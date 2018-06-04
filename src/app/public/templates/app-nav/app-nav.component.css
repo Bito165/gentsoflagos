@@ -1,0 +1,67 @@
+.example3{
+  background-color: #0e0e28;
+}
+
+.navbar{
+  background-color: #0e0e28;
+  border-color: #0e0e28;
+}
+
+.example3 .navbar-brand {
+  height: 80px;
+}
+
+.fix{
+    font-size: 10px;
+}
+
+.example3 .nav >li >a:hover{
+  color: #0e0e28;
+  background-color: #ffffff;
+}
+
+.example3 .nav .touchnot >li >a:hover{
+  background-color: #0e0e28;
+  color: #ffffff;
+}
+
+#pleasework{
+  padding-top:25px;
+}
+
+#pleasework:hover{
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.example3 .nav >li >a {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-size: 18px;
+  border-radius: 0px;
+  color: #ffffff;
+}
+
+.example3 .navbar-toggle {
+  padding: 10px;
+  margin: 25px 15px 25px 0;
+}
+
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 10px;
+  width: auto;
+}
+
+.nav{
+    height: 80px;
+}
+
+@media screen and (max-width: 760px) {
+  .nav{
+    height: 100%;
+  }
+}

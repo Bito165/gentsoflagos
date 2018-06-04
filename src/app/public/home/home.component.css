@@ -1,0 +1,28 @@
+.back{
+    background: url('../../../assets/img/services.jpg');
+    background-size: cover;
+    padding: 20px 20px;
+    height: 40%;
+    font-size: 20px;
+    max-width: 98.9%;
+    color: #ffffff;
+}
+
+.black{
+    padding: 6.6% !important ;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 19px;
+}
+
+.black:hover{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.picture{
+    background: url('../../../assets/img/cut.jpg');
+    background-size: cover;
+    line-height: 26em;
+}
+

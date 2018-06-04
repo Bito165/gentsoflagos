@@ -19,9 +19,17 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "../src/assets/css/bootstrap.min.css",
+        "../src/assets/css/bootstrap.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../src/assets/js/jquery.min.js",
+        "../src/assets/js/bootstrap.min.js",
+        "../src/assets/dash/js/adminlte.min.js",
+        "../src/assets/dash/js/pages/dashboard.js",
+        "../src/assets/dash/js/demo.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -55,6 +63,13 @@
   },
   "defaults": {
     "styleExt": "css",
+    "class": {
+      "spec": false
+    },
+    "serve": {
+      "sslKey": "<relative path from .angular-cli.json>/server.key",
+      "sslCert": "<relative path from .angular-cli.json>/server.crt"
+    },
     "component": {}
   }
 }

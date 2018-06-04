@@ -1,0 +1,20 @@
+.footer{
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #0e0e28;;
+    color: #ffffff;
+    text-align: left;
+    padding: 10px;
+    line-height: 1.75em;
+    z-index: 2000;
+    position: relative;
+}
+
+a {
+    color: #ffffff;
+}
+
+a:hover{
+    text-decoration: none;
+}

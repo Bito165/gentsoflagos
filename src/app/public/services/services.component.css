@@ -1,0 +1,19 @@
+.blue{
+    padding: 6.8% !important ;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #0e0e28;
+    line-height: 1.6em;
+}
+
+.picture{
+    background: url('../../../assets/img/services.jpg');
+    background-size: auto;
+    line-height: 27.5em;
+    background-size: cover; 
+}
+
+.service{
+    text-align: center;
+    padding: 8px;
+}

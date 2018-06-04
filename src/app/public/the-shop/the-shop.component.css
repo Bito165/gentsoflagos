@@ -1,0 +1,86 @@
+.jumbotron{
+    background: url('../../../assets/img/theshop.jpg');
+    padding: 8%;
+    color: #ffffff;
+    background-size:cover; 
+}
+
+.black{
+    padding:5% 8% 8% 8% !important ;
+    font-size: 18px;
+    line-height: 1.5em;
+}
+
+.crew{
+    margin-top: -60px;
+}
+
+.map{
+    border:1px solid #0e0e28 ; margin-top: 6%
+}
+
+.map-md{
+    border:1px solid #0e0e28; margin-top: 2%; margin-bottom: 3%;
+}
+
+.map-xs{
+    border:1px solid #0e0e28; margin-top: 2%; margin-bottom: 15%;
+}
+
+
+.blue{
+    padding: 8% !important ;
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #0e0e28;
+}
+
+.white{
+    padding: 8% !important ;
+    font-size: 18px;
+    background-color: #ffffff;
+    color: #0e0e28;
+}
+
+.picture{
+    background: url('../../../assets/img/services.jpg');
+    background-size: auto;
+    background-size: cover;
+    line-height: 27.5em;
+}
+
+.team{
+    background: url('../../../assets/img/services.jpg');
+    background-size: auto;
+    background-size: cover;
+    line-height: 27.5em;
+}
+
+@media screen and (max-width: 1024px) {
+	.black{
+        padding-bottom: 5% !important;
+    }
+
+    .jumbotron{
+        padding-right: 0%;
+        width: 98.5% !important;
+    }
+
+    .jumbotron >.container{
+        padding-right: 0%; 
+    }
+
+    .crew{
+        margin-top: 40px;
+    }
+
+    .for-map{
+        margin-bottom: 5%;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .jumbotron{
+        width: 98% !important;
+    }
+}
