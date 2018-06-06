@@ -19,7 +19,7 @@ const appRoutes: Routes = [
     BrowserModule,
     PublicModule,
     BusinessModule,
-    RouterModule.forRoot(appRoutes, { useHash: true }),
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [],
   bootstrap: [AppComponent],
