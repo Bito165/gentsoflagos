@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorage,LocalStorageService } from "ngx-webstorage";
 
 @Component({
   selector: 'business-nav',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./business-nav.component.css']
 })
 export class BusinessNavComponent implements OnInit {
+  user:any;
 
-  constructor() { }
+  constructor(private local:LocalStorageService) { }
 
   ngOnInit() {
+    this.user = this.local.retrieve('User_info');
   }
 
 }

@@ -9,7 +9,9 @@ import { LoginComponent } from './login/login.component'
 import { PLComponent } from './p-l/p-l.component'
 import { RevenueComponent } from './revenue/revenue.component'
 import { StaffComponent } from './staff/staff.component';
-import { BusinesshomeComponent } from './businesshome/businesshome.component'
+import { BusinesshomeComponent } from './businesshome/businesshome.component';
+import { FormsModule } from "@angular/forms";
+import { NgProgressModule } from "ngx-progressbar";
 
 const BusinessRoutes: Routes = [
     { path: 'business', component: LoginComponent },
@@ -36,6 +38,8 @@ const BusinessRoutes: Routes = [
     imports: [
         BrowserModule,
         TemplatesModule,
+        FormsModule,
+        NgProgressModule,
         RouterModule.forChild(BusinessRoutes),
     ],
     exports: [RouterModule],

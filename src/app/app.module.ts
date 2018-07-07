@@ -5,6 +5,10 @@ import { AppComponent } from './app.component';
  import { BusinessModule } from './business/business.module'; 
 import { PublicModule } from './public/public.module';
 import { HomeComponent } from './public/home/home.component';
+import { ApiBaseService } from "../services/apibase/api-base.service";
+import { HttpClientModule } from "@angular/common/http";
+import { LocalStorage, LocalStorageService } from "ngx-webstorage";
+
 
 
 const appRoutes: Routes = [
@@ -13,15 +17,21 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
+  
   imports: [
     BrowserModule,
     PublicModule,
     BusinessModule,
-    RouterModule.forRoot(appRoutes),
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes, {useHash: true}),
   ],
-  providers: [],
+  providers: [
+    LocalStorageService,
+    ApiBaseService,
+    
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
