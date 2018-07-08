@@ -11,9 +11,9 @@ const api = require('./server/routes/api');
 const app = express();
 
 var connection = sql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '',
+  host: 'eu-cdbr-west-02.cleardb.net',
+  user: 'bccc30f9b509b0',
+  password: '1f148d97',
   multipleStatements: true
 });
 
@@ -23,7 +23,7 @@ connection.connect(function (err) {
   console.log("Connected!");
 });
 
-connection.query('USE gentsoflagos');
+connection.query('USE heroku_4d2e8b4f4099a12');
 
 connection.query('CREATE TABLE IF NOT EXISTS Services (id INT AUTO_INCREMENT PRIMARY KEY, service_name VARCHAR(255), service_price VARCHAR(255), duration VARCHAR(255), description VARCHAR(255), times_booked VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
