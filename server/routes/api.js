@@ -3,13 +3,14 @@ const router = express.Router();
 var sql = require('mysql');
 
 var connection = sql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: '',
-    multipleStatements: true
+  host: 'eu-cdbr-west-02.cleardb.net',
+  user: 'bccc30f9b509b0',
+  password: '1f148d97',
+  multipleStatements: true
 });
 
-connection.query('USE gentsoflagos');
+
+connection.query('USE heroku_4d2e8b4f4099a12');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
