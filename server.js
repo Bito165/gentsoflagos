@@ -17,13 +17,19 @@ var connection = sql.createConnection({
   multipleStatements: true
 });
 
+connection.query('USE heroku_4d2e8b4f4099a12');
 
 connection.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
 });
 
-connection.query('USE heroku_4d2e8b4f4099a12');
+
+
+setInterval(() => {
+  connection.query('SELECT 1');
+}, 1000);
+
 
 connection.query('CREATE TABLE IF NOT EXISTS Services (id INT AUTO_INCREMENT PRIMARY KEY, service_name VARCHAR(255), service_price VARCHAR(255), duration VARCHAR(255), description VARCHAR(255), times_booked VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
@@ -33,7 +39,7 @@ connection.query('CREATE TABLE IF NOT EXISTS Staff (id INT AUTO_INCREMENT PRIMAR
   if (err) throw err;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Merch (id INT AUTO_INCREMENT PRIMARY KEY, item_name VARCHAR(255), item_avatar VARCHAR(255), item_avatar2 VARCHAR(255), item_avatar3 VARCHAR(255), item_price VARCHAR(255), item_category VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Merch (id INT AUTO_INCREMENT PRIMARY KEY, item_name VARCHAR(255), item_avatar VARCHAR(255), item_avatar2 VARCHAR(255), item_avatar3 VARCHAR(255), item_price VARCHAR(255), item_category VARCHAR(255), item_quantity VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 });
 
@@ -41,12 +47,11 @@ connection.query('CREATE TABLE IF NOT EXISTS Orders (id INT AUTO_INCREMENT PRIMA
   if (err) throw err;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Academy (id INT AUTO_INCREMENT PRIMARY KEY, applicant_name VARCHAR(255), applicant_dob datetime, applicant_gist VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Academy (id INT AUTO_INCREMENT PRIMARY KEY, applicant_name VARCHAR(255), applicant_dob datetime, applicant_gist VARCHAR(255), applicant_contact VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
-
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Bookings (id INT AUTO_INCREMENT PRIMARY KEY, staff_name VARCHAR(255), service VARCHAR(255), price VARCHAR(255), customer_name datetime, date datetime, client_phone_number VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Bookings (id INT AUTO_INCREMENT PRIMARY KEY, staff_name VARCHAR(255), service VARCHAR(255), price VARCHAR(255), customer_name VARCHAR(255), date datetime, client_phone_number VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 
 });
@@ -56,14 +61,13 @@ connection.query('CREATE TABLE IF NOT EXISTS Customers (id INT AUTO_INCREMENT PR
 ;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Revenue (id INT AUTO_INCREMENT PRIMARY KEY, amount VARCHAR(255), source VARCHAR(255), week_day VARCHAR(255), date datetime, month VARCHAR(255), year VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Revenue (id INT AUTO_INCREMENT PRIMARY KEY, amount VARCHAR(255), source VARCHAR(255), staff VARCHAR(255), week_day VARCHAR(255), date datetime, month VARCHAR(255), year VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 
 });
 
 connection.query('CREATE TABLE IF NOT EXISTS Expenses (id INT AUTO_INCREMENT PRIMARY KEY, amount VARCHAR(255), source VARCHAR(255), week_day VARCHAR(255), date datetime, month VARCHAR(255), year VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
-
 });
 
 connection.query('CREATE TABLE IF NOT EXISTS Users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), full_name VARCHAR(255), title VARCHAR(255), password VARCHAR(255), last_login datetime, user_type VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
@@ -73,7 +77,10 @@ connection.query('CREATE TABLE IF NOT EXISTS Users (id INT AUTO_INCREMENT PRIMAR
 
 connection.query('CREATE TABLE IF NOT EXISTS BarberSchedule (id INT AUTO_INCREMENT PRIMARY KEY, barber_name VARCHAR(255), week_day VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
+});
 
+connection.query('CREATE TABLE IF NOT EXISTS CarouselImages (id INT AUTO_INCREMENT PRIMARY KEY, image VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+  if (err) throw err;
 });
 
 connection.query('CREATE TABLE IF NOT EXISTS MerchCategories (id INT AUTO_INCREMENT PRIMARY KEY, category_name VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
@@ -106,7 +113,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8088');
+  res.setHeader('Access-Control-Allow-Origin', 'gentsoflagos.herokuapp.com');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
