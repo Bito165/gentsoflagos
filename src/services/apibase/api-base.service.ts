@@ -5,35 +5,33 @@ import  "rxjs/add/operator/map";
 @Injectable()
 export class ApiBaseService {
 
-  baseurl:any = "gentsoflagos.herokuapp.com";
-
   constructor(public webServ:HttpClient) { }
 
   testapi(){
-    return this.webServ.get(this.baseurl + '/' + 'api')
+    return this.webServ.get('/' + 'api')
     .map(res => res);
   }
 
   login(username:any, password:any, time:Date){
     var body = { "username": username , "password": password, "last_login": time};
-    return this.webServ.post(this.baseurl + '/' + 'api' + '/' + 'login' , body)
+    return this.webServ.post('/' + 'api' + '/' + 'login' , body)
     .map(res => res);
   }
 
   dashboard(){
-    return this.webServ.get(this.baseurl + '/' + 'api' + '/' + 'dashboard')
+    return this.webServ.get('/' + 'api' + '/' + 'dashboard')
     .map(res => res);
   }
 
   postRevenue(){
     var body = {}
-    return this.webServ.post(this.baseurl + '/' + 'api' + '/' + 'revenue' + '/' + 'new', body)
+    return this.webServ.post('/' + 'api' + '/' + 'revenue' + '/' + 'new', body)
       .map(res => res);
   }
 
   postExpense(){
     var body = {}
-    return this.webServ.post(this.baseurl + '/' + 'api' + '/' + 'expenses' + '/' + 'new', body)
+    return this.webServ.post('/' + 'api' + '/' + 'expenses' + '/' + 'new', body)
       .map(res => res);
   }
 
