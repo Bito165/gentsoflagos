@@ -11,25 +11,23 @@ const api = require('./server/routes/api');
 const app = express();
 
 var connection = sql.createConnection({
-  host: 'eu-cdbr-west-02.cleardb.net',
-  user: 'bccc30f9b509b0',
-  password: '1f148d97',
+  host: '127.0.0.1',
+  user: 'root',
+  password: '',
   multipleStatements: true
 });
 
-connection.query('USE heroku_4d2e8b4f4099a12');
 
 connection.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
 });
 
-
-
 setInterval(() => {
   connection.query('SELECT 1');
 }, 1000);
 
+connection.query('USE gentsoflagos');
 
 connection.query('CREATE TABLE IF NOT EXISTS Services (id INT AUTO_INCREMENT PRIMARY KEY, service_name VARCHAR(255), service_price VARCHAR(255), duration VARCHAR(255), description VARCHAR(255), times_booked VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
@@ -113,7 +111,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'gentsoflagos.herokuapp.com');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8088');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
