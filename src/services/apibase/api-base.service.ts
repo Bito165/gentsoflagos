@@ -5,7 +5,7 @@ import  "rxjs/add/operator/map";
 @Injectable()
 export class ApiBaseService {
 
-  baseurl:any = "http://localhost:8000";
+  baseurl:any = "gentsoflagos.herokuapp.com";
 
   constructor(public webServ:HttpClient) { }
 
