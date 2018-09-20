@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       this.signInMessage = "Sign In"
     }else{
       this.time = new Date().getTime();
-      this.api.login(form.value.username, form.value.password, this.time).subscribe(
+      this.api.postLogin(form.value.username, form.value.password, this.time).subscribe(
         user => {
           this.loader.done();
           console.log(user)

@@ -19,17 +19,17 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <div class="table-responsive">
-                                <table class="table no-margin">
+                                <table class="table table-hover table-bordered no-margin">
                                     <thead>
-                                        <tr>
-                                            <th>Date Due</th>
-                                            <th>Client Name</th>
+                                        <tr style="background-color: #0e0e28; color: white">
+                                            <th>Time</th>
+                                            <th>Customer Name</th>
                                             <th> Service </th>
-                                            <th>Barber</th>
+                                            <th>Staff</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr style="cursor:pointer" data-toggle="modal" data-target="#modal-default">
                                             <td>
                                                 <a href="pages/examples/invoice.html">OR9842</a>
                                             </td>
@@ -127,18 +127,18 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="table-responsive">
-                            <table class="table no-margin">
+                            <table class="table table-hover no-margin table-bordered">
                                 <thead>
-                                    <tr>
+                                    <tr style="background-color: #0e0e28; color: white">
                                         <th>Date Due</th>
-                                        <th> Client Name </th>  
+                                        <th> Customer Name </th>  
                                         <th>Item</th>
                                         <th> Size </th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr style="cursor:pointer" data-toggle="modal" data-target="#modal-default">
                                         <td>
                                             <a href="pages/examples/invoice.html">OR9842</a>
                                         </td>
@@ -221,3 +221,26 @@
         
     </section>
 </div>
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Default Modal</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

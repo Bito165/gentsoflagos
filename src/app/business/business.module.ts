@@ -12,16 +12,23 @@ import { StaffComponent } from './staff/staff.component';
 import { BusinesshomeComponent } from './businesshome/businesshome.component';
 import { FormsModule } from "@angular/forms";
 import { NgProgressModule } from "ngx-progressbar";
+import { MerchManagementComponent } from './merch-management/merch-management.component';
+import { CustomersComponent } from './customers/customers.component';
+import { AcademyApplicationsComponent } from './academy-applications/academy-applications.component';
+import { AuthGuard } from "./../../services/auth/auth.guard";
 
 const BusinessRoutes: Routes = [
-    { path: 'business', component: LoginComponent },
-    { path: 'business/view-bookings', component: BookingsComponent },
-    { path: 'business/expenses', component: ExpensesComponent },
-    { path: 'business/oflagosjournal', component: JournalComponent },
-    { path: 'business/pl-analysis', component: PLComponent },
-    { path: 'business/revenue', component: RevenueComponent },
-    { path: 'business/staff', component: StaffComponent },
-    { path: 'business/home', component: BusinesshomeComponent },
+    { path: 'business', component: LoginComponent},
+    { path: 'business/view-bookings', component: BookingsComponent, canActivate: [AuthGuard] },
+    { path: 'business/expenses', component: ExpensesComponent, canActivate: [AuthGuard] },
+    { path: 'business/maintenance', component: JournalComponent, canActivate: [AuthGuard] },
+    { path: 'business/pl-analysis', component: PLComponent, canActivate: [AuthGuard] },
+    { path: 'business/revenue', component: RevenueComponent, canActivate: [AuthGuard] },
+    { path: 'business/staff', component: StaffComponent, canActivate: [AuthGuard] },
+    { path: 'business/home', component: BusinesshomeComponent, canActivate: [AuthGuard] },
+    { path: 'business/merch', component: MerchManagementComponent, canActivate: [AuthGuard] },
+    { path: 'business/customers', component: CustomersComponent, canActivate: [AuthGuard] },
+    { path: 'business/academy', component: AcademyApplicationsComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -33,7 +40,10 @@ const BusinessRoutes: Routes = [
         PLComponent,
         RevenueComponent,
         StaffComponent,
-        BusinesshomeComponent
+        BusinesshomeComponent,
+        MerchManagementComponent,
+        CustomersComponent,
+        AcademyApplicationsComponent
     ],
     imports: [
         BrowserModule,
@@ -43,6 +53,6 @@ const BusinessRoutes: Routes = [
         RouterModule.forChild(BusinessRoutes),
     ],
     exports: [RouterModule],
-    providers: [],
+    providers: [AuthGuard],
 })
 export class BusinessModule { }

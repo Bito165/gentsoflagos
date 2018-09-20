@@ -11,9 +11,10 @@ const api = require('./server/routes/api');
 const app = express();
 
 var connection = sql.createConnection({
-  host: 'eu-cdbr-west-02.cleardb.net',
-  user: 'bccc30f9b509b0',
-  password: '1f148d97',
+  host: 'b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+  user: 's4i091wurpcyf4ob',
+  password: 'd8466sslfhbyo5r3',
+  port: '3306',
   multipleStatements: true
 });
 
@@ -22,7 +23,7 @@ connection.connect(function (err) {
   console.log("Connected!");
 });
 
-connection.query('USE heroku_4d2e8b4f4099a12');
+connection.query('USE h9fm1o7pm244m15o');
 
 setInterval(() => {
   connection.query('SELECT 1');
@@ -45,11 +46,11 @@ connection.query('CREATE TABLE IF NOT EXISTS Orders (id INT AUTO_INCREMENT PRIMA
   if (err) throw err;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Academy (id INT AUTO_INCREMENT PRIMARY KEY, applicant_name VARCHAR(255), applicant_dob datetime, applicant_gist VARCHAR(255), applicant_contact VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Academy (id INT AUTO_INCREMENT PRIMARY KEY, applicant_name VARCHAR(255), applicant_dob datetime, applicant_gist VARCHAR(255), applicant_contact VARCHAR(255), status boolean,createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Bookings (id INT AUTO_INCREMENT PRIMARY KEY, staff_name VARCHAR(255), service VARCHAR(255), price VARCHAR(255), customer_name VARCHAR(255), date datetime, client_phone_number VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Bookings (id INT AUTO_INCREMENT PRIMARY KEY, staff_name VARCHAR(255), service VARCHAR(255), price VARCHAR(255), customer_name VARCHAR(255), date date, time time,client_phone_number VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 
 });
@@ -98,8 +99,12 @@ connection.query('CREATE TABLE IF NOT EXISTS RevenueSources (id INT AUTO_INCREME
 
 connection.query('CREATE TABLE IF NOT EXISTS ExpenseSources (id INT AUTO_INCREMENT PRIMARY KEY, source VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
-
 });
+
+connection.query("INSERT INTO users(username, full_name, title, password, user_type, createdby) values('bito', 'Babalola Fareed', 'CTO', 'allforgents007$', 'admin', '')", function (err, result) {
+  if (err) throw err;
+});
+
 
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -111,7 +116,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'gentsoflagos.herokuapp.com');
+  res.setHeader('Access-Control-Allow-Origin', 'https://gentsoflagos.herokuapp.com');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');

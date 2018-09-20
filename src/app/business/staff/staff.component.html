@@ -1,1 +1,104 @@
 <business-nav> </business-nav>
+<div class="content-wrapper">
+  <section class="content">
+    <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#tab_1" data-toggle="tab">Staff List</a></li>
+              <li><a href="#tab_2" data-toggle="tab">Staff Schedule</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab_1">
+                <div class="row">
+                    <div style="cursor: pointer;" data-toggle="modal" data-target="#modal-info" class="col-lg-3">
+                        <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>ADD</h3>
+
+                            <p>NEW STAFF</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
+
+                            <h3 class="profile-username text-center">Staff Name</h3>
+
+                            <p class="text-muted text-center">Staff Role</p>
+
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                <b>Date Joined</b>
+                                <a class="pull-right">1,322</a>
+                                </li>
+                                <li class="list-group-item">
+                                <b> Commission Due This Month </b>
+                                <a class="pull-right">543</a>
+                                </li>
+                            </ul>
+
+                            <p class="text-center" style="color: steelblue"> View Commission Breakdown </p>
+
+                            <div class="row mx-auto">
+                                <div class="col-lg-6" style="margin-top: 10px">
+                                <a href="#" class="btn btn-warning btn-block ">
+                                    <b style="color: white">Edit Details</b>
+                                </a>
+                            </div>
+                            <div class="col-lg-6" style="margin-top: 10px">
+                                <a href="#" class="btn btn-danger btn-block ">
+                                    <b style="color: white">Delete</b>
+                                </a>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    </div>
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="tab_2">
+                The European languages are members of the same family. Their separate existence is a myth.
+                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                new common language would be desirable: one could refuse to pay expensive translators. To
+                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                words. If several languages coalesce, the grammar of the resulting language is more simple
+                and regular than that of the individual languages.
+              </div>
+            </div>
+            <!-- /.tab-content -->
+    </div>
+    <!-- nav-tabs-custom -->
+    
+ </section>
+</div>
+
+<div class="modal modal-info fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Info Modal</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

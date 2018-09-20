@@ -3,13 +3,15 @@ const router = express.Router();
 var sql = require('mysql');
 
 var connection = sql.createConnection({
-  host: 'eu-cdbr-west-02.cleardb.net',
-  user: 'bccc30f9b509b0',
-  password: '1f148d97',
+  host: 'b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+  user: 's4i091wurpcyf4ob',
+  password: 'd8466sslfhbyo5r3',
+  port: '3306',
   multipleStatements: true
 });
 
-connection.query('USE heroku_4d2e8b4f4099a12');
+
+connection.query('USE h9fm1o7pm244m15o');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
@@ -19,7 +21,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/dashboard', (req,res)=>{    
-    var query = "Select * from orders where status = 0; Select * from bookings; Select * from revenuesources; Select * from expensesources; Select * from carouselimages; Select * from merch order by item_category,createddate";
+    var query = "Select * from orders where status < 2; Select * from bookings order by date; Select * from revenuesources; Select * from expensesources; Select * from staff";
     connection.query(query, function (err, result) {
         if(err){
             console.log(err);
@@ -101,8 +103,8 @@ router.get('/staff-list', (req, res) => {
    })
 })
 
-router.get('/user-list', (req, res) => {
-  var query = "SELECT * from users";
+router.get('/maintenance', (req, res) => {
+  var query = "SELECT * from users; SELECT * from staffcategories; SELECT * from merchcategories; SELECT * from revenuesources; SELECT * from expensesources; SELECT * from services";
   connection.query(query, function (err, result) {
     if (err) {
       res.send(err);
@@ -193,7 +195,7 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/revenue/new', (req, res) => {
-  var query = "INSERT INTO revenue (amount, source, staff , week_day, date, month, year, createdby, createddate) values ('" + req.body.amount + "', '" + req.body.source + "',  '" + req.body.staff + "', '" + req.body.week_day + "', '" + req.body.date + "', '" + req.body.month + "', '" + req.body.year + "', '" + req.body.createdby + "', '" + req.body.createddate + "')";
+  var query = "INSERT INTO revenue (amount, source, staff , week_day, date, month, year, createdby, createddate) values ('" + req.body.amount + "', '" + req.body.source + "',  '" + req.body.staff + "', '" + req.body.week_day + "', '" + req.body.date + "', '" + req.body.month + "', '" + req.body.year + "', '" + req.body.createdby + "')";
 
   connection.query(query, function (err, result) {
     if (err) {
@@ -208,7 +210,7 @@ router.post('/revenue/new', (req, res) => {
 });
 
 router.post('/academy/new', (req, res) => {
-  var query = "INSERT INTO revenue (applicant_name, applicant_dob, applicant_gist, applicant_contact, createdby, createddate) values ('" + req.body.applicant_name + "', '" + req.body.applicant_dob + "',  '" + req.body.applicant_gist + "', '" + req.body.applicant_contact + "', '" + req.body.createdby + "', '" + req.body.createddate + "')";
+  var query = "INSERT INTO revenue (applicant_name, applicant_dob, applicant_gist, applicant_contact, createdby, createddate) values ('" + req.body.applicant_name + "', '" + req.body.applicant_dob + "',  '" + req.body.applicant_gist + "', '" + req.body.applicant_contact + "', '" + req.body.createdby + "')";
 
   connection.query(query, function (err, result) {
     if (err) {
@@ -223,7 +225,7 @@ router.post('/academy/new', (req, res) => {
 });
 
 router.post('/carousel/new', (req, res) => {
-    var query = "INSERT INTO carouselimages (image, createdby, createddate) value ('" + req.body.image + "', '" + req.body.createdby + "', '" + req.body.createddate + "')";
+    var query = "INSERT INTO carouselimages (image, createdby, createddate) value ('" + req.body.image + "', '" + req.body.createdby + "')";
     connection.query(query, function (err, result) {
       if (err) {
         res.send(err);
@@ -237,7 +239,7 @@ router.post('/carousel/new', (req, res) => {
 });
 
 router.post('/expenses/new', (req, res) => {
-  var query = "INSERT INTO expenses (amount, source, week_day, date, month, year, createdby, createddate) values ('" + req.body.amount + "', '" + req.body.source + "', '" + req.body.week_day + "', '" + req.body.date + "', '" + req.body.month + "', '" + req.body.year + "', '" + req.body.createdby + "', '" + req.body.createddate + "')";
+  var query = "INSERT INTO expenses (amount, source, week_day, date, month, year, createdby, createddate) values ('" + req.body.amount + "', '" + req.body.source + "', '" + req.body.week_day + "', '" + req.body.date + "', '" + req.body.month + "', '" + req.body.year + "', '" + req.body.createdby + "')";
   connection.query(query, function (err, result) {
     if (err) {
       res.send(err);
@@ -251,12 +253,12 @@ router.post('/expenses/new', (req, res) => {
 });
 
 router.post('/bookings/new', (req, res) => {
-  var query = "INSERT INTO bookings (staff_name, service, price, customer_name, date, client_phone_number, createdby, createddate) values ('" + req.body.staff_name + "', '" + req.body.service + "', '" + req.body.price + "', '" + req.body.customer_name + "', '" + req.body.date + "', '" + req.body.client_phone_number + "', '" + req.body.createdby + "', '" + req.body.createddate + "')";
+  var query = "INSERT INTO bookings (staff_name, service, price, customer_name, date, client_phone_number, createdby, createddate) values ('" + req.body.staff_name + "', '" + req.body.service + "', '" + req.body.price + "', '" + req.body.customer_name + "', '" + req.body.date + "', '" + req.body.client_phone_number + "', '" + req.body.createdby + "')";
   connection.query(query, function (err, result) {
     if (err) {
       res.send(err);
     } else {
-      var customer = "INSERT INTO customers (customer_name, customer_phone_number, source, createdby, createddate) values ('" + req.body.customer_name + "', '" + req.body.client_phone_number + "', 'bookings', '" + req.body.createdby + "', '" + req.body.createddate + "')";
+      var customer = "INSERT INTO customers (customer_name, customer_phone_number, source, createdby, createddate) values ('" + req.body.customer_name + "', '" + req.body.client_phone_number + "', 'bookings', '" + req.body.createdby + "')";
       connection.query(customer);
       var message = {
         "message": "Success"
@@ -267,12 +269,12 @@ router.post('/bookings/new', (req, res) => {
 });
 
 router.post('/orders/new', (req, res) => {
-  var query = "INSERT INTO orders (item_ordered, item_size, client_name, date_due, status, delivery_address, client_phone_number , createdby, createddate) values ('" + req.body.item_ordered + "', '" + req.body.item_size + "', '" + req.body.client_name + "', '" + req.body.date_due + "', '" + req.body.status + "', '" + req.body.delivery_address + "', '" + req.body.client_phone_number + "', '" + req.body.createdby + "', '" + req.body.createddate + "')";
+  var query = "INSERT INTO orders (item_ordered, item_size, client_name, date_due, status, delivery_address, client_phone_number , createdby, createddate) values ('" + req.body.item_ordered + "', '" + req.body.item_size + "', '" + req.body.client_name + "', '" + req.body.date_due + "', '" + req.body.status + "', '" + req.body.delivery_address + "', '" + req.body.client_phone_number + "', '" + req.body.createdby + "')";
   connection.query(query, function (err, result) {
     if (err) {
       res.send(err);
     } else {
-      var customer = "INSERT INTO customers (customer_name, customer_phone_number, source, createdby, createddate) values ('" + req.body.customer_name + "', '" + req.body.client_phone_number + "', 'orders', '" + req.body.createdby + "', '" + req.body.createddate + "')";
+      var customer = "INSERT INTO customers (customer_name, customer_phone_number, source, createdby, createddate) values ('" + req.body.customer_name + "', '" + req.body.client_phone_number + "', 'orders', '" + req.body.createdby + "')";
       connection.query(customer);
       var message = {
         "message": "Success"
@@ -325,7 +327,7 @@ router.post('/user/account/update', (req, res) => {
 })
 
 router.post('/staff/create-new', (req, res) => {
-    var query = "INSERT INTO staff (staff_name, staff_avatar, staff_bio, staff_category, createdby, createddate) values ('" + req.body.name + "', '" + req.body.avatar + "', '" + req.body.bio + "', '" + req.body.category + "', '" + req.body.createdby + "', '" + req.body.createddate + "') ";
+    var query = "INSERT INTO staff (staff_name, staff_avatar, staff_bio, staff_category, createdby, createddate) values ('" + req.body.name + "', '" + req.body.avatar + "', '" + req.body.bio + "', '" + req.body.category + "', '" + req.body.createdby + "') ";
     connection.query(query, function (err, result) {
         if (err) {
             res.send(err);
@@ -337,7 +339,9 @@ router.post('/staff/create-new', (req, res) => {
 })
 
 router.post('/user/create-new', (req, res) => {
-  var query = "INSERT INTO users (username, full_name, title, password, usertype, createdby ,createddate) values ('" + req.body.username + "', '" + req.body.full_name + "', '" + req.body.title + "', '" + req.body.password + "', '" + req.body.usertype + "', '" + req.body.createdby + "', '" + req.body.createddate + "') ";
+  console.log(req.body);
+  req.body.createddate = new Date(req.body.createddate).getTime();
+  var query = "INSERT INTO users (username, full_name, title, password, user_type, createdby) values ('" + req.body.username + "', '" + req.body.full_name + "', '" + req.body.title + "', '" + req.body.password + "', '" + req.body.usertype + "', '" + req.body.createdby + "') ";
   connection.query(query, function (err, result) {
     if (err) {
       res.send(err);
@@ -417,7 +421,7 @@ router.post('/merch/delete', (req, res) => {
 })
 
 router.post('/merch/create-new', (req, res) => {
-  var query = "INSERT INTO merch (item_name, item_avatar, item_avatar2, item_avatar3, item_quantity, item_price, item_category , createdby, createddate) values ('" + req.body.name + "', '" + req.body.avatar + "', '" + req.body.avatar2 + "', '" + req.body.avatar3 + "', '" + req.body.quantity + "', '" + req.body.price + "', '" + req.body.category + "', '" + req.body.createdby + "', '" + req.body.createddate + "') ";
+  var query = "INSERT INTO merch (item_name, item_avatar, item_avatar2, item_avatar3, item_quantity, item_price, item_category , createdby, createddate) values ('" + req.body.name + "', '" + req.body.avatar + "', '" + req.body.avatar2 + "', '" + req.body.avatar3 + "', '" + req.body.quantity + "', '" + req.body.price + "', '" + req.body.category + "', '" + req.body.createdby + "') ";
   connection.query(query, function (err, result) {
     if (err) {
       res.send(err);
@@ -429,5 +433,117 @@ router.post('/merch/create-new', (req, res) => {
     }
   })
 })
+
+router.post('/categories/staff-new', (req, res) => {
+  var query = "SELECT * from staffcategories where category_name = ?";
+  connection.query(query, [req.body.category_name] ,function (err, result) {
+    if (err) {
+      res.send(err);
+    } else if(result.length > 0){
+      var message = {
+        "message": "THIS CATEGORY ALREADY EXISTS"
+      };
+      res.send(message);
+    }else{
+      var time = new Date();
+      req.body.createddate = time;
+      connection.query("INSERT INTO staffcategories(category_name, createdby) values ('" + req.body.category_name + "', '" + req.body.username + "') ")
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+})
+
+router.post('/categories/merch-new', (req, res) => {
+  var query = "SELECT * from merchcategories where category_name = ?";
+  connection.query(query, [req.body.category_name], function (err, result) {
+    if (err) {
+      res.send(err);
+    } else if (result.length > 0) {
+      var message = {
+        "message": "THIS CATEGORY ALREADY EXISTS"
+      };
+      res.send(message);
+    } else {
+      var time = new Date();
+      req.body.createddate = time;
+      connection.query("INSERT INTO merchcategories(category_name, createdby) values ('" + req.body.category_name + "', '" + req.body.username + "') ")
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+})
+
+router.post('/sources/revenue-new', (req, res) => {
+  var query = "SELECT * from revenuesources where source = ?";
+  connection.query(query, [req.body.source], function (err, result) {
+    if (err) {
+      res.send(err);
+    } else if (result.length > 0) {
+      var message = {
+        "message": "THIS SOURCE ALREADY EXISTS"
+      };
+      res.send(message);
+    } else {
+      var time = new Date();
+      req.body.createddate = time;
+      connection.query("INSERT INTO revenuesources(source, createdby) values ('" + req.body.source + "', '" + req.body.username + "') ")
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+})
+
+router.post('/sources/expenses-new', (req, res) => {
+  var query = "SELECT * from expensesources where source = ?";
+  connection.query(query, [req.body.source], function (err, result) {
+    if (err) {
+      res.send(err);
+    } else if (result.length > 0) {
+      var message = {
+        "message": "THIS SOURCE ALREADY EXISTS"
+      };
+      res.send(message);
+    } else {
+      var time = new Date();
+      req.body.createddate = time;
+      connection.query("INSERT INTO expensesources(source, createdby) values ('" + req.body.source + "', '" + req.body.username + "') ")
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+})
+
+router.post('/services/create-new', (req, res) => {
+  var query = "SELECT * from services where service_name = ?";
+  connection.query(query, [req.body.service_name], function (err, result) {
+    if (err) {
+      res.send(err);
+    } else if (result.length > 0) {
+      var message = {
+        "message": "THIS SERVICE ALREADY EXISTS"
+      };
+      res.send(message);
+    } else {
+      var time = new Date();
+      req.body.createddate = time;
+      connection.query("INSERT INTO services(service_name, service_price, duration, description ,createdby, createddate) values ('" + req.body.service_name + "', '" + req.body.service_price + "', '" + req.body.duration + "', '" + req.body.description + "' , '" + req.body.username + "') ")
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+})
+
+
 
 module.exports = router;

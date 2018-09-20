@@ -2,185 +2,211 @@
 <div class="content-wrapper">
     <section class="content">
 
-        <h2 class="page-header">Welcome {{user.username}}</h2>
+        <h2 class="page-header">Hello {{user.username}}</h2>
 
         <div class="row">
 
-            <div class="col-lg-4 col-xs-6">
-                <!-- small box -->
+            <div style="cursor: pointer;" data-toggle="modal" data-target="#modal-info" class="col-lg-3 col-xs-6">
+            <!-- small box -->
                 <div class="small-box bg-aqua">
-                    
                     <div class="inner">
-                        <h4>ADD NEW REVENUE</h4>
+                    <h3>ADD</h3>
+
+                    <p>NEW REVENUE</p>
                     </div>
-                    <br>
                     <div class="icon">
-                        <i class="glyphicon glyphicon-plus"></i>
+                    <i class="fa fa-plus"></i>
                     </div>
                 </div>
             </div>
+
+ 
             <!-- ./col -->
-            <div class="col-lg-4 col-xs-6">
+            <div style="cursor: pointer;" data-toggle="modal" data-target="#modal-danger" class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h4>ADD NEW EXPENSE </h4>
+                    <h3>ADD</h3>
+
+                    <p>NEW EXPENSE</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                    <i class="fa fa-plus"></i>
                     </div>
+                    
                 </div>
             </div>
+            <!-- ./col -->
             
         </div>
         <!-- /.row -->
 
         <h2 class="page-header">Pending Barber Appointments</h2>
+        
 
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12">
+        
+            <div *ngFor="let booking of bookings" class="col-md-3 col-sm-6 col-xs-12" style="cursor:pointer" data-toggle="modal" data-target="#modal-default" (click)="bookingModal(booking)">
                 <div class="info-box">
                     <span class="info-box-icon bg-aqua">
                         <i class="ion ion-ios-gear-outline"></i>
                     </span>
         
                     <div class="info-box-content">
-                        <span class="info-box-text">Client Name</span>
-                        <span class="info-box-number">01/01/2001</span>
-                        <span class="info-box-text">Two Days Time</span>
+                        <span class="info-box-text">{{booking.customer_name}}</span>
+                        <span class="info-box-number">{{booking.staff_name}}</span>
+                        <span class="info-box-text"> {{booking.time}}, {{booking.date}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-red">
-                        <i class="fa fa-google-plus"></i>
-                    </span>
-        
-                    <div class="info-box-content">
-                        <span class="info-box-text">Client Name</span>
-                        <span class="info-box-number">01/01/2001</span>
-                        <span class="info-box-text">Two Days Time</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
+            <div *ngIf="noBookings" class="text-center">
+                <hr>
+                <h3 style="color: seagreen"><i class="fa fa-thumbs-up"></i> There are no upcoming bookings</h3>
+                <hr>
             </div>
-            <!-- /.col -->
-        
-            <!-- fix for small devices only -->
-            <div class="clearfix visible-sm-block"></div>
-        
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-green">
-                        <i class="ion ion-ios-cart-outline"></i>
-                    </span>
-        
-                    <div class="info-box-content">
-                        <span class="info-box-text">Client Name</span>
-                        <span class="info-box-number">01/01/2001</span>
-                        <span class="info-box-text">Two Days Time</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-yellow">
-                        <i class="ion ion-ios-people-outline"></i>
-                    </span>
-        
-                    <div class="info-box-content">
-                        <span class="info-box-text">Client Name</span>
-                        <span class="info-box-number">01/01/2001</span>
-                        <span class="info-box-text">Two Days Time</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
+            
         </div>
 
         <h2 class="page-header">Pending Merch Orders</h2>
-        
+
         <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12">
+            
+            <div *ngFor="let order of orders" class="col-md-3 col-sm-6 col-xs-12" style="cursor:pointer" data-toggle="modal" data-target="#modal-default" (click)="orderModal(order)">
                 <div class="info-box">
                     <span class="info-box-icon bg-aqua">
                         <i class="ion ion-ios-gear-outline"></i>
                     </span>
         
                     <div class="info-box-content">
-                        <span class="info-box-text">Client Name</span>
-                        <span class="info-box-number">01/01/2001</span>
-                        <span class="info-box-text">Two Days Time</span>
+                        <span class="info-box-text">{{order.client_name}}</span>
+                        <span class="info-box-number">{{order.item_ordered}}</span>
+                        <span class="info-box-text">{{order.date_due}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-red">
-                        <i class="fa fa-google-plus"></i>
-                    </span>
-        
-                    <div class="info-box-content">
-                        <span class="info-box-text">Client Name</span>
-                        <span class="info-box-number">01/01/2001</span>
-                        <span class="info-box-text">Two Days Time</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
+            <div *ngIf="noOrders" class="text-center">
+                <hr>
+                <h3 style="color: seagreen"> <i class="fa fa-thumbs-up"></i> There are no pending merch orders to attend to</h3>
+                <hr>
             </div>
-            <!-- /.col -->
-        
-            <!-- fix for small devices only -->
-            <div class="clearfix visible-sm-block"></div>
-        
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-green">
-                        <i class="ion ion-ios-cart-outline"></i>
-                    </span>
-        
-                    <div class="info-box-content">
-                        <span class="info-box-text">Client Name</span>
-                        <span class="info-box-number">01/01/2001</span>
-                        <span class="info-box-text">Two Days Time</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-yellow">
-                        <i class="ion ion-ios-people-outline"></i>
-                    </span>
-        
-                    <div class="info-box-content">
-                        <span class="info-box-text">Client Name</span>
-                        <span class="info-box-number">01/01/2001</span>
-                        <span class="info-box-text">Two Days Time</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
+            
         </div>
 
         
     </section>
 </div>    
+
+
+<div class="modal modal-info fade" id="modal-info">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">ADD REVENUE</h4>
+      </div>
+      <form #newRevenue="ngForm" (ngSubmit)="postRevenue(newRevenue)">
+        <div class="modal-body">
+            <div class="box-body">
+                <div class="form-group">
+                  <label for="amount">Amount</label>
+                  <input type="number" class="form-control" name="amount" placeholder="Enter Amount" ngModel>
+                </div>
+                <div class="form-group">
+                  <label for="source">Source</label>
+                  <select name="source" class="form-control" ngModel>
+                      <option *ngFor="let source of revenuesources" class="form-control" value="{{source.source}}"> {{source.source}} </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="staff">Staff</label>
+                  <select name="staff" class="form-control" ngModel>
+                    <option *ngFor="let source of revenuesources" class="form-control" value="{{source.source}}"> {{source.source}} </option>
+                  </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">CLOSE</button>
+            <button type="submit" class="btn btn-outline">SAVE</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal modal-danger fade" id="modal-danger">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">ADD EXPENSE</h4>
+      </div>
+      <form #newExpense="ngForm" (ngSubmit)="postExpense(newExpense)">
+        <div class="modal-body">
+            <div class="box-body">
+                <div class="form-group">
+                  <label for="amount">Amount</label>
+                  <input type="number" class="form-control" name="amount" placeholder="Enter Amount" ngModel>
+                </div>
+                <div class="form-group">
+                  <label for="source">Source</label>
+                  <select name="source" class="form-control" ngModel>
+                      <option *ngFor="let source of expensesources" class="form-control" value="{{source.source}}"> {{source.source}} </option>
+                  </select>
+                </div>
+              </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">CLOSE</button>
+            <button type="submit" class="btn btn-outline">SAVE</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">{{title}}</h4>
+      </div>
+      <div class="modal-body">
+          <div *ngIf="order">
+            <h4> {{orderedItem.item_ordered}} </h4>
+            <h4> Size: {{orderedItem.item_size}} </h4>
+            <p> Customer Name: {{orderedItem.client_name}} </p>
+            <p> Date Due: {{orderedItem.date_due}} </p>
+            <p> De </p>
+          </div>
+          <div *ngIf="booking">
+
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+        <button type="button" class="btn btn-primary">UPDATE STATUS</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
