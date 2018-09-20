@@ -6,10 +6,9 @@ import { LocalStorageService } from "ngx-webstorage";
 @Injectable()
 export class ApiBaseService {
   baseUrl: any = "https://gentsoflagos.herokuapp.com/api"
-  user: any;
+  user:any = this.local.retrieve('user_info');
 
   constructor(public webServ:HttpClient, public local:LocalStorageService) { 
-    this.user = this.local.retrieve('user_info');
   }
 
 
