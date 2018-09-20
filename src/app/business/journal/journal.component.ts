@@ -10,6 +10,8 @@ import { NgProgress } from "ngx-progressbar";
 })
 export class JournalComponent implements OnInit {
   users:any;
+  newService;
+  endButton;
   staffCategories:any;
   merchCategories:any;
   revenueSources:any;

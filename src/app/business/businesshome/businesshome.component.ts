@@ -13,6 +13,9 @@ export class BusinesshomeComponent implements OnInit {
   user:any;
   orders = [];
   bookings = [];
+  title;
+  order;
+  booking;
   revenuesources:any;
   expensesources:any;
   noOrders:boolean = false;
