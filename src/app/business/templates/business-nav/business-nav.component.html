@@ -1,16 +1,17 @@
 
-
   <header style="background-color: #0e0e28; color: #ffffff;" class="main-header">
     <!-- Logo -->
-    <a routerLink="/business/home" class="logo">
+    <a class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">
-        <b style="font-family: 'Convergence', sans-serif"> Gents of Lagos </b></span>
+        <b routerLink="/business/home" style="font-family: 'Convergence', sans-serif"> Gents of Lagos </b></span>
+
       <!-- logo for regular state and mobile devices -->
+
       <span class="logo-lg">
-        <img src="assets/img/Capture.PNG" width="30px" height="30px" class="hidden-lg hidden-md hidden-sm" alt="User Image">
-        <b  style="color: #ffffff; font-family: 'Convergence', sans-serif"> Gents of Lagos  
-        <a class="sidebar-toggle hidden-lg hidden-md hidden-sm pull-right" style="border:0; color: #0e0e28; margin-top: -15px" data-toggle="push-menu">
+        <img routerLink="/business/home" src="assets/img/Capture.PNG" width="30px" height="30px" class="hidden-lg hidden-md hidden-sm" alt="User Image">
+        <b style="color: #ffffff; font-family: 'Convergence', sans-serif"> <span routerLink="/business/home"> Gents of Lagos </span>   
+        <a (click)="bito()" id="press" class="sidebar-toggle hidden-lg hidden-md hidden-sm pull-right" style="border:0; color: #0e0e28; margin-top: -15px" data-toggle="push-menu">
           <i class="fa fa-align-justify" style="color: white"></i>
         </a>
         </b>
@@ -20,13 +21,13 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top hidden-xs">
       <!-- Sidebar toggle button-->
-      <a class="sidebar-toggle " style="border:0; cursor: pointer; color: #0e0e28" data-toggle="push-menu">
+      <a  class="sidebar-toggle " style="border:0; cursor: pointer; color: #0e0e28" data-toggle="push-menu">
           <i class="fa fa-align-justify" style="color: white"></i>
       </a>
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
-  <aside style="background-color: #0e0e28; color: #ffffff;" class="main-sidebar">
+  <aside id="ashad" style="background-color: #0e0e28; color: #ffffff;" class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <!-- Sidebar user panel -->
@@ -45,13 +46,13 @@
       <ul class="sidebar-menu" data-widget="tree">
 
         <li>
-          <a style="color: #ffffff" routerLink="/business/home" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/home" routerLinkActive="active">
             <i class="fa fa-home"></i>
             <span>Home</span>
           </a>
         </li>
         <li>
-          <a style="color: #ffffff" routerLink="/business/view-bookings" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28" routerLink="/business/view-bookings" routerLinkActive="active" >
             <i class="fa fa-calendar"></i>
             <span> Bookings/Orders </span>
             <span class="pull-right-container">
@@ -60,7 +61,7 @@
           </a>
         </li>
         <li>
-          <a style="color: #ffffff" routerLink="/business/academy" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/academy" routerLinkActive="active">
             <i class="fa fa-graduation-cap"></i>
             <span> Academy Applications </span>
             <span class="pull-right-container">
@@ -69,50 +70,50 @@
           </a>
         </li>
         <li>
-          <a style="color: #ffffff" routerLink="/business/merch" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/merch" routerLinkActive="active">
             <i class="fa fa-plus-circle"></i>
             <span>Merch Management</span> 
           </a>
         </li>
         <li>
-          <a style="color: #ffffff" routerLink="/business/revenue" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/revenue" routerLinkActive="active">
             <i class="fa fa-arrow-circle-right"></i>
             <span>Revenue</span>
           </a>
         </li>
         <li>
-          <a style="color: #ffffff" routerLink="/business/expenses" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/expenses" routerLinkActive="active">
             <i class="fa fa-arrow-circle-left"></i>
             <span>Expenses</span> 
           </a>
         </li>
         <li>
-          <a style="color: #ffffff" routerLink="/business/pl-analysis" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/pl-analysis" routerLinkActive="active">
             <i class="fa fa-signal"></i>
             <span>Profit & Loss Charts</span>
           </a>
         </li>
         <li>  
-          <a style="color: #ffffff" routerLink="/business/customers" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/customers" routerLinkActive="active">
             <i class="fa fa-users"></i>
             <span>Customer List</span>
           </a>
         </li>
         <li>  
-          <a style="color: #ffffff" routerLink="/business/staff" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/staff" routerLinkActive="active">
             <i class="fa fa-user"></i>
             <span>Staff</span>
           </a>
         </li>
         <li>
-          <a style="color: #ffffff" routerLink="/business/maintenance" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/maintenance" routerLinkActive="active">
             <i class="fa fa-wrench"></i>
             <span> Site Maintenance </span>
             
           </a>
         </li>
         <li>
-          <a style="color: #ffffff" routerLink="/business" routerLinkActive="active">
+          <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business" routerLinkActive="active">
             <i class="fa fa-th"></i>
             <span>Logout</span>
           </a>
@@ -121,3 +122,5 @@
     </section>
     <!-- /.sidebar -->
   </aside>
+
+

@@ -8,8 +8,9 @@
           </div>
           <div class="col-lg-6 text-center blue">
             <br>
-            <p> Gents of Lagos can be found nestled in the heart of Surulere; With adequate parking and world class
-            grooming facilities for the modern Lagos gentleman </p>
+                       <br>
+            <p> With world class facilities for the modern Lagos gentleman, our range of services are designed to cater
+            to your grooming requirements.  </p>
             <br>
           </div>
         </div>
@@ -24,19 +25,16 @@
               </p>
               <hr>
 
-              <div class="items">
+              <div *ngFor="let service of services" class="items">
                   <h3>
-                    SERVCE LIST
-                    <br> £ Price
+                    {{service.service_name}}
+                    <br> {{service.service_price | currency:'₦'}}
                   </h3>
                   
-                  <p> Duration: 30 minutes </p>
+                  <p> Duration: {{service.duration}} minutes </p>
                   
                   <p>
-                    Our most popular service. If you are after a contemporary or classic haircut this service is for you. A 30 minute service
-                    inclusive of a thorough consultation, complimentary hair wash/condition. Providing professional styling advice using our
-                    very own premium Gents of London bespoke men’s styling range. Concluded with an optional neck shave to leave a clean, natural
-                    finish.
+                    {{service.description}}
                   </p>
 
                   <button class="btn btn-primary"> Book Now </button>

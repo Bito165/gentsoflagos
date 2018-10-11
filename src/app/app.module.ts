@@ -7,7 +7,7 @@ import { PublicModule } from './public/public.module';
 import { HomeComponent } from './public/home/home.component';
 import { ApiBaseService } from "../services/apibase/api-base.service";
 import { HttpClientModule } from "@angular/common/http";
-import { LocalStorage, LocalStorageService } from "ngx-webstorage";
+import { LocalStorage, LocalStorageService, SessionStorage, SessionStorageService } from "ngx-webstorage";
 
 
 
@@ -30,7 +30,7 @@ const appRoutes: Routes = [
   providers: [
     LocalStorageService,
     ApiBaseService,
-    
+    SessionStorageService
   ],
   bootstrap: [AppComponent],
 })

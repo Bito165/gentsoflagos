@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiBaseService } from "../../../services/apibase/api-base.service";
 
 @Component({
   selector: 'app-customers',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./customers.component.css']
 })
 export class CustomersComponent implements OnInit {
-
-  constructor() { }
+  customer:any;
+  constructor(private api:ApiBaseService) { }
 
   ngOnInit() {
+    this.api.getCustomerList().subscribe(
+      res => {
+        this.customer = res;
+      }
+    )
   }
 
 }

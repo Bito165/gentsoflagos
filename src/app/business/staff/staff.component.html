@@ -1,4 +1,6 @@
 <business-nav> </business-nav>
+<ng-progress [color]="'white'" [speed]="10" [trickleSpeed]="50" [thick]="true"></ng-progress>
+
 <div class="content-wrapper">
   <section class="content">
     <div class="nav-tabs-custom">
@@ -23,37 +25,39 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div *ngFor="let staff of staff" class="col-md-4">
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
+                            <img class="profile-user-img img-responsive img-circle" src="{{staff.staff_avatar}}" alt="User profile picture">
 
-                            <h3 class="profile-username text-center">Staff Name</h3>
+                            <h3 class="profile-username text-center">{{staff.staff_name}}</h3>
 
-                            <p class="text-muted text-center">Staff Role</p>
+                            <p class="text-muted text-center">{{staff.staff_category}}</p>
 
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
                                 <b>Date Joined</b>
-                                <a class="pull-right">1,322</a>
+                                <a class="pull-right">{{staff.createddate}}</a>
                                 </li>
                                 <li class="list-group-item">
                                 <b> Commission Due This Month </b>
-                                <a class="pull-right">543</a>
+                                <a class="pull-right"> {{staff.staff_commission}} </a>
                                 </li>
                             </ul>
+
+                            
 
                             <p class="text-center" style="color: steelblue"> View Commission Breakdown </p>
 
                             <div class="row mx-auto">
                                 <div class="col-lg-6" style="margin-top: 10px">
-                                <a href="#" class="btn btn-warning btn-block ">
+                                <a class="btn btn-warning btn-block ">
                                     <b style="color: white">Edit Details</b>
                                 </a>
                             </div>
                             <div class="col-lg-6" style="margin-top: 10px">
-                                <a href="#" class="btn btn-danger btn-block ">
-                                    <b style="color: white">Delete</b>
+                              <a (click)="deleteStaff(staff.id)" class="btn btn-danger btn-block ">
+                                <b style="color: white">Delete</b>
                                 </a>
                             </div>
                             </div>
@@ -65,13 +69,27 @@
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_2">
-                The European languages are members of the same family. Their separate existence is a myth.
-                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                new common language would be desirable: one could refuse to pay expensive translators. To
-                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                words. If several languages coalesce, the grammar of the resulting language is more simple
-                and regular than that of the individual languages.
+                <div class="row">
+                    <div *ngFor="let staff of staff" class="col-md-4">
+                      <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-responsive img-circle" src="{{staff.staff_avatar}}" alt="User profile picture">
+                                <h3> {{staff.staff_name}}'s Work Days</h3>
+                                <p *ngFor="let work_day of staff.work_days"> {{work_day}} </p>
+
+                                <div class="row mx-auto">
+                                  <div class="col-lg-12" style="margin-top: 10px">
+                                    <a (click)="fill(staff)" style="cursor: pointer;" data-toggle="modal" data-target="#modal-schedule" class="btn btn-warning btn-block ">
+                                      <b style="color: white">Update</b>
+                                    </a>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
               </div>
             </div>
             <!-- /.tab-content -->
@@ -85,20 +103,91 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button id="addCls" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Info Modal</h4>
+        <h4 class="modal-title">ADD NEW STAFF</h4>
       </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-outline">Save changes</button>
-      </div>
+      <form #newStaff="ngForm" (ngSubmit)="postStaff(newStaff)">
+        <div class="modal-body">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="amount">Staff Name</label>
+              <input type="text" class="form-control" name="staff_name" placeholder="Enter Staff Name" ngModel>
+            </div>
+            <div class="form-group">
+              <label for="source">Category</label>
+              <select name="staff_category" class="form-control" ngModel>
+                <option value=""> Select Category </option>
+                <option *ngFor="let category of staffcategories" class="form-control" value="{{category.category_name}}">
+                  {{category.category_name}} </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="amount">Staff Bio</label>
+              <textarea class="form-control" name="staff_bio" placeholder="Enter Staff Bio" ngModel></textarea>
+            </div>
+            <div class="form-group">
+              <label for="amount">Avatar</label>
+              <input type="file" class="form-control" name="staff_avatar" placeholder="Select Staff Avatar" ngModel>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">CLOSE</button>
+          <button type="submit" class="btn btn-outline">SAVE</button>
+        </div>
+      </form>
     </div>
     <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal modal-warning fade" id="modal-schedule">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button id="newCls" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">UPDATE SCHEDULE</h4>
+      </div>
+      <form #schedule="ngForm" (ngSubmit)="postSchedule(schedule)">
+        <div class="modal-body">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="amount">Staff Name</label>
+              <input disabled name="staff_name" type="text" class="form-control" [(ngModel)]="currentBarber">
+            </div>
+            <div style="display:none" class="form-group">
+              <label for="amount">Staff ID</label>
+              <input name="id" type="text" class="form-control" placeholder="Enter Staff Name" [(ngModel)]="barberID">
+            </div>
+            <div class="form-group">
+              <label for="source">Category</label>
+              <input disabled name="staff_category" type="text" class="form-control" placeholder="Enter Staff Name" [(ngModel)]="currentCat">
+            </div>
+            <div class="form-group">
+              <label>Select Work Days</label>
+              <select id="getter" name="days" data class="form-control select2" multiple="multiple" data-placeholder="Select Working Days"
+                style="width: 100%;">
+                <option (click)="boom" value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">CLOSE</button>
+          <button type="submit" class="btn btn-outline">UPDATE</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
 </div>

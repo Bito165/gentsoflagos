@@ -1,4 +1,7 @@
 <business-nav> </business-nav>
+<ng-progress [color]="'white'" [speed]="10" [trickleSpeed]="50" [thick]="true"></ng-progress>
+
+
 <div class="content-wrapper">
   <section class="wrapper">
     <br>
@@ -39,75 +42,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="cursor:pointer" data-toggle="modal" data-target="#modal-default">
-                    <td>
-                      <a href="pages/examples/invoice.html">OR9842</a>
+                  <tr *ngFor="let merch of merch" style="cursor:pointer">
+                    <td data-toggle="modal" data-target="#modal-default">
+                      <a>{{merch.item_name}}</a>
                     </td>
-                    <td>Call of Duty IV</td>
+                    <td>{{merch.item_price}}</td>
                     <td>
-                      <span class="label label-success">Shipped</span>
+                      {{merch.item_category}}
                     </td>
-
-                  </tr>
-                  <tr>
                     <td>
-                      <a href="pages/examples/invoice.html">OR1848</a>
+                      <span class="label label-success">{{merch.quantity_sold}}</span>
                     </td>
-                    <td>Samsung Smart TV</td>
                     <td>
-                      <span class="label label-warning">Pending</span>
+                      <span class="label label-warning">{{merch.quantity_left}}</span>
                     </td>
-
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="pages/examples/invoice.html">OR7429</a>
-                    </td>
-                    <td>iPhone 6 Plus</td>
-                    <td>
-                      <span class="label label-danger">Delivered</span>
-                    </td>
-
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="pages/examples/invoice.html">OR7429</a>
-                    </td>
-                    <td>Samsung Smart TV</td>
-                    <td>
-                      <span class="label label-info">Processing</span>
-                    </td>
-
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="pages/examples/invoice.html">OR1848</a>
-                    </td>
-                    <td>Samsung Smart TV</td>
-                    <td>
-                      <span class="label label-warning">Pending</span>
-                    </td>
-
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="pages/examples/invoice.html">OR7429</a>
-                    </td>
-                    <td>Samsung Smart TV</td>
-                    <td>
-                      <span class="label label-info">Processing</span>
-                    </td>
-
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="pages/examples/invoice.html">OR1848</a>
-                    </td>
-                    <td>Samsung Smart TV</td>
-                    <td>
-                      <span class="label label-warning">Pending</span>
-                    </td>
-
+                    <td> <button (click)="postDeleteMerch(merch.id)" class="btn btn-danger"> Delete </button> </td>
                   </tr>
                 </tbody>
               </table>
@@ -128,18 +77,41 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button id="addCls" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Info Modal</h4>
+        <h4 class="modal-title">ADD MERCH ITEM</h4>
       </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-outline">Save changes</button>
-      </div>
+        <form #newMerchItem="ngForm" (ngSubmit)="postMerch(newMerchItem)">
+          <div class="modal-body">
+            <div class="box-body">
+              <div class="form-group">
+                <label for="amount">Name</label>
+                <input type="text" class="form-control" name="item_name" placeholder="Enter Item Name" ngModel>
+              </div>
+              <div class="form-group">
+                <label for="source">Category</label>
+                <select name="item_category" class="form-control" ngModel>
+                  <option value=""> Select Category </option>
+                  <option *ngFor="let category of merchcategories" class="form-control" value="{{category.category_name}}">
+                    {{category.category_name}} </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="amount">Price</label>
+                <input type="number" class="form-control" name="item_price" placeholder="Enter Item Price" ngModel>
+              </div>
+              <div class="form-group">
+                <label for="amount">Quantity</label>
+                <input type="number" class="form-control" name="item_quantity" placeholder="Enter Item Quantity" ngModel>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">CLOSE</button>
+            <button type="submit" class="btn btn-outline">SAVE</button>
+          </div>
+        </form>
     </div>
     <!-- /.modal-content -->
   </div>

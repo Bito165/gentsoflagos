@@ -26,13 +26,15 @@ export class JournalComponent implements OnInit {
   newExpenseSource:boolean = false;
   newSource:boolean = false;
   rspMsg="";
-  @ViewChild('closer', {read: ElementRef}) closer:ElementRef;
+  click:any;
 
   constructor(private webServ:ApiBaseService, private progress:NgProgress) { }
 
   ngOnInit() {
 
     this.getStuff();
+    this.click =  document.getElementById('close');
+    console.log(this.click);
 
   }
 
@@ -64,7 +66,7 @@ export class JournalComponent implements OnInit {
           this.getStuff();
           this.rspMsg = res['message'];
           setTimeout(() => {
-            this.closer.nativeElement.click();
+            this.click.click();
           }, 2000);
         }else{
           this.rspMsg = "Operation Failed"
@@ -99,7 +101,7 @@ export class JournalComponent implements OnInit {
           this.getStuff();
           this.rspMsg = res['message']; 
           setTimeout(() => {
-            this.closer.nativeElement.click();
+            this.click.click()
           }, 2000);
         } else {
           this.rspMsg = "Operation Failed"
@@ -119,7 +121,7 @@ export class JournalComponent implements OnInit {
           this.getStuff();
           this.rspMsg = res['message'];
           setTimeout(() => {
-            this.closer.nativeElement.click();
+            this.click.click()
           }, 2000);
         } else {
           this.rspMsg = "Operation Failed"
@@ -128,32 +130,33 @@ export class JournalComponent implements OnInit {
     )
   }
 
-  deleteStaffCat(user_id: any) {
+  deleteStaffCat(id: any) {
     this.progress.start();
-    // this.webServ.postDeleteUser(user_id).subscribe(
-    //   res => {
-    //     this.progress.done();
-    //     if (res['message'] == 'Success') {
-    //       this.getStuff();
-    //     } else {
-    //       console.log(res);
-    //     }
-    //   }
-    // )
+    this.webServ.postDeleteStaffCat(id).subscribe(
+      res => {
+        this.progress.done();
+        if (res['message'] == 'Success') {
+          this.getStuff();
+        } else {
+          console.log(res);
+        }
+      }
+    )
   }
 
-  deleteMerchCat(user_id: any) {
+  deleteMerchCat(id: any) {
     this.progress.start();
-    // this.webServ.postDeleteUser(user_id).subscribe(
-    //   res => {
-    //     this.progress.done();
-    //     if (res['message'] == 'Success') {
-    //       this.getStuff();
-    //     } else {
-    //       console.log(res);
-    //     }
-    //   }
-    // )
+    this.webServ.postDeleteMerchCat(id).subscribe(
+      res => {
+        this.progress.done();
+        if (res['message'] == 'Success') {
+          console.log(res);
+          this.getStuff();
+        } else {
+          console.log(res);
+        }
+      }
+    )
   }
 
   // Source Maintanance Functions
@@ -168,7 +171,7 @@ export class JournalComponent implements OnInit {
           this.getStuff();
           this.rspMsg = res['message'];
           setTimeout(() => {
-            this.closer.nativeElement.click();
+            this.click.click()
           }, 2000);
         } else {
           this.rspMsg = "Operation Failed"
@@ -188,7 +191,7 @@ export class JournalComponent implements OnInit {
           this.getStuff();
           this.rspMsg = res['message'];
           setTimeout(() => {
-            this.closer.nativeElement.click();
+            this.click.click()
           }, 2000);
         } else {
           this.rspMsg = "Operation Failed"
@@ -197,31 +200,130 @@ export class JournalComponent implements OnInit {
     )
   }
 
-  deleteRevSource(user_id: any) {
+  deleteRevSource(id: any) {
     this.progress.start();
-    // this.webServ.postDeleteUser(user_id).subscribe(
-    //   res => {
-    //     this.progress.done();
-    //     if (res['message'] == 'Success') {
-    //       this.getStuff();
-    //     } else {
-    //       console.log(res);
-    //     }
-    //   }
-    // )
+    this.webServ.postDeleteRevSource(id).subscribe(
+      res => {
+        this.progress.done();
+        if (res['message'] == 'Success') {
+          this.getStuff();
+        } else {
+          console.log(res);
+        }
+      }
+    )
   }
 
-  deleteExpSource(user_id: any) {
+  deleteExpSource(id: any) {
     this.progress.start();
-    // this.webServ.postDeleteUser(user_id).subscribe(
-    //   res => {
-    //     this.progress.done();
-    //     if (res['message'] == 'Success') {
-    //       this.getStuff();
-    //     } else {
-    //       console.log(res);
-    //     }
-    //   }
-    // )
+    this.webServ.postDeleteExpSource(id).subscribe(
+      res => {
+        this.progress.done();
+        if (res['message'] == 'Success') {
+          this.getStuff();
+        } else {
+          console.log(res);
+        }
+      }
+    )
   }
+
+  //Service Maintenance Functions
+  postNewService(form: NgForm) {
+      this.progress.start();
+      console.log(form.value);
+      this.webServ.postNewService(form.value.service_name, form.value.service_price, form.value.duration, form.value.description).subscribe(
+        res => {
+          console.log(res);
+          if (res['message'] == 'Success') {
+            this.progress.done();
+            this.getStuff();
+            this.rspMsg = res['message'];
+            setTimeout(() => {
+              this.click.click()
+            }, 2000);
+          } else {
+            this.rspMsg = "Operation Failed"
+          }
+        }
+      )
+  }
+
+  deleteService(id: any) {
+    this.progress.start();
+    this.webServ.postDeleteService(id).subscribe(
+      res => {
+        this.progress.done();
+        if (res['message'] == 'Success') {
+          this.getStuff();
+        } else {
+          console.log(res);
+        }
+      }
+    )
+  }
+
+  popModal(scenario:string){
+    console.log(scenario);
+    switch (scenario) {
+      case 'newuser':
+          this.newUser = true;
+          this.newStaffCategory = false;
+          this.newExpenseSource = false;
+          this.newMerchCategory = false;
+          this.newRevenueSource = false;
+          this.newService = false;
+          this.endButton = "ADD USER";
+        break;
+      case 'staffcat':
+          this.newUser = false;
+          this.newStaffCategory = true;
+          this.newExpenseSource = false;
+          this.newMerchCategory = false;
+          this.newRevenueSource = false;
+          this.newService = false;
+          this.endButton = "ADD CATEGORY";
+        break;
+      case 'merchcat':
+          this.newUser = false;
+          this.newStaffCategory = false;
+          this.newExpenseSource = false;
+          this.newMerchCategory = true;
+          this.newRevenueSource = false;
+          this.newService = false;
+          this.endButton = "ADD CATEGORY";
+        break;
+      case 'revsource':
+          this.newUser = false;
+          this.newStaffCategory = false;
+          this.newExpenseSource = false;
+          this.newMerchCategory = false;
+          this.newRevenueSource = true;
+          this.newService = false;
+          this.endButton = "ADD SOURCE";
+        break;
+      case 'expsource':
+          this.newUser = false;
+          this.newStaffCategory = false;
+          this.newExpenseSource = true;
+          this.newMerchCategory = false;
+          this.newRevenueSource = false;
+          this.newService = false;
+          this.endButton = "ADD SOURCE";
+        break;
+      case 'newservice':
+          this.newUser = false;
+          this.newStaffCategory = false;
+          this.newExpenseSource = false;
+          this.newMerchCategory = false;
+          this.newRevenueSource = false;
+          this.newService = true;
+          this.endButton = "ADD SERVICE";
+        break;
+    
+      default:
+        break;
+    }
+  }
+
 }
