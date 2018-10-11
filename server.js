@@ -18,7 +18,6 @@ var connection = sql.createConnection({
   multipleStatements: true
 });
 
-
 connection.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");

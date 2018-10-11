@@ -3,14 +3,15 @@ const router = express.Router();
 var sql = require('mysql');
 
 var connection = sql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '',
+  host: 'b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+  user: 's4i091wurpcyf4ob',
+  password: 'd8466sslfhbyo5r3',
+  port: '3306',
   multipleStatements: true
 });
 
 
-connection.query('USE gentsoflagos');
+connection.query('USE h9fm1o7pm244m15o');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
