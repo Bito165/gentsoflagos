@@ -8,7 +8,7 @@ var connection = sql.createConnection({
   password: 'd8466sslfhbyo5r3',
   port: '3306',
   multipleStatements: true
-});
+}); 
 
 
 connection.query('USE h9fm1o7pm244m15o');

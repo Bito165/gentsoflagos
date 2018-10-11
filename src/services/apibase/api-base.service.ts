@@ -40,8 +40,8 @@ export class ApiBaseService {
 
   postNewUser(username:any, full_name:any, title:any, password:any, usertype:any){
     var time = new Date();
+    this.user = this.local.retrieve('user_info');
     var body = {'username': username, 'full_name': full_name, 'title': title, 'password':password, 'usertype': usertype, 'createdby': this.user.username, 'createddate': time}
-    
     return this.webServ.post(this.baseUrl + '/' + 'user/create-new', body)
       .map(res => res);
   }
