@@ -7,13 +7,13 @@ import { ApiBaseService } from "../../../services/apibase/api-base.service";
   styleUrls: ['./customers.component.css']
 })
 export class CustomersComponent implements OnInit {
-  customer:any;
+  customers:any;
   constructor(private api:ApiBaseService) { }
 
   ngOnInit() {
     this.api.getCustomerList().subscribe(
       res => {
-        this.customer = res;
+        this.customers = res;
       }
     )
   }
