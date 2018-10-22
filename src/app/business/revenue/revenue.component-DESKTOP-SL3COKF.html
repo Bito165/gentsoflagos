@@ -1,6 +1,6 @@
 <business-nav> </business-nav>
 <div class="content-wrapper">
-    <section class="content">
+    <section *ngIf="first" class="content">
         <h2 class="page-header">Revenue Breakdown</h2>
         
         <div class="row">
@@ -13,8 +13,8 @@
                     <div class="info-box-content">
                         <span class="info-box-text">Today</span>
                         <span class="info-box-number">2,000</span>
-                        <span class="info-box-text">
-                            <a href="#" class="small-box-footer">More info
+                        <span (click)="drillDown('today')" class="info-box-text">
+                            <a  class="small-box-footer">More info
                                 <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </span>
@@ -33,8 +33,8 @@
                     <div class="info-box-content">
                         <span class="info-box-text">This Week</span>
                         <span class="info-box-number">20,000</span>
-                        <span class="info-box-text">
-                            <a href="#" class="small-box-footer">More info
+                        <span (click)="drillDown('week')" class="info-box-text">
+                            <a  class="small-box-footer">More info
                                 <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </span>
@@ -57,8 +57,8 @@
                     <div class="info-box-content">
                         <span class="info-box-text">This Month</span>
                         <span class="info-box-number">200,000</span>
-                        <span class="info-box-text">
-                            <a href="#" class="small-box-footer">More info
+                        <span (click)="drillDown('month')" class="info-box-text">
+                            <a  class="small-box-footer">More info
                                 <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </span>
@@ -77,8 +77,8 @@
                     <div class="info-box-content">
                         <span class="info-box-text">This Year</span>
                         <span class="info-box-number">2,000,000</span>
-                        <span class="info-box-text">
-                            <a href="#" class="small-box-footer">More info
+                        <span (click)="drillDown('year')" class="info-box-text">
+                            <a  class="small-box-footer">More info
                                 <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </span>
@@ -139,4 +139,17 @@
             </div>
         </div>
     </section>
+
+    <section *ngIf="!first" class="content">
+        
+        <h2 class="page-header">
+            Revenue Breakdown({{timeFrame}})  
+            <span class="pull-right"> <button (click)="home()" class="btn btn-danger"> Back </button> </span>
+        </h2>
+        
+        <div class="row">
+        </div>
+
+    </section>
+    
 </div>

@@ -114,55 +114,27 @@
             </div>
 
             <div class="col-lg-12">
-                <div class="container">
+                <div *ngIf="merch.length > 0" class="container">
                     <div class="text-center">
                         <h2>
                             Gents of Lagos Merch
                         </h2>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div *ngFor="let merch of merch | slice:0:7" class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <a href="" class="thumbnail">
-                            <img src="assets/img/merch.jpg" alt="merch">
+                            <img src="assets/img/merch-main.jpg" alt="merch">
                             <div class="caption text-center">
-                                <h3> Gents of Lagos Snapback </h3>
-                                <p> Price Goes Here </p>
-                                <button class="btn btn-success"> Order Now </button>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <a href="" class="thumbnail">
-                            <img src="assets/img/merch.jpg" alt="merch">
-                            <div class="caption text-center">
-                                <h3> Gents of Lagos Snapback </h3>
-                                <p> Price Goes Here </p>
-                                <button class="btn btn-success"> Order Now </button>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="hidden-lg col-md-6 col-sm-6 col-xs-12">
-                        <a href="" class="thumbnail">
-                            <img src="assets/img/merch.jpg" alt="merch">
-                            <div class="caption text-center">
-                                <h3> Gents of Lagos Snapback </h3>
-                                <p> Price Goes Here </p>
-                                <button class="btn btn-success"> Order Now </button>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <a href="" class="thumbnail">
-                            <img src="assets/img/merch.jpg" alt="merch">
-                            <div class="caption text-center">
-                                <h3> Gents of Lagos Snapback </h3>
-                                <p> Price Goes Here </p>
+                                <h3> {{merch.item_name}} </h3>
+                                <p> {{merch.item_price | currency:'₦'}} </p>
                                 <button class="btn btn-success"> Order Now </button>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
+
+
 
             <div class="col-lg-12 text-center back">
                 

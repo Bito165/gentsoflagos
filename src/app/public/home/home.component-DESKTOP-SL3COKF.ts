@@ -7,13 +7,14 @@ import { ApiBaseService } from "../../../services/apibase/api-base.service";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  merch:any
   constructor(public webServ:ApiBaseService) { }
 
   ngOnInit() {
-    this.webServ.testapi().subscribe(
+    this.webServ.getPublicMerch().subscribe(
       res => {
         console.log(res);
+        this.merch = res;
       }
     )
   }

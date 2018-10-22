@@ -11,6 +11,7 @@ import { BookingsComponent } from './bookings/bookings.component';
 import { TemplatesModule } from "./templates/templates.modules";
 import { TermsComponent } from './terms/terms.component';
 import { RefundsComponent } from './refunds/refunds.component';
+import { FormsModule } from "@angular/forms";
 
 const PublicRoutes: Routes = [
             { path: '', component: HomeComponent },
@@ -39,9 +40,11 @@ const PublicRoutes: Routes = [
     imports: [
         BrowserModule,
         TemplatesModule,
+        FormsModule,
         RouterModule.forChild(PublicRoutes),
     ],
     exports: [RouterModule],
     providers: [],
 })
 export class PublicModule { }
+

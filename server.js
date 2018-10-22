@@ -11,10 +11,9 @@ const api = require('./server/routes/api');
 const app = express();
 
 var connection = sql.createConnection({
-  host: 'b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
-  user: 's4i091wurpcyf4ob',
-  password: 'd8466sslfhbyo5r3',
-  port: '3306',
+  host     : '127.0.0.1',
+  user     : 'root',
+  password : '',
   multipleStatements: true
 });
 
@@ -23,32 +22,22 @@ connection.connect(function (err) {
   console.log("Connected!");
 });
 
-connection.query('DROP DATABASE h9fm1o7pm244m15o');
+connection.query('USE gentsoflagos');
 
 setInterval(() => {
   connection.query('SELECT 1');
 }, 1000);
 
 
-connection.query('CREATE DATABASE h9fm1o7pm244m15o');
-
-
-connection.query('USE h9fm1o7pm244m15o');
-
-
 connection.query('CREATE TABLE IF NOT EXISTS Services (id INT AUTO_INCREMENT PRIMARY KEY, service_name VARCHAR(255), service_price VARCHAR(255), duration VARCHAR(255), description VARCHAR(255), times_booked VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Services (id INT AUTO_INCREMENT PRIMARY KEY, service_name VARCHAR(255), service_price VARCHAR(255), duration VARCHAR(255), description VARCHAR(255), times_booked VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Staff (id INT AUTO_INCREMENT PRIMARY KEY, staff_name VARCHAR(255), staff_avatar VARCHAR(255), staff_bio VARCHAR(255), staff_category VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Staff (id INT AUTO_INCREMENT PRIMARY KEY, staff_name VARCHAR(255), staff_avatar VARCHAR(255), staff_bio VARCHAR(255), staff_category VARCHAR(255), work_days VARCHAR(255),createdby VARCHAR(255), createddate datetime)', function (err, result) {
-  if (err) throw err;
-});
-
-connection.query('CREATE TABLE IF NOT EXISTS Merch (id INT AUTO_INCREMENT PRIMARY KEY, item_name VARCHAR(255), item_avatar VARCHAR(255), item_avatar2 VARCHAR(255), item_avatar3 VARCHAR(255), item_price VARCHAR(255), item_category VARCHAR(255), item_quantity VARCHAR(255), quantity_sold VARCHAR(255),createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Merch (id INT AUTO_INCREMENT PRIMARY KEY, item_name VARCHAR(255), item_avatar VARCHAR(255), item_avatar2 VARCHAR(255), item_avatar3 VARCHAR(255), item_price VARCHAR(255), item_category VARCHAR(255), item_quantity VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 });
 
@@ -56,7 +45,7 @@ connection.query('CREATE TABLE IF NOT EXISTS Orders (id INT AUTO_INCREMENT PRIMA
   if (err) throw err;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Academy (id INT AUTO_INCREMENT PRIMARY KEY, applicant_name VARCHAR(255), applicant_gist VARCHAR(255), applicant_contact VARCHAR(255), status boolean,createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Academy (id INT AUTO_INCREMENT PRIMARY KEY, applicant_name VARCHAR(255), applicant_dob datetime, applicant_gist VARCHAR(255), applicant_contact VARCHAR(255), status boolean,createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 });
 
@@ -65,23 +54,27 @@ connection.query('CREATE TABLE IF NOT EXISTS Bookings (id INT AUTO_INCREMENT PRI
 
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Customers (id INT AUTO_INCREMENT PRIMARY KEY, customer_name VARCHAR(255), customer_phone_number VARCHAR(255), customer_email VARCHAR(255), source VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Customers (id INT AUTO_INCREMENT PRIMARY KEY, customer_name VARCHAR(255), customer_phone_number VARCHAR(255), source VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 ;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Revenue (id INT AUTO_INCREMENT PRIMARY KEY, amount VARCHAR(255), source VARCHAR(255), staff VARCHAR(255), week_day VARCHAR(255), month VARCHAR(255), year VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Revenue (id INT AUTO_INCREMENT PRIMARY KEY, amount VARCHAR(255), source VARCHAR(255), staff VARCHAR(255), week_day VARCHAR(255), date datetime, month VARCHAR(255), year VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Expenses (id INT AUTO_INCREMENT PRIMARY KEY, amount VARCHAR(255), source VARCHAR(255), week_day VARCHAR(255), month VARCHAR(255), year VARCHAR(255), createdby VARCHAR(255) ,createddate datetime)', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Expenses (id INT AUTO_INCREMENT PRIMARY KEY, amount VARCHAR(255), source VARCHAR(255), week_day VARCHAR(255), date datetime, month VARCHAR(255), year VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 });
 
 connection.query('CREATE TABLE IF NOT EXISTS Users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255), full_name VARCHAR(255), title VARCHAR(255), password VARCHAR(255), last_login datetime, user_type VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
 
+});
+
+connection.query('CREATE TABLE IF NOT EXISTS BarberSchedule (id INT AUTO_INCREMENT PRIMARY KEY, barber_name VARCHAR(255), week_day VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
+  if (err) throw err;
 });
 
 connection.query('CREATE TABLE IF NOT EXISTS CarouselImages (id INT AUTO_INCREMENT PRIMARY KEY, image VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
@@ -105,13 +98,8 @@ connection.query('CREATE TABLE IF NOT EXISTS RevenueSources (id INT AUTO_INCREME
 
 connection.query('CREATE TABLE IF NOT EXISTS ExpenseSources (id INT AUTO_INCREMENT PRIMARY KEY, source VARCHAR(255), createdby VARCHAR(255), createddate datetime)', function (err, result) {
   if (err) throw err;
+
 });
-
-
-connection.query("INSERT INTO users (username, full_name, title, password, user_type, createdby) values ('bito', 'Fareed Babalola', 'CTO', 'allfor', 'Admin', 'bito')", function (err, result) {
-  if (err) throw err;
-});
-
 
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -123,7 +111,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(function (req, res, next) {
 
   // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8088');
 
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');

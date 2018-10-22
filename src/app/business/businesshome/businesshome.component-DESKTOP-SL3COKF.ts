@@ -3,7 +3,10 @@ import { ApiBaseService } from "../../../services/apibase/api-base.service";
 import * as moment from 'moment'
 import { LocalStorage, LocalStorageService } from "ngx-webstorage";
 import { NgForm } from '../../../../node_modules/@angular/forms';
+<<<<<<< HEAD
+=======
 import { NgProgress } from "ngx-progressbar";
+>>>>>>> 516e31254903eab2f3b4f8660943598d91683a2d
 
 @Component({
   selector: 'app-businesshome',
@@ -14,15 +17,22 @@ export class BusinesshomeComponent implements OnInit {
   user:any;
   orders = [];
   bookings = [];
+<<<<<<< HEAD
+=======
   title;
   order;
   booking;
+>>>>>>> 516e31254903eab2f3b4f8660943598d91683a2d
   revenuesources:any;
   expensesources:any;
   noOrders:boolean = false;
   noBookings: boolean = false;
+<<<<<<< HEAD
+  constructor(private api:ApiBaseService, private local:LocalStorageService) { }
+=======
   click:any;
   constructor(private api:ApiBaseService, private local:LocalStorageService, private progress:NgProgress) { }
+>>>>>>> 516e31254903eab2f3b4f8660943598d91683a2d
 
   ngOnInit() {
     this.user = this.local.retrieve('user_info');
@@ -36,6 +46,8 @@ export class BusinesshomeComponent implements OnInit {
         this.bookings = res[1];
         this.revenuesources = res[2];
         this.expensesources = res[3];
+<<<<<<< HEAD
+=======
         console.log(this.revenuesources, this.expensesources);
         console.log(this.bookings.length, this.orders);
         if(this.orders.length == 0){
@@ -86,6 +98,7 @@ export class BusinesshomeComponent implements OnInit {
         } else {
           this.progress.done();
         }
+>>>>>>> 516e31254903eab2f3b4f8660943598d91683a2d
       }
     )
 
@@ -99,6 +112,13 @@ export class BusinesshomeComponent implements OnInit {
 
   }
 
-  
+  postRevenue(form:NgForm){
+    console.log(form.value)
+    
+  }
+
+  postExpense(form: NgForm) {
+    console.log(form.value)
+  }
 
 }

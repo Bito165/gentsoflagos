@@ -3,15 +3,15 @@ const router = express.Router();
 var sql = require('mysql');
 
 var connection = sql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '',
+  host: 'b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+  user: 's4i091wurpcyf4ob',
+  password: 'd8466sslfhbyo5r3',
+  port: '3306',
   multipleStatements: true
-});
+}); 
 
 
-connection.query('USE gentsoflagos');
-
+connection.query('USE h9fm1o7pm244m15o');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
     var bito = {'api': 'izz working'}
     res.send(bito);
 });
+
 
 router.get('/dashboard', (req,res)=>{    
     var query = "Select * from orders where status < 2; Select * from bookings order by date; Select * from revenuesources; Select * from expensesources; Select * from staff";
@@ -33,7 +34,7 @@ router.get('/dashboard', (req,res)=>{
 })
 
 router.get('/pre-booking', (req, res) => {
-  var query = "Select * from services; Select * from staff; Select * from barberschedule";
+  var query = "Select * from services; Select * from staff where staff_category = 'Barbers'";
   connection.query(query, function (err, result) {
     if (err) {
       console.log(err);
@@ -45,7 +46,6 @@ router.get('/pre-booking', (req, res) => {
 })
 
 router.get('/revenue/history', (req,res) => {
-
     var query = "SELECT * from revenue";
     connection.query(query, function (err, result){
         if(err){
@@ -57,8 +57,19 @@ router.get('/revenue/history', (req,res) => {
 
 });
 
-router.get('/expenses/history', (req, res) => {
+router.get('/services', (req,res) => {
+    var query = "SELECT * from services";
+    connection.query(query, function (err, result){
+        if(err){
+            res.send(err);
+        }else{
+            res.send(result);
+        }
+    })
 
+});
+
+router.get('/expenses/history', (req, res) => {
     var query = "SELECT * from expenses";
     connection.query(query, function (err, result) {
         if (err) {
@@ -93,8 +104,19 @@ router.get('/profit-loss/history', (req, res) => {
 });
 
 router.get('/staff-list', (req, res) => {
-   var query = "SELECT * from staff; SELECT * from revenue where source =?";
-   connection.query(query, [req.body.source] ,function(err, result) {
+   var query = "SELECT * from staff;";
+   connection.query(query,function(err, result) {
+       if(err){
+           res.send(err);
+       }else{
+           res.send(result);
+       }
+   })
+})
+
+router.get('/staff/revenue/:id', (req, res) => {
+   var query = "SELECT * from revenue where staff =?;";
+   connection.query(query, [req.params.id] ,function(err, result) {
        if(err){
            res.send(err);
        }else{
@@ -114,8 +136,18 @@ router.get('/maintenance', (req, res) => {
   })
 })
 
-router.get('/academy/applications', (req, res) => {
+router.get('/merch', (req, res) => {
+  var query = "SELECT * from merchcategories; SELECT * from merch where item_quantity > 0";
+  connection.query(query, function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
 
+router.get('/academy/applications', (req, res) => {
     var query = "SELECT * from academy where status = 0";
     connection.query(query, function (err, result) {
         if (err) {
@@ -150,8 +182,41 @@ router.get('/carousel/images', (req, res) => {
   })
 })
 
-router.get('/merch/all', (req, res) => {
+router.get('/public/merch/all', (req, res) => {
   var query = "SELECT * from merch where item_quantity > 0";
+  connection.query(query, function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
+
+router.get('/business/merch/all', (req, res) => {
+  var query = "SELECT * from merch";
+  connection.query(query, function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
+
+router.get('/business/merch/categories', (req, res) => {
+  var query = "SELECT * from merchcategories";
+  connection.query(query, function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
+
+router.get('/business/staff/categories', (req, res) => {
+  var query = "SELECT * from staffcategories";
   connection.query(query, function (err, result) {
     if (err) {
       res.send(err);
@@ -195,7 +260,7 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/revenue/new', (req, res) => {
-  var query = "INSERT INTO revenue (amount, source, staff , week_day, date, month, year, createdby, createddate) values ('" + req.body.amount + "', '" + req.body.source + "',  '" + req.body.staff + "', '" + req.body.week_day + "', '" + req.body.date + "', '" + req.body.month + "', '" + req.body.year + "', '" + req.body.createdby + "')";
+  var query = "INSERT INTO revenue (amount, source, staff , week_day, month, year, createdby) values ('" + req.body.amount + "', '" + req.body.source + "',  '" + req.body.staff + "', '" + req.body.week_day + "', '" + req.body.month + "', '" + req.body.year + "', '" + req.body.createdby + "')";
 
   connection.query(query, function (err, result) {
     if (err) {
@@ -209,9 +274,22 @@ router.post('/revenue/new', (req, res) => {
   })
 });
 
-router.post('/academy/new', (req, res) => {
-  var query = "INSERT INTO revenue (applicant_name, applicant_dob, applicant_gist, applicant_contact, createdby, createddate) values ('" + req.body.applicant_name + "', '" + req.body.applicant_dob + "',  '" + req.body.applicant_gist + "', '" + req.body.applicant_contact + "', '" + req.body.createdby + "')";
+router.post('/expenses/new', (req, res) => {
+  var query = "INSERT INTO expenses (amount, source, week_day, month, year, createdby) values ('" + req.body.amount + "', '" + req.body.source + "', '" + req.body.week_day + "', '" + req.body.month + "', '" + req.body.year + "', '" + req.body.createdby + "')";
+  connection.query(query, function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+});
 
+router.post('/academy/new', (req, res) => {
+  var query = "INSERT INTO academy (applicant_name, applicant_gist, applicant_contact, status) values ('" + req.body.applicant_name + "', '" + req.body.applicant_gist + "', '" + req.body.applicant_contact + "', '0')";
   connection.query(query, function (err, result) {
     if (err) {
       res.send(err);
@@ -238,32 +316,34 @@ router.post('/carousel/new', (req, res) => {
     })
 });
 
-router.post('/expenses/new', (req, res) => {
-  var query = "INSERT INTO expenses (amount, source, week_day, date, month, year, createdby, createddate) values ('" + req.body.amount + "', '" + req.body.source + "', '" + req.body.week_day + "', '" + req.body.date + "', '" + req.body.month + "', '" + req.body.year + "', '" + req.body.createdby + "')";
-  connection.query(query, function (err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      var message = {
-        "message": "Success"
-      };
-      res.send(message);
-    }
-  })
-});
-
 router.post('/bookings/new', (req, res) => {
-  var query = "INSERT INTO bookings (staff_name, service, price, customer_name, date, client_phone_number, createdby, createddate) values ('" + req.body.staff_name + "', '" + req.body.service + "', '" + req.body.price + "', '" + req.body.customer_name + "', '" + req.body.date + "', '" + req.body.client_phone_number + "', '" + req.body.createdby + "')";
-  connection.query(query, function (err, result) {
-    if (err) {
-      res.send(err);
-    } else {
-      var customer = "INSERT INTO customers (customer_name, customer_phone_number, source, createdby, createddate) values ('" + req.body.customer_name + "', '" + req.body.client_phone_number + "', 'bookings', '" + req.body.createdby + "')";
-      connection.query(customer);
-      var message = {
-        "message": "Success"
-      };
-      res.send(message);
+  var initial = "SELECT * from bookings where staff_name=? and date=? and time=?";
+  connection.query(initial, [req.body.staff_name, req.body.date, req.body.time], function (error, results){
+    if(error){
+      res.send(error)
+    }else{
+      if(results.length == 0){
+        var query = "INSERT INTO bookings (staff_name, service, price, customer_name, date, time ,client_phone_number) values ('" + req.body.staff_name + "', '" + req.body.service + "', '" + req.body.price + "', '" + req.body.customer_name + "', '" + req.body.date + "', '" + req.body.time + "', '" + req.body.client_phone_number + "')";
+        connection.query(query, function (err, result) {
+          if (err) {
+            res.send(err);
+          } else {
+            var message = {
+              "message": "Success"
+            };
+            var check = "SELECT * FROM customers where customer_phone_number = ?"
+            connection.query(check, [req.body.client_phone_number] ,function (err,res) {
+              if(res.length == 0){
+                var customer = "INSERT INTO customers (customer_name, customer_phone_number, source) values ('" + req.body.customer_name + "', '" + req.body.client_phone_number + "', 'Bookings')";
+                connection.query(customer);
+              }
+            })
+            res.send(message);
+          }
+        })
+      }else{
+        var message = {'message': req.body.staff_name + " has been booked for that time slot. Please Pick Another One"}
+      }
     }
   })
 });
@@ -327,7 +407,7 @@ router.post('/user/account/update', (req, res) => {
 })
 
 router.post('/staff/create-new', (req, res) => {
-    var query = "INSERT INTO staff (staff_name, staff_avatar, staff_bio, staff_category, createdby, createddate) values ('" + req.body.name + "', '" + req.body.avatar + "', '" + req.body.bio + "', '" + req.body.category + "', '" + req.body.createdby + "') ";
+    var query = "INSERT INTO staff (staff_name, staff_avatar, staff_bio, staff_category, createdby) values ('" + req.body.staff_name + "', '" + req.body.staff_avatar + "', '" + req.body.staff_bio + "', '" + req.body.staff_category + "', '" + req.body.username + "') ";
     connection.query(query, function (err, result) {
         if (err) {
             res.send(err);
@@ -338,8 +418,21 @@ router.post('/staff/create-new', (req, res) => {
     })
 })
 
+router.post('/staff/schedule', (req, res) => {
+    var query = "UPDATE staff SET work_days='" + req.body.work_days + "' where id='" + req.body.id + "'"
+    connection.query(query, function (err, result) {
+        if (err) {
+            console.log(err);
+            res.send(err);
+        } else {
+            var message = { "message": "Success" };
+            res.send(message);
+        }
+    })
+})
+
 router.post('/user/create-new', (req, res) => {
-  console.log(req.body);
+  
   req.body.createddate = new Date(req.body.createddate).getTime();
   var query = "INSERT INTO users (username, full_name, title, password, user_type, createdby) values ('" + req.body.username + "', '" + req.body.full_name + "', '" + req.body.title + "', '" + req.body.password + "', '" + req.body.usertype + "', '" + req.body.createdby + "') ";
   connection.query(query, function (err, result) {
@@ -406,9 +499,9 @@ router.post('/academy/application-status/update', (req, res) => {
     })
 })
 
-router.post('/merch/delete', (req, res) => {
-  var query = "DELETE FROM merch where id = ?";
-  connection.query(query, [req.body.id], function (err, result) {
+router.post('/merch/create-new', (req, res) => {
+  var query = "INSERT INTO merch (item_name, item_avatar, item_avatar2, item_avatar3, item_quantity, item_price, item_category, quantity_sold ,createdby) values ('" + req.body.item_name + "', '" + req.body.avatar + "', '" + req.body.avatar2 + "', '" + req.body.avatar3 + "', '" + req.body.item_quantity + "', '" + req.body.item_price + "', '" + req.body.item_category + "', '" + req.body.quantity_sold + "', '" + req.body.createdby + "') ";
+  connection.query(query, function (err, result) {
     if (err) {
       res.send(err);
     } else {
@@ -420,9 +513,9 @@ router.post('/merch/delete', (req, res) => {
   })
 })
 
-router.post('/merch/create-new', (req, res) => {
-  var query = "INSERT INTO merch (item_name, item_avatar, item_avatar2, item_avatar3, item_quantity, item_price, item_category , createdby, createddate) values ('" + req.body.name + "', '" + req.body.avatar + "', '" + req.body.avatar2 + "', '" + req.body.avatar3 + "', '" + req.body.quantity + "', '" + req.body.price + "', '" + req.body.category + "', '" + req.body.createdby + "') ";
-  connection.query(query, function (err, result) {
+router.post('/merch/delete', (req, res) => {
+  var query = "DELETE FROM merch where id = ?";
+  connection.query(query, [req.body.id], function (err, result) {
     if (err) {
       res.send(err);
     } else {
@@ -447,7 +540,7 @@ router.post('/categories/staff-new', (req, res) => {
     }else{
       var time = new Date();
       req.body.createddate = time;
-      connection.query("INSERT INTO staffcategories(category_name, createdby, createddate) values ('" + req.body.category_name + "', '" + req.body.username + "') ")
+      connection.query("INSERT INTO staffcategories(category_name, createdby) values ('" + req.body.category_name + "', '" + req.body.username + "') ")
       var message = {
         "message": "Success"
       };
@@ -455,6 +548,21 @@ router.post('/categories/staff-new', (req, res) => {
     }
   })
 })
+
+
+router.post('/categories/staff-delete', (req, res) => {
+      var query = "DELETE from staffcategories where id = ?";
+      connection.query(query, [req.body.id], function (err, result) {
+            if (err) {
+              res.send(err);
+            } else{
+              var message = {
+                "message": "Success"
+              };
+              res.send(message);
+            }
+          })
+});
 
 router.post('/categories/merch-new', (req, res) => {
   var query = "SELECT * from merchcategories where category_name = ?";
@@ -469,7 +577,7 @@ router.post('/categories/merch-new', (req, res) => {
     } else {
       var time = new Date();
       req.body.createddate = time;
-      connection.query("INSERT INTO merchcategories(category_name, createdby, createddate) values ('" + req.body.category_name + "', '" + req.body.username + "') ")
+      connection.query("INSERT INTO merchcategories(category_name, createdby) values ('" + req.body.category_name + "', '" + req.body.username + "') ")
       var message = {
         "message": "Success"
       };
@@ -477,6 +585,20 @@ router.post('/categories/merch-new', (req, res) => {
     }
   })
 })
+
+router.post('/categories/merch-delete', (req, res) => {
+  var query = "DELETE from merchcategories where id = ?";
+  connection.query(query, [req.body.id], function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+});
 
 router.post('/sources/revenue-new', (req, res) => {
   var query = "SELECT * from revenuesources where source = ?";
@@ -491,7 +613,7 @@ router.post('/sources/revenue-new', (req, res) => {
     } else {
       var time = new Date();
       req.body.createddate = time;
-      connection.query("INSERT INTO revenuesources(source, createdby, createddate) values ('" + req.body.source + "', '" + req.body.username + "') ")
+      connection.query("INSERT INTO revenuesources(source, createdby) values ('" + req.body.source + "', '" + req.body.username + "') ")
       var message = {
         "message": "Success"
       };
@@ -499,6 +621,20 @@ router.post('/sources/revenue-new', (req, res) => {
     }
   })
 })
+
+router.post('/sources/revenue-delete', (req, res) => {
+  var query = "DELETE from revenuesources where id = ?";
+  connection.query(query, [req.body.id], function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+});
 
 router.post('/sources/expenses-new', (req, res) => {
   var query = "SELECT * from expensesources where source = ?";
@@ -513,14 +649,28 @@ router.post('/sources/expenses-new', (req, res) => {
     } else {
       var time = new Date();
       req.body.createddate = time;
-      connection.query("INSERT INTO expensesources(source, createdby, createddate) values ('" + req.body.source + "', '" + req.body.username + "') ")
+      connection.query("INSERT INTO expensesources(source, createdby) values ('" + req.body.source + "', '" + req.body.username + "') ")
       var message = {
         "message": "Success"
       };
       res.send(message);
     }
   })
-})
+});
+
+router.post('/sources/expenses-delete', (req, res) => {
+  var query = "DELETE from expensesources where id = ?";
+  connection.query(query, [req.body.id], function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+});
 
 router.post('/services/create-new', (req, res) => {
   var query = "SELECT * from services where service_name = ?";
@@ -535,15 +685,28 @@ router.post('/services/create-new', (req, res) => {
     } else {
       var time = new Date();
       req.body.createddate = time;
-      connection.query("INSERT INTO services(service_name, service_price, duration, description ,createdby, createddate) values ('" + req.body.service_name + "', '" + req.body.service_price + "', '" + req.body.duration + "', '" + req.body.description + "' , '" + req.body.username + "') ")
+      connection.query("INSERT INTO services(service_name, service_price, duration, description ,createdby) values ('" + req.body.service_name + "', '" + req.body.service_price + "', '" + req.body.duration + "', '" + req.body.description + "' , '" + req.body.username + "') ")
       var message = {
         "message": "Success"
       };
       res.send(message);
     }
   })
-})
+});
 
+router.post('/services/delete', (req, res) => {
+  var query = "DELETE from services where id = ?";
+  connection.query(query, [req.body.id], function (err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      var message = {
+        "message": "Success"
+      };
+      res.send(message);
+    }
+  })
+});
 
 
 module.exports = router;
