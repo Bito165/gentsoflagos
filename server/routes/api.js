@@ -33,7 +33,11 @@ var connection = sql.createConnection({
 });
 
 
-connection.query('USE h9fm1o7pm244m15o');
+connection.query('DROP DATABASE h9fm1o7pm244m15o');
+
+connection.query('CREATE DATABASE h9fm1o7pm244m15o');
+
+connection.query('use h9fm1o7pm244m15o');
 
 
 /* GET api listing. */
