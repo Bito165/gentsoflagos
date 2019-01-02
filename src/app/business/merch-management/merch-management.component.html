@@ -3,7 +3,11 @@
 
 
 <div class="content-wrapper">
-  <section class="wrapper">
+  <div *ngIf='loader' class="row text-center">
+    <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
+</div>       
+
+<section *ngIf='!loader' class="content">
     <br>
     <div class="row">
       <h3 class="text-center"> Merch Management </h3>
@@ -42,8 +46,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let merch of merch" style="cursor:pointer">
-                    <td data-toggle="modal" data-target="#modal-default">
+                  <tr  *ngFor="let merch of merch" style="cursor:pointer" >
+                    <td (click)='viewMerch(merch)' data-toggle="modal" data-target="#modal-default">
                       <a>{{merch.item_name}}</a>
                     </td>
                     <td>{{merch.item_price}}</td>
@@ -54,9 +58,14 @@
                       <span class="label label-success">{{merch.quantity_sold}}</span>
                     </td>
                     <td>
-                      <span class="label label-warning">{{merch.quantity_left}}</span>
+                      <span class="label label-warning">{{merch.item_quantity}}</span>
                     </td>
+                    <td> <button (click)='restockMerch(merch)' data-toggle="modal" data-target="#modal-default" class="btn btn-info"> Restock </button> </td>
                     <td> <button (click)="postDeleteMerch(merch.id)" class="btn btn-danger"> Delete </button> </td>
+                    
+                  </tr>
+                  <tr *ngIf='noMerch'>
+                      <td colspan="5" class="text-info text-center text-uppercase"> You Have No Merch In Stock </td>
                   </tr>
                 </tbody>
               </table>
@@ -85,30 +94,83 @@
         <form #newMerchItem="ngForm" (ngSubmit)="postMerch(newMerchItem)">
           <div class="modal-body">
             <div class="box-body">
-              <div class="form-group">
-                <label for="amount">Name</label>
-                <input type="text" class="form-control" name="item_name" placeholder="Enter Item Name" ngModel>
-              </div>
-              <div class="form-group">
-                <label for="source">Category</label>
-                <select name="item_category" class="form-control" ngModel>
-                  <option value=""> Select Category </option>
-                  <option *ngFor="let category of merchcategories" class="form-control" value="{{category.category_name}}">
-                    {{category.category_name}} </option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="amount">Price</label>
-                <input type="number" class="form-control" name="item_price" placeholder="Enter Item Price" ngModel>
-              </div>
-              <div class="form-group">
-                <label for="amount">Quantity</label>
-                <input type="number" class="form-control" name="item_quantity" placeholder="Enter Item Quantity" ngModel>
+              <div class="row">
+                  <div class="col-lg-12">
+                      <div class="col-lg-12">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                              <label for="amount">Name</label>
+                              <input type="text" class="form-control" name="item_name" placeholder="Enter Item Name" ngModel>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="source">Category</label>
+                            <select name="item_category" class="form-control" ngModel>
+                              <option value=""> Select Category </option>
+                              <option *ngFor="let category of merchcategories" class="form-control" value="{{category.category_name}}">
+                                {{category.category_name}} </option>
+                            </select>
+                          </div>
+                        </div> 
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="amount">Images</label>
+                            <input class='form-control' multiple type="file" name='image' accept="image/x-png,image/gif,image/jpeg" (change)="handleUpload($event.target.files)" id="upload">
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="amount">Price</label>
+                            <input type="number" class="form-control" name="item_price" placeholder="Enter Item Price" ngModel>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Sizes</label>
+                                <input type="text" class="darken form-control"  disabled value="Small" > <br>
+                                <input type="text" class="darken form-control "  disabled value="Medium" > <br>
+                                <input type="text" class="darken form-control"  disabled value="Large" > <br>
+                                <input type="text" class="darken form-control"  disabled value="Extra Large" > 
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Quantity</label>
+                                
+                            <input (change)='addQuantity()' type="text" class="form-control" name="small_quantity" placeholder="Quantity" [(ngModel)]='small_quantity'> <br>
+                            <input (change)='addQuantity()' type="text" class="form-control" name="medium_quantity" placeholder="Quantity" [(ngModel)]='medium_quantity'> <br>
+                            <input (change)='addQuantity()' type="text" class="form-control" name="large_quantity" placeholder="Quantity" [(ngModel)]='large_quantity'> <br>
+                            <input (change)='addQuantity()' type="text" class="form-control" name="extra_large_quantity" placeholder="Quantity" [(ngModel)]='extra_large_quantity'>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12">
+                           <div class="col-lg-6">
+                              <div class="form-group">
+                                  <label for="amount">Color</label>
+                                  <input type="text" class="form-control" name="item_color" placeholder="Item Color" ngModel>
+                              </div>
+                           </div>
+                           <div class="col-lg-6">
+                              <div class="form-group">
+                                  <label for="amount">Quantity</label>
+                                  <input disabled type="text" class="form-control" name="item_quantity" placeholder="Total Quantity" [(ngModel)]='item_quantity'> 
+                              </div>
+                           </div>
+                      </div>
+      
+          
+                  </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">CLOSE</button>
+            <button   type="button" class="btn btn-outline pull-left" data-dismiss="modal">CLOSE</button>
             <button type="submit" class="btn btn-outline">SAVE</button>
           </div>
         </form>
@@ -126,14 +188,136 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Default Modal</h4>
+        <h4 class="modal-title">{{title}}</h4>
       </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
+      <div *ngIf='restock' class="modal-body">
+          <div class="row">
+              <div class="col-lg-12">
+
+                  <div class="col-lg-12">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="amount">Name</label>
+                            <input disabled type="text" class="form-control" name="item_name" placeholder="Enter Item Name" [(ngModel)]='merch_item.item_name'>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="source">Category</label>
+                          <select disabled name="item_category" class="form-control" [(ngModel)]='merch_item.item_category'>
+                            <option value=""> Select Category </option>
+                            <option *ngFor="let category of merchcategories" class="form-control" value="{{category.category_name}}">
+                              {{category.category_name}} </option>
+                          </select>
+                        </div>
+                      </div> 
+                    </div>
+                  <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="amount">Sizes</label>
+                            <input type="text" class="darken form-control"  disabled value="Small" > <br>
+                            <input type="text" class="darken form-control "  disabled value="Medium" > <br>
+                            <input type="text" class="darken form-control"  disabled value="Large" > <br>
+                            <input type="text" class="darken form-control"  disabled value="Extra Large" > 
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="amount">Quantity</label>
+                            <input (change)='addRestockQuantity()' type="text" class="form-control" name="small_quantity" placeholder="Quantity" [(ngModel)]='merch_item.small_size_quantity'> <br>
+                            <input (change)='addRestockQuantity()' type="text" class="form-control" name="medium_quantity" placeholder="Quantity" [(ngModel)]='merch_item.medium_size_quantity'> <br>
+                            <input (change)='addRestockQuantity()' type="text" class="form-control" name="large_quantity" placeholder="Quantity" [(ngModel)]='merch_item.large_size_quantity'> <br>
+                            <input (change)='addRestockQuantity()' type="text" class="form-control" name="extra_large_quantity" placeholder="Quantity" [(ngModel)]='merch_item.extra_large_size_quantity'>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12">  
+                      <div class="col-lg-6 col-lg-offset-6">
+                         <div class="form-group">
+                             <label for="amount"> Total Quantity</label>
+                             <input disabled type="text" class="form-control" name="item_quantity" placeholder="Total Quantity" [(ngModel)]='merch_item.item_quantity'> 
+                         </div>
+                      </div>
+                 </div>
+  
+      
+              </div>
+          </div>
+      </div>
+      <div *ngIf='itemView' class="modal-body">
+          <div class="box-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-lg-12">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="amount">Name</label>
+                            <input disabled type="text" class="form-control" name="item_name" placeholder="Enter Item Name" [(ngModel)]='merch_item.item_name'>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="source">Category</label>
+                          <select disabled name="item_category" class="form-control" [(ngModel)]='merch_item.item_category'>
+                            <option value=""> Select Category </option>
+                            <option *ngFor="let category of merchcategories" class="form-control" value="{{category.category_name}}">
+                              {{category.category_name}} </option>
+                          </select>
+                        </div>
+                      </div> 
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Color</label>
+                                <input disabled type="text" class="form-control" name="item_color" placeholder="Item Color" [(ngModel)]='merch_item.item_color'>
+                            </div>
+                         </div>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="amount">Price</label>
+                          <input disabled type="number" class="form-control" name="item_price" placeholder="Enter Item Price" [(ngModel)]='merch_item.item_price'>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="col-lg-6">
+                          <div class="form-group">
+                              <label for="amount">Size</label>
+                              <input type="text" class="darken form-control"  disabled value="Small" > <br>
+                              <input type="text" class="darken form-control "  disabled value="Medium" > <br>
+                              <input type="text" class="darken form-control"  disabled value="Large" > <br>
+                              <input type="text" class="darken form-control"  disabled value="Extra Large" > 
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div class="form-group">
+                              <label for="amount">Quantity Sold</label>
+                              <input disabled  type="text" class="form-control" name="small_quantity" placeholder="Quantity" [(ngModel)]='merch_item.small_size_quantity_sold'> <br>
+                              <input disabled  type="text" class="form-control" name="medium_quantity" placeholder="Quantity" [(ngModel)]='merch_item.medium_size_quantity_sold'> <br>
+                              <input disabled  type="text" class="form-control" name="large_quantity" placeholder="Quantity" [(ngModel)]='merch_item.large_size_quantity_sold'> <br>
+                              <input disabled  type="text" class="form-control" name="extra_large_quantity" placeholder="Quantity" [(ngModel)]='merch_item.extra_large_size_quantity_sold'>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">  
+                         <div class="col-lg-6 col-lg-offset-6">
+                            <div class="form-group">
+                                <label for="amount"> Total Quantity Sold</label>
+                                <input disabled type="text" class="form-control" name="item_quantity" placeholder="Total Quantity" [(ngModel)]='merch_item.quantity_sold'> 
+                            </div>
+                         </div>
+                    </div>
+    
+        
+                  </div>
+            </div>
+          </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button id='restockcls' type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+        <button (click)='restockItem()' *ngIf='restock' type="button" class="btn btn-primary">UPDATE</button>
       </div>
     </div>
     <!-- /.modal-content -->

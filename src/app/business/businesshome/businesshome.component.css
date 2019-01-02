@@ -15,6 +15,11 @@
  * Skin: Blue
  * ----------
  */
+
+.bito{
+  border-bottom: 1px solid gray;
+}
+
 .example-modal .modal {
   position: relative;
   top: auto;

@@ -1,13 +1,18 @@
 <business-nav> </business-nav> 
 <ng-progress [color]="'white'" [speed]="10" [trickleSpeed]="50" [thick]="true"></ng-progress>
 <div class="content-wrapper">
-    <section class="content">
 
-        <h2 class="page-header">Hello {{user.username}}</h2>
+    <div *ngIf='loader' class="row text-center">
+        <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
+    </div>       
+
+    <section *ngIf='!loader' class="content">
+
+        <h2 class="page-header">Hello {{user.username | uppercase}}</h2>
 
         <div class="row">
 
-            <div style="cursor: pointer;" data-toggle="modal" data-target="#modal-info" class="col-lg-3 col-xs-6">
+            <div (click)="errorMessage=''" style="cursor: pointer;" data-toggle="modal" data-target="#modal-info" class="col-lg-3 col-xs-6">
             <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
@@ -23,7 +28,7 @@
 
  
             <!-- ./col -->
-            <div style="cursor: pointer;" data-toggle="modal" data-target="#modal-danger" class="col-lg-3 col-xs-6">
+            <div (click)="errorMessage=''" style="cursor: pointer;" data-toggle="modal" data-target="#modal-danger" class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
@@ -42,20 +47,20 @@
         </div>
         <!-- /.row -->
 
-        <h2 class="page-header">Pending Barber Appointments</h2>
+        <h2 class="page-header bito">Pending Barber Appointments</h2>
         
 
         <div class="row">
         
-            <div *ngFor="let booking of bookings" class="col-md-3 col-sm-6 col-xs-12" style="cursor:pointer" data-toggle="modal" data-target="#modal-default" (click)="bookingModal(booking)">
-                <div class="info-box">
+            <div *ngFor="let booking of bookings| slice:0:4" class="col-md-3 col-sm-6 col-xs-12" style="cursor:pointer" data-toggle="modal" data-target="#modal-default" >
+                <div (click)='viewBooking(booking)' class="info-box">
                     <span class="info-box-icon bg-aqua">
-                        <i class="ion ion-ios-gear-outline"></i>
+                        <i class="fa fa-calendar"></i>
                     </span>
         
                     <div class="info-box-content">
                         <span class="info-box-text">{{booking.customer_name}}</span>
-                        <span class="info-box-number">{{booking.staff_name}}</span>
+                        <span class="info-box-text">{{booking.staff_name}}</span>
                         <span class="info-box-text"> {{booking.time}}, {{booking.date}}</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -64,25 +69,25 @@
             </div>
             <div *ngIf="noBookings" class="text-center">
                 <hr>
-                <h3 style="color: seagreen"><i class="fa fa-thumbs-up"></i> There are no upcoming bookings</h3>
+                <h3 style="color: seagreen"><i class="fa fa-thumbs-up"></i> There are no pending bookings to attend to  </h3>
                 <hr>
             </div>
             
         </div>
 
-        <h2 class="page-header">Pending Merch Orders</h2>
+        <h2 class="page-header bito">Pending Merch Orders</h2>
 
         <div class="row">
             
-            <div *ngFor="let order of orders" class="col-md-3 col-sm-6 col-xs-12" style="cursor:pointer" data-toggle="modal" data-target="#modal-default" (click)="orderModal(order)">
-                <div class="info-box">
+            <div *ngFor="let order of orders | slice:0:4" class="col-md-3 col-sm-6 col-xs-12" style="cursor:pointer" data-toggle="modal" data-target="#modal-default" >
+                <div (click)='viewOrder(order)' class="info-box">
                     <span class="info-box-icon bg-aqua">
                         <i class="ion ion-ios-gear-outline"></i>
                     </span>
         
                     <div class="info-box-content">
                         <span class="info-box-text">{{order.client_name}}</span>
-                        <span class="info-box-number">{{order.item_ordered}}</span>
+                        <span class="info-box-text">{{order.item_ordered}}</span>
                         <span class="info-box-text">{{order.date_due}}</span>
                     </div>
                     <!-- /.info-box-content -->
@@ -114,6 +119,7 @@
       <form #newRevenue="ngForm" (ngSubmit)="postRevenue(newRevenue)">
         <div class="modal-body">
             <div class="box-body">
+                <h4 class="text-danger text-center"> {{errorMessage}} </h4>
                 <div class="form-group">
                   <label for="amount">Amount</label>
                   <input type="number" class="form-control" name="amount" placeholder="Enter Amount" ngModel>
@@ -129,7 +135,7 @@
                   <label for="staff">Staff</label>
                   <select name="staff" class="form-control" ngModel>
                     <option value=""> Select Staff </option>
-                    <option *ngFor="let source of revenuesources" class="form-control" value="{{source.source}}"> {{source.source}} </option>
+                    <option *ngFor="let staff of staff" class="form-control" value="{{staff.staff_name}}"> {{staff.staff_name}} </option>
                   </select>
                 </div>
             </div>
@@ -158,6 +164,7 @@
       <form #newExpense="ngForm" (ngSubmit)="postExpense(newExpense)">
         <div class="modal-body">
             <div class="box-body">
+                    <h4 class="text-light text-center"> {{errorMessage}} </h4>
                 <div class="form-group">
                   <label for="amount">Amount</label>
                   <input type="number" class="form-control" name="amount" placeholder="Enter Amount" ngModel>
@@ -184,32 +191,126 @@
 <!-- /.modal -->
 
 <div class="modal fade" id="modal-default">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button id="ordClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">{{title}}</h4>
-      </div>
-      <div class="modal-body">
-          <div *ngIf="order">
-            <h4> {{orderedItem.item_ordered}} </h4>
-            <h4> Size: {{orderedItem.item_size}} </h4>
-            <p> Customer Name: {{orderedItem.client_name}} </p>
-            <p> Date Due: {{orderedItem.date_due}} </p>
-            <p> De </p>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">{{modalTitle}}</h4>
+            </div>
+            <div *ngIf='bookingUpdate'>
+              <div class="modal-body">
+                  <div class="box-body">
+                  <h4 class="text-danger text-center"> {{errorMessage}} </h4>
+                  <div class="form-group">
+                      <label for="amount">Customer Name</label>
+                      <input type="text" disabled class="form-control" name="customer_name" [(ngModel)]='booking.customer_name'>
+                  </div>
+                  <div class="form-group">
+                      <label for="amount">Service</label>
+                      <input type="text" disabled class="form-control" name="service" [(ngModel)]='booking.service'>
+                  </div>
+                  <div class="form-group">
+                      <label for="amount">Staff</label>
+                      <input type="text" disabled class="form-control" name="service" [(ngModel)]='booking.staff_name'>
+                  </div>
+                  <div class="form-group">
+                      <label for="amount">Time</label>
+                      <input type="text" disabled class="form-control" name="time" [(ngModel)]='booking.time'>
+                  </div>
+                  <div class="form-group">
+                      <label for="amount">Date</label>
+                      <input type="text" disabled class="form-control" name="date" [(ngModel)]='booking.date'>
+                  </div>
+                  <div class="form-group">
+                      <label for="source">Status</label>
+                      <select name="source" class="form-control" [(ngModel)]='booking.status'>
+                          <option value=""> Select Status </option>
+                          <option value="0"> Uncompleted </option>
+                          <option value="1"> Completed </option>
+                      </select>
+                  </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+              <button id='clsBooking' type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+              <button (click)='updateBookingStatus()' type="button" class="btn btn-primary">UPDATE</button>
+              </div>
+            </div>
+            <div *ngIf='orderUpdate'>
+              <div class="modal-body">
+                  <div class="box-body">
+                      <h4 class="text-danger text-center"> {{errorMessage}} </h4>
+                      <div class="col-lg-12">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Customer Name</label>
+                                <input type="text" disabled class="form-control" name="client_name" [(ngModel)]='order.client_name'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                    <label for="amount">Customer Phone Number</label>
+                                    <input type="text" disabled class="form-control" name="client_phone_number" [(ngModel)]='order.client_phone_number'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Item Ordered</label>
+                                <input type="text" disabled class="form-control" name="item_ordered" [(ngModel)]='order.item_ordered'>
+                            </div>      
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Item Size</label>
+                                <input type="text" disabled class="form-control" name="item_size" [(ngModel)]='order.item_size'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Date Due</label>
+                                <input type="text" disabled class="form-control" name="date_due" [(ngModel)]='order.date_due'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Delivery Address</label>
+                                <textarea disabled class="form-control" name="delivery_address" [(ngModel)]='order.delivery_address'></textarea>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Item Color</label>
+                                <input type="text" disabled class="form-control" name="item_color" [(ngModel)]='order.item_color'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Delivery Status</label>
+                                <div class="form-group">
+                                    <select name="source" class="form-control" [(ngModel)]='order.status'>
+                                        <option value=""> Select Status </option>
+                                        <option value="0"> Received </option>
+                                        <option value="1"> Processing </option>
+                                        <option value="2"> In Transit </option>
+                                        <option value="3"> Delivered </option>
+                                    </select>
+                                </div>
+                            </div>
+                          </div>
+                          
+                      </div>
+                     
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button id='ordercls'  type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+                  <button (click)='updateOrderStatus()' type="button" class="btn btn-primary">UPDATE</button>
+              </div>
+            </div>
           </div>
-          <div *ngIf="booking">
-
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
-        <button type="button" class="btn btn-primary">UPDATE STATUS</button>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
 </div>

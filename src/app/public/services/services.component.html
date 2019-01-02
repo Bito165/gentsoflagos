@@ -1,51 +1,54 @@
-<app-nav></app-nav>
-
-<div class="content" style="margin-top: -19px; padding: 0">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="col-lg-6  picture">
-            <br>
-          </div>
-          <div class="col-lg-6 text-center blue">
-            <br>
-            <p> Gents of Lagos can be found nestled in the heart of Surulere; With adequate parking and world class
-            grooming facilities for the modern Lagos gentleman </p>
-            <br>
-          </div>
-        </div>
-        
-        <div class="col-lg-8 col-lg-offset-2">
-            <div class="service">
-              <h3> SERVCE LIST </h3>
-              <p>
-                Please choose the barbering service and time frame that best suits your grooming requirements. 
-                An optional back of the neck shave is provided along with a complimentary espresso to keep you 
-                on the move during your busy day. 
-              </p>
-              <hr>
-
-              <div class="items">
-                  <h3>
-                    SERVCE LIST
-                    <br> £ Price
-                  </h3>
-                  
-                  <p> Duration: 30 minutes </p>
-                  
-                  <p>
-                    Our most popular service. If you are after a contemporary or classic haircut this service is for you. A 30 minute service
-                    inclusive of a thorough consultation, complimentary hair wash/condition. Providing professional styling advice using our
-                    very own premium Gents of London bespoke men’s styling range. Concluded with an optional neck shave to leave a clean, natural
-                    finish.
-                  </p>
-
-                  <button class="btn btn-primary"> Book Now </button>
-                  <hr>
-              </div>
-
-            </div>
-        </div>
-      </div>
+<div *ngIf='loader' class="row text-center">
+    <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
 </div>
 
-<app-footer></app-footer>
+<div *ngIf='!loader'>
+    <app-nav></app-nav>
+
+    <div class="content" style="margin-top: -19px; padding: 0">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="col-lg-6  picture">
+                <br>
+              </div>
+              <div class="col-lg-6 text-center blue">
+                <br>
+                <p> Gents of Lagos can be found nestled in the heart of Surulere; With adequate parking and world class
+                grooming facilities for the modern Lagos gentleman </p>
+                <br>
+              </div>
+            </div>
+            
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="service">
+                  <h3> SERVCE LIST </h3>
+                  <p>
+                    Please choose the barbering service and time frame that best suits your grooming requirements. 
+                    An optional back of the neck shave is provided along with a complimentary espresso to keep you 
+                    on the move during your busy day. 
+                  </p>
+                  <hr>
+    
+                  <div *ngFor='let service of services' class="items">
+                      <h3>
+                       {{service.service_name}}
+                        <br> {{service.service_price | currency:'₦' }}
+                      </h3>
+                      
+                      <p> Duration: {{service.duration}} minutes </p>
+                      
+                      <p>
+                        {{service.description}}
+                      </p>
+    
+                      <button routerLink='/bookings' (click)='bookService(service)' class="btn btn-primary"> Book Now </button>
+                      <hr>
+                  </div>
+    
+                </div>
+            </div>
+          </div>
+    </div>
+    
+    <app-footer></app-footer>
+</div>

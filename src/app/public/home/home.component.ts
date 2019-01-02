@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiBaseService } from "../../../services/apibase/api-base.service";
+import { LocalStorageService } from "ngx-webstorage";
 
 @Component({
   selector: 'app-home',
@@ -7,15 +8,29 @@ import { ApiBaseService } from "../../../services/apibase/api-base.service";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor(public webServ:ApiBaseService) { }
+  merch:any;
+  noMerch:boolean  = true;
+  loader:boolean = true;
+  constructor(public webServ:ApiBaseService, public local:LocalStorageService) { }
 
   ngOnInit() {
-    this.webServ.testapi().subscribe(
+    this.webServ.getPublicMerch().subscribe(
       res => {
         console.log(res);
+        this.merch = res;
+        this.loader = false;
+        if(this.merch.length == 0){
+          this.noMerch = true;
+        }else{
+          this.noMerch = false;
+        }
+
       }
     )
+  }
+
+  selectMerch(merch:any){
+    this.local.store('merch', merch);
   }
 
 }

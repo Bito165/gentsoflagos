@@ -11,17 +11,23 @@ import { BookingsComponent } from './bookings/bookings.component';
 import { TemplatesModule } from "./templates/templates.modules";
 import { TermsComponent } from './terms/terms.component';
 import { RefundsComponent } from './refunds/refunds.component';
+import {FormsModule} from '@angular/forms';
+import { MerchViewComponent } from './merch/merch-view/merch-view.component';
+import { CartComponent } from './merch/cart/cart.component'
 
 const PublicRoutes: Routes = [
             { path: '', component: HomeComponent },
             { path: 'theshop', component: TheShopComponent },
             { path: 'merch', component: MerchComponent },
+            { path: 'merch/:id', component: MerchViewComponent },
             { path: 'theteam', component: TheTeamComponent },
             { path: 'services', component: ServicesComponent },
             { path: 'academy', component: AcademyComponent },
             { path: 'bookings', component: BookingsComponent },
             { path: 'refunds', component: RefundsComponent },
             { path: 'terms', component: TermsComponent },
+            { path: 'cart', component: CartComponent },
+
 ];
 
 @NgModule({
@@ -34,11 +40,14 @@ const PublicRoutes: Routes = [
         AcademyComponent,
         BookingsComponent,
         TermsComponent,
-        RefundsComponent
+        RefundsComponent,
+        MerchViewComponent,
+        CartComponent
     ],
     imports: [
         BrowserModule,
         TemplatesModule,
+        FormsModule,
         RouterModule.forChild(PublicRoutes),
     ],
     exports: [RouterModule],

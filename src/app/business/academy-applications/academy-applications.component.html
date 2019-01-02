@@ -1,6 +1,11 @@
 <business-nav> </business-nav>
+<ng-progress [color]="'white'" [speed]="10" [trickleSpeed]="50" [thick]="true"></ng-progress>
 <div class="content-wrapper">
-  <section class="wrapper">
+    <div *ngIf='loader' class="row text-center">
+        <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
+    </div>       
+
+    <section *ngIf='!loader' class="wrapper">
       <br>
       <div class="row">
         <h3 class="text-center"> Academy Applications </h3>
@@ -23,7 +28,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let application of applications" style="cursor:pointer" data-toggle="modal" data-target="#modal-default">
+                    <tr (click)='viewApplication(application)' *ngFor="let application of applications" style="cursor:pointer" data-toggle="modal" data-target="#modal-default">
                       <td>
                         <a>{{application.applicant_name}}</a>
                       </td>
@@ -37,6 +42,9 @@
                           {{application.status}}
                       </td>
 
+                    </tr>
+                    <tr *ngIf='noApplications'>
+                        <td colspan="4" class="text-info text-center text-uppercase"> There are no pending academy applications </td>
                     </tr>
                   </tbody>
                 </table>
@@ -53,24 +61,46 @@
   </section>
 </div>
 
-<div class="modal fade" id="modal-default">
+ <div class="modal fade" id="modal-default">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Default Modal</h4>
+        <h4 class="modal-title">Academy Application</h4>
       </div>
       <div class="modal-body">
-        <p>One fine body&hellip;</p>
+          <div *ngIf='applicationView' class="box-body">
+              <h4 class="text-danger text-center"> {{errorMessage}} </h4>
+              <div class="form-group">
+                  <label for="amount">Applicant Name</label>
+                  <input type="text" disabled class="form-control" name="customer_name" [(ngModel)]='application.applicant_name'>
+              </div>
+              <div class="form-group">
+                  <label for="amount">Applicant Essay</label>
+                  <textarea disabled class="form-control" name="service" [(ngModel)]='application.applicant_gist'></textarea>
+              </div>
+              <div class="form-group">
+                  <label for="amount">Contact Info</label>
+                  <input type="text" disabled class="form-control" name="service" [(ngModel)]='application.applicant_contact'>
+              </div>
+              <div class="form-group">
+                  <label for="amount">Status</label>
+                  <select name="source" class="form-control" [(ngModel)]='application.status'>
+                      <option value=""> Select Status </option>
+                      <option value="0"> Received </option>
+                      <option value="1"> Processing </option>
+                      <option value="2"> Rejected </option>
+                      <option value="3"> Accepted </option>
+                  </select>
+              </div>
+          </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button id='academyCls' type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+        <button (click)='updateApplicationStatus()' type="button" class="btn btn-primary"> UPDATE </button>
       </div>
     </div>
-    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog -->
 </div>

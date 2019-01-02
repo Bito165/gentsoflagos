@@ -1,0 +1,138 @@
+<app-nav></app-nav>
+<div class="content" style="margin-top:-19px; padding: 0">
+  <div class="container">
+    <br> <br>
+    <div class="row">
+      <div class="pull-right">
+          <button>Previous</button>
+          <button> Next </button>
+      </div>
+    </div>
+    <div class="row">
+      <br>
+      <div class="col-lg-6">
+       <div class="col-lg-10 col-lg-offset-1">
+          <div  class="carousel slide " data-ride="carousel" id="home">
+            
+              <ol class="carousel-indicators">
+                  <li data-target="#home" data-slide-to="0" class="active"></li>
+                  <li data-target="#home" data-slide-to="1"></li>
+                  <li data-target="#home" data-slide-to="2"></li>
+              </ol>
+
+              <div class="carousel-inner">
+                  <div class="item active">
+                      <img src="https://gentsoflagos.herokuapp.com/{{merch.item_avatar}}" alt="slide1">
+                      
+                  </div>
+                  <div class="item ">
+                      <a routerLink="/theshop" routerLinkActive="true">
+                          <img src="https://gentsoflagos.herokuapp.com/{{merch.item_avatar2}}" alt="slide">
+                         
+                      </a>
+                  </div>
+                  <div class="item">
+                      <a routerLink="/merch" routerLinkActive="true">
+                          <img src="https://gentsoflagos.herokuapp.com/{{merch.item_avatar3}}" alt="slide2">
+                          
+                      </a>
+                  </div>
+                  
+                 
+              </div>
+              
+              <a href="#home" data-slide="prev" class="left carousel-control">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+
+              <a href="#home" data-slide="next" class="right carousel-control">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+      
+      
+            </div>
+       </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="text-left">
+          <h3> 
+            
+           {{merch.item_name}}
+            <h4> <span class='text-bold'> {{merch.item_price | currency:'₦'}} </span> <span class='text-muted'> | #GNTS-{{merch.id}} </span>  </h4> <br>
+          </h3> 
+          <p class='text-center' style='color:red'> {{errMsg}} </p>
+        <form #addCart='ngForm' (ngSubmit)='addItem(addCart)'>
+            <div class="col-lg-6">
+                <h5>
+                    Available Sizes <hr>
+                    <div *ngIf='merch.small_size_quantity > 0' class="radio radio-inline radio-info radio-circle">
+                        <input id="radio8" type="radio" name='size' value='small' ngModel>
+                        <label for="radio8">
+                        S
+                        </label>
+                    </div>
+                    <div *ngIf='merch.medium_size_quantity > 0' class="radio radio-inline radio-info radio-circle">
+                        <input id="radio9" type="radio" name='size' value='size' value='medium' ngModel>
+                        <label for="radio9">
+                        M
+                        </label>
+                    </div>
+                    <div *ngIf='merch.large_size_quantity > 0' class="radio radio-inline radio-info radio-circle">
+                        <input id="radio10" type="radio" name='size' value='large' ngModel>
+                        <label for="radio10">
+                        L
+                        </label>
+                    </div>
+                    <div *ngIf='merch.extra_large_size_quantity > 0' class="radio radio-inline radio-info radio-circle">
+                        <input id="radio11" type="radio" name='size' value='size' value='extra_large' ngModel>
+                        <label for="radio11">
+                        XL
+                        </label>
+                    </div>
+                </h5>
+             </div>
+             <br class='hidden-lg hidden-md'>
+             <div class="col-lg-6">
+               <h5> Quantity </h5> <hr>
+                <div class="form-group">
+                    <input type="number" placeholder="0" class="form-control" name='quantity' ngModel>
+                </div>
+             </div>
+             
+              <div class='col-lg-12'>
+                <br> <br> 
+                  <button (click)=' buynow = true; addItem(addCart)' class='btn btn-primary'> BUY NOW <i class="fas fa-receipt"></i> </button>
+                  <button class='btn btn-primary'> ADD TO CART <i class="fas fa-plus"></i> </button>
+                  <button  data-target="#modal-default" data-toggle="modal" id='modal-trigger' style='display: none'> modal </button>
+              </div>
+        </form>
+
+
+        </div>
+      </div>
+    </div>  
+  </div>
+</div>
+<br> <br>
+<app-footer></app-footer>
+
+<div class="modal fade modal-success" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button id="ordClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">ADD TO CART</h4>
+            </div>
+            <div class="modal-body">
+                This item has been successfully added to your cart
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+</div>

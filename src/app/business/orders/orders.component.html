@@ -1,0 +1,147 @@
+<business-nav> </business-nav>
+<ng-progress [color]="'white'" [speed]="10" [trickleSpeed]="50" [thick]="true"></ng-progress>
+<div class="content-wrapper">
+    <div *ngIf='loader' class="row text-center">
+        <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
+    </div>       
+
+    <section *ngIf='!loader' class="wrapper">
+            <br>
+            <div class="row">
+                <h3 class="text-center"> Merch Orders </h3>
+            </div>
+
+            <div class="col-lg-10 col-lg-offset-1 col-md-12">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        
+            
+                        
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover no-margin table-bordered">
+                                <thead>
+                                    <tr style="background-color: #0e0e28; color: white">
+                                        <th>Date Due</th>
+                                        <th> Customer Name </th>  
+                                        <th>Item</th>
+                                        <th> Size </th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let order of orders" (click)='viewOrder(order)' style="cursor:pointer" data-toggle="modal" data-target="#modal-info">
+                                        <td>
+                                            <a>{{order.date_due}}</a>
+                                        </td>
+                                        <td>{{order.client_name}}</td>
+                                        <td>{{order.item_ordered}}</td>
+                                        <td>{{order.item_size}}</td>
+                                        <td> {{order.status}} </td>
+                                    </tr>
+                                    <tr *ngIf='noOrders'>
+                                        <td colspan="5" class="text-info text-center text-uppercase"> There are no pending orders </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+            
+                    <!-- /.box-footer -->
+                </div>
+                <!-- /.box -->
+            </div>
+        
+    </section>
+</div>
+
+<div class="modal fade" id="modal-info">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">{{modalTitle}}</h4>
+            </div>
+           
+            <div *ngIf='orderUpdate'>
+              <div class="modal-body">
+                  <div class="box-body">
+                      <h4 class="text-danger text-center"> {{errorMessage}} </h4>
+                      <div class="col-lg-12">
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Customer Name</label>
+                                <input type="text" disabled class="form-control" name="client_name" [(ngModel)]='order.client_name'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                    <label for="amount">Customer Phone Number</label>
+                                    <input type="text" disabled class="form-control" name="client_phone_number" [(ngModel)]='order.client_phone_number'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Item Ordered</label>
+                                <input type="text" disabled class="form-control" name="item_ordered" [(ngModel)]='order.item_ordered'>
+                            </div>      
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Item Size</label>
+                                <input type="text" disabled class="form-control" name="item_size" [(ngModel)]='order.item_size'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Date Due</label>
+                                <input type="text" disabled class="form-control" name="date_due" [(ngModel)]='order.date_due'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Delivery Address</label>
+                                <textarea disabled class="form-control" name="delivery_address" [(ngModel)]='order.delivery_address'></textarea>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Item Color</label>
+                                <input type="text" disabled class="form-control" name="item_color" [(ngModel)]='order.item_color'>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="amount">Delivery Status</label>
+                                <div class="form-group">
+                                    <select name="source" class="form-control" [(ngModel)]='order.status'>
+                                        <option value=""> Select Status </option>
+                                        <option value="0"> Received </option>
+                                        <option value="1"> Processing </option>
+                                        <option value="2"> In Transit </option>
+                                        <option value="3"> Delivered </option>
+                                    </select>
+                                </div>
+                            </div>
+                          </div>
+                          
+                      </div>
+                     
+                  </div>
+              </div>
+              <div class="modal-footer">
+                    <button id='ordercls'  type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+                    <button (click)='updateOrderStatus()' type="button" class="btn btn-primary">UPDATE</button>
+                </div>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

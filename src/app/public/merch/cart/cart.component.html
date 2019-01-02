@@ -1,0 +1,147 @@
+<app-nav></app-nav>
+<div class="content" style="margin-top:-19px; padding: 0">
+  <div class="container">
+    <br> <br>
+    <div class="row">
+
+        <h3 class='text-center'>
+            Cart Checkout <hr>
+        </h3> <br>  <br class='hidden-sm hidden-xs'> <br class='hidden-sm hidden-xs'>
+
+        <h4 *ngIf='emptycart' class='text-center'> 
+            Your Cart Is Currently Empty 
+            
+            <button routerLink='/merch' class='btn btn-primary'> View Merch</button>
+        </h4>
+
+        <div *ngIf='!emptycart'>
+                <div class="col-lg-5">
+                        <div *ngFor='let item of cart| slice:begin:end; let i = index' class="panel panel-shadow">
+                            <div class="panel-body">
+                                <div class="media">
+                                    <div class="media-left media-middle">
+                                        <img src="https://gentsoflagos.herokuapp.com/{{item.item_avatar}}" width='75px' height='75px' alt="">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">{{item.item_ordered}} </h4>
+                                        <p> Price: {{item.price | currency:'₦'}} | Quantity: {{item.item_quantity}} | Size: {{item.item_size}} </p>
+                                        <button (click)='removeItem(i)' class='btn btn-danger'> <i style='margin-top: 3px; margin-left: 3px' class='fas fa-ban pull-right'></i> Remove Item </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <button id='load-more' (click)='loadmore()'  *ngIf='cart.length > end' class='btn btn-primary'> Load More </button>
+                    </div>
+                    
+                    <br class='hidden-lg hidden-md'>
+
+                    <div class="col-lg-4 col-lg-offset-3">
+                        <div *ngIf='start'>
+                          <div class="panel panel-shadow">
+                              <div class="panel-body">
+                                  <div class="media">
+                                     
+                                      <div class="media-body">
+                                          <h3 class="media-heading">Amount Due</h3> <hr>
+                                          <p> Subtotal: {{amount | currency:'₦'}} </p>
+                                          <p> Delivery Cost: ₦1000.00 </p>
+                                          <p class='text-danger text-center'> *Delivery Is Only Available Within The Lagos Metropolis </p>
+                                          <hr>
+                                          <h4> Total: {{total | currency:'₦'}} </h4>
+                                          <button (click)='start = false' class='btn btn-primary pull-right'> Check Out Now </button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <div *ngIf='!start'>
+                              <h3 class='text-center'> Customer Details </h3> <hr>
+              
+                              <form class='text-center'>
+                                    <p class='text-center' style='color:red'> {{errMsg}} </p>
+                                    <div class="form-group">
+                                        <label class="pull-left">Customer Name</label>
+                                        <input class="form-control " name="text"   name='customer_name' [(ngModel)]='customer_name'>
+                                    </div>
+                                    
+                                    <div class="input-group fixing">
+                                        <label class='pull-left'>Phone Number</label> <br> <br>
+                                            <div class="input-group">
+                                            <span style='background-color: #0e0e28; color:white' class="input-group-addon">+234</span>
+                                            <input class="form-control col-lg-12" maxlength="11" name="client_phone_number" placeholder="Phone Number" type="tel-no" [(ngModel)]='client_phone_number'>                         
+                                        </div> 
+                                    </div> <br>
+                                    
+                                    <div class="form-group">
+                                        <label class="pull-left">Delivery Address</label>
+                                        <textarea class="form-control " name='delivery_address' [(ngModel)]='delivery_address'></textarea>
+                                    </div>
+                    
+                    
+                                    <br>
+                                    
+                                    <p class='text-danger'> *Items Will Be Delivered in 3-5 Working Days</p>
+                    
+                                    <br>
+                    
+                                    <button (click)='checkOut()' class='btn btn-primary'> {{buttonMessage}} </button>
+                                    <button  data-target="#modal-gents" data-toggle="modal" id='modal-trigger' style='display: none'> modal </button>
+                                    <button  data-target="#modal-fail" data-toggle="modal" id='modal-trigg' style='display: none'> modal </button>
+                              </form>
+                        </div>
+                    </div>
+        </div>
+    </div> 
+  </div>
+</div>
+<br> <br>
+<app-footer></app-footer>
+
+<div class="modal fade modal-success" id="modal-gents">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button id="ordClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">ORDER SUCCESSFUL</h4>
+            </div>
+            <div *ngIf='posted' class="modal-body text-center">
+                Hello {{customer_name}}, <br>
+                Thank You For Your Purchase. <br>
+                You order will be delivered to the supplied address in 3-5 working days. <br>
+                Thank You For Your Patronage Of Our Brand. 
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade modal-danger" id="modal-fail">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button id="ordClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">ORDER FAILED</h4>
+            </div>
+            <div *ngIf='posted' class="modal-body text-center">
+                Hello {{customer_name}}, <br>
+                Unfortunately, The following item<span *ngIf='noStock.length > 1'>s</span> in your cart <span *ngIf='noStock.length > 1'>are</span> <span *ngIf='noStock.length == 1'>is</span> now out of stock <br>
+                <br>
+                <p *ngFor='let items of noStock'> - {{items.item_ordered}}, Size: {{items.item_size}} </p>
+            </div>
+            <div class="modal-footer">
+              <button (click)='clearNoStock()' type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+</div>

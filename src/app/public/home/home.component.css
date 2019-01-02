@@ -1,3 +1,9 @@
+.carousel-caption{
+    background-color: #00000085;
+    border-radius: 7px;
+}
+
+
 .back{
     background: url('../../../assets/img/slide1.jpg');
     background-size: cover;
@@ -26,3 +32,7 @@
     line-height: 26em;
 }
 
+.fixer{
+    background-color: #00000089;
+    border-radius: 7px;
+}

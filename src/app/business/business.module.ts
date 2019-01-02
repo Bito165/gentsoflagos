@@ -16,10 +16,13 @@ import { MerchManagementComponent } from './merch-management/merch-management.co
 import { CustomersComponent } from './customers/customers.component';
 import { AcademyApplicationsComponent } from './academy-applications/academy-applications.component';
 import { AuthGuard } from "./../../services/auth/auth.guard";
+import { FileSelectDirective } from 'ng2-file-upload';
+import { OrdersComponent } from './orders/orders.component';
 
 const BusinessRoutes: Routes = [
     { path: 'business', component: LoginComponent},
     { path: 'business/view-bookings', component: BookingsComponent, canActivate: [AuthGuard] },
+    { path: 'business/view-orders', component: OrdersComponent, canActivate: [AuthGuard] },
     { path: 'business/expenses', component: ExpensesComponent, canActivate: [AuthGuard] },
     { path: 'business/maintenance', component: JournalComponent, canActivate: [AuthGuard] },
     { path: 'business/pl-analysis', component: PLComponent, canActivate: [AuthGuard] },
@@ -38,12 +41,14 @@ const BusinessRoutes: Routes = [
         ExpensesComponent,
         JournalComponent,
         PLComponent,
+        FileSelectDirective,
         RevenueComponent,
         StaffComponent,
         BusinesshomeComponent,
         MerchManagementComponent,
         CustomersComponent,
-        AcademyApplicationsComponent
+        AcademyApplicationsComponent,
+        OrdersComponent
     ],
     imports: [
         BrowserModule,

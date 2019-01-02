@@ -1,6 +1,10 @@
-<app-nav></app-nav>
+<div *ngIf='loader' class="row text-center">
+    <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
+</div>
 
-    <div class="content" style="margin-top: -19px; overflow: hidden; padding: 0">
+<div *ngIf='!loader'>
+    <app-nav></app-nav>
+    <div  class="content" style="margin-top: -19px; overflow: hidden; padding: 0">
         <div class="row">
 
             <div class="col-lg-12">
@@ -19,16 +23,16 @@
                         <div class="item active">
                             <img src="assets/img/outside.jpg" alt="slide1">
                             <div class="carousel-caption">
-                                <h3> Gent of Lagos </h3>
-                                <p> Upscale Men's Grooming and Barber Shop </p>
+                                <h2> Gents of Lagos </h2>
+                                <h4> Upscale Men's Grooming and Barber Shop </h4>
                             </div>
                         </div>
                         <div class="item">
                             <a routerLink="/theshop" routerLinkActive="true">
                                 <img src="assets/img/theshop-main.jpg" alt="slide">
                                 <div class="carousel-caption">
-                                    <h3> Visit Our Shop </h3>
-                                    <p> Walk into our men's lounge and get the best men's grooming service in Lagos </p>
+                                    <h2> Visit Our Shop </h2>
+                                    <h4> Walk into our men's lounge and get the best men's grooming service in Lagos </h4>
                                 </div>
                             </a>
                         </div>
@@ -36,8 +40,8 @@
                             <a routerLink="/merch" routerLinkActive="true">
                                 <img src="assets/img/merch-main.jpg" alt="slide2">
                                 <div class="carousel-caption">
-                                    <h3> Get That Gents of Lagos Fresh </h3>
-                                    <p> Order your own Gents of Lagos merch online now </p>
+                                    <h2> Get That Gents of Lagos Fresh </h2>
+                                    <h4> Order your own Gents of Lagos merch online now </h4>
                                 </div>
                             </a>
                         </div>
@@ -45,8 +49,8 @@
                             <a routerLink="/academy" routerLinkActive="true">
                                 <img src="assets/img/academy-main.jpg" alt="slide2">
                                 <div class="carousel-caption">
-                                    <h3> Join Our Academy </h3>
-                                    <p> Take your first steps into the world of professional barbing </p>
+                                    <h2> Join Our Academy </h2>
+                                    <h4> Take your first steps into the world of professional barbing </h4>
                                 </div>
                             </a>
                         </div>
@@ -54,8 +58,8 @@
                             <a routerLink="/bookings" routerLinkActive="true">
                                 <img src="assets/img/bookings-main.jpg" alt="slide2">
                                 <div class="carousel-caption">
-                                    <h3> Book a Cut </h3>
-                                    <p> Skip the hassle of waiting and book a cut online </p>
+                                    <h2> Book a Cut </h2>
+                                    <h4> Skip the hassle of waiting and book a cut online </h4>
                                 </div>
                             </a>
                         </div>
@@ -113,7 +117,7 @@
         
             </div>
 
-            <div class="col-lg-12">
+            <div *ngIf='!noMerch' class="col-lg-12">
                 <div class="container">
                     <div class="text-center">
                         <h2>
@@ -121,43 +125,13 @@
                         </h2>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <a href="" class="thumbnail">
-                            <img src="assets/img/merch.jpg" alt="merch">
+                    <div *ngFor='let merch of merch| slice:0:3' class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <a routerLink='/merch/{{merch.id}}' (click)='selectMerch(merch)' class="thumbnail">
+                            <img src="https://gentsoflagos.herokuapp.com/{{merch.item_avatar}}" alt="merch">
                             <div class="caption text-center">
-                                <h3> Gents of Lagos Snapback </h3>
-                                <p> Price Goes Here </p>
-                                <button class="btn btn-success"> Order Now </button>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <a href="" class="thumbnail">
-                            <img src="assets/img/merch.jpg" alt="merch">
-                            <div class="caption text-center">
-                                <h3> Gents of Lagos Snapback </h3>
-                                <p> Price Goes Here </p>
-                                <button class="btn btn-success"> Order Now </button>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="hidden-lg col-md-6 col-sm-6 col-xs-12">
-                        <a href="" class="thumbnail">
-                            <img src="assets/img/merch.jpg" alt="merch">
-                            <div class="caption text-center">
-                                <h3> Gents of Lagos Snapback </h3>
-                                <p> Price Goes Here </p>
-                                <button class="btn btn-success"> Order Now </button>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                        <a href="" class="thumbnail">
-                            <img src="assets/img/merch.jpg" alt="merch">
-                            <div class="caption text-center">
-                                <h3> Gents of Lagos Snapback </h3>
-                                <p> Price Goes Here </p>
-                                <button class="btn btn-success"> Order Now </button>
+                                <h3> {{merch.item_name}} </h3>
+                                <p> {{merch.item_price | currency:'₦'}} </p>
+                                <button class="btn btn-primary"> Order Now </button>
                             </div>
                         </a>
                     </div>
@@ -181,8 +155,8 @@
                     </p>
                     <br>
 
-                    <button routerLink="/theshop" routerLinkActive="true" class="btn btn-warning"> Visit Us </button>
-                    <br>
+                    <button routerLink="/theshop" routerLinkActive="true" class="btn btn-primary"> Visit Us </button>
+                    <br> <br>
                 </div>
             </div>
 
@@ -209,5 +183,5 @@
         
         </div>
     </div>
-        
-<app-footer></app-footer>
+    <app-footer></app-footer>
+</div>

@@ -23,7 +23,9 @@
         "../src/assets/css/bootstrap.min.css",
         "../src/assets/css/bootstrap.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../src/assets/js/paystackinline.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

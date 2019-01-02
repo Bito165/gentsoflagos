@@ -28,48 +28,18 @@
     </div>
     <div class="col-lg-12">
       <div class="container">
-    
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <a href="" class="thumbnail">
-            <img src="assets/img/slide2.jpg" alt="slide2">
-            <div class="caption text-center">
-              <h3> Gents of Lagos Snapback </h3>
-              <p> Price Goes Here </p>
-              <button class="btn btn-success"> Order Now </button>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <a href="" class="thumbnail">
-            <img src="assets/img/slide2.jpg" alt="slide2">
-            <div class="caption text-center">
-              <h3> Gents of Lagos Snapback </h3>
-              <p> Price Goes Here </p>
-              <button class="btn btn-success"> Order Now </button>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <a href="" class="thumbnail">
-            <img src="assets/img/slide2.jpg" alt="slide2">
-            <div class="caption text-center">
-              <h3> Gents of Lagos Snapback </h3>
-              <p> Price Goes Here </p>
-              <button class="btn btn-success"> Order Now </button>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-          <a href="" class="thumbnail">
-            <img src="assets/img/slide2.jpg" alt="slide2">
-            <div class="caption text-center">
-              <h3> Gents of Lagos Snapback </h3>
-              <p> Price Goes Here </p>
-              <button class="btn btn-success"> Order Now </button>
-            </div>
-          </a>
-        </div>
 
+        <div *ngFor='let staff of staff' class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+          <a class="thumbnail">
+            <img src="https://gentsoflagos.herokuapp.com/{{staff.staff_avatar}}" alt="slide2">
+            <div class="caption text-center">
+              <h3> {{staff.staff_name}} </h3>
+              <p> {{staff.staff_bio}} </p>
+              <button (click)='bookStaff(staff)' routerLink="/bookings" routerLinkActive="true" class="btn btn-primary"> Book Now </button>
+            </div>
+          </a>
+        </div>
+      
       </div>
 
       <hr>

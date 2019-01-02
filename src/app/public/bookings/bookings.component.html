@@ -1,57 +1,127 @@
-<app-nav></app-nav>
-<div class="content" style="margin-top:-19px; padding: 0">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="col-lg-6 hidden-sm hidden-xs picture">
-        <br>
-      </div>
-      <div class="col-lg-6 text-center blue">
-        <br>
-        <br> 
-        <p> Don't like waiting ? Book a cut online or through our app with one our barbers at a time convinient for you  </p>
-        <br>
-      </div>
-    </div>
-    <div class="col-lg-8 col-lg-offset-2">
-      <div class="service">
-        <h3> BOOK A SERVICE </h3>
-
-
-        <br>
-
-        <div class="col-lg-6 col-lg-offset-3">
-
-          <form>
-
-            <select class="form-control" name="service">
-              <option value="">James</option>
-            </select>
-            <br>
-
-            <select class="form-control" name="barber">
-              <option value="">James</option>
-            </select>
-            <br>
-
-            <input type="datetime-local" class="form-control" name="time" min="2018-05-31">
-            <br>
-
-            <input type="text" placeholder="Your Name" class="form-control" name="Customer Name">
-            <br>
-
-            <input type="text" placeholder="Price" class="form-control" name="price" disabled>
-            <br>
-
-            <button class="btn btn-primary"> BOOK NOW </button>
-            <br>
-            <br>
-
-          </form>
-
-        </div>
-
-      </div>
-    </div>
-  </div>
+<div  *ngIf='loader' class="row text-center">
+    <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
 </div>
-<app-footer></app-footer>
+
+<div  *ngIf='!loader'>
+    <app-nav></app-nav>
+    <div class="content" style="margin-top:-19px; padding: 0">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="col-lg-6 hidden-sm hidden-xs picture">
+            <br>
+          </div>
+          <div class="col-lg-6 text-center blue">
+            <br>
+            <br> 
+            <p> Don't like waiting ? Book a cut online or through our app with one our barbers at a time convinient for you  </p>
+            <br>
+          </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                <div class="service">
+                  <h3> CUSTOMER DETAILS </h3>
+          
+          
+                  <br>
+          
+                  <div class="col-lg-10 col-lg-offset-1">
+          
+                       <div class="form-group">
+                        <label class="pull-left">Customer Name</label>
+                        <input class="form-control" name="customer_name" placeholder="Your Name" type="text" [(ngModel)]='customer_name'>
+                      </div>
+                      
+                      <div class="input-group fixing">
+                        <label class='pull-left'>Phone Number</label> <br> <br>
+                         <div class="input-group">
+                            <span style='background-color: #0e0e28; color:white' class="input-group-addon">+234</span>
+                            <input class="form-control col-lg-12" maxlength="11" name="client_phone_number" placeholder="Phone Number" type="tel-no" [(ngModel)]='client_phone_number'>                         
+                        </div> 
+    
+                      </div>
+          
+                  </div>
+          
+                </div>
+              </div>
+              <div class="col-lg-6 ">
+                  <div class="service">
+                    <h3> SERVICE DETAILS </h3>
+        
+                    <br>
+        
+                    <div class="col-lg-10 col-lg-offset-1">
+        
+                       <form>
+                          <div class="form-group">
+                            <label class="pull-left">Select Service</label>
+                            <select (change)='setPrice()' class="form-control " name="service" [(ngModel)]='currentService'> 
+                              <option value="">Select Service</option>
+                              <option *ngFor='let service of services' value="{{service.service_name}}"> {{service.service_name}} </option>
+                            </select>
+                          </div>
+                          
+                          <div class="form-group">
+                            <label class="pull-left">Select Barber</label>
+                            <select class="form-control " name="barber" [(ngModel)]='currentBarber'>
+                              <option value="">Select Barber</option>
+                              <option *ngFor='let barber of staff' value="{{barber.staff_name}}"> {{barber.staff_name}} </option>
+                            </select>
+                          </div>
+                          
+                          <div class="form-group">
+                            <label class="pull-left">Pick Date</label>
+                            <input class="form-control " name="date"  type="date" min="{{maxDate}}" [(ngModel)]='currentDate'>
+                          </div>
+        
+                          <div class="form-group">
+                            <label class="pull-left">Pick Time</label>
+                            <input class="form-control " name="time"  type="time" min="09:00" max="21:00" [(ngModel)]='currentTime'>
+                          </div>
+        
+                          <div class="form-group">
+                            <label class="pull-left">Price(₦)</label>
+                            <input class="form-control" disabled="" name="price" placeholder="Price" type="text" [(ngModel)]='currentPrice'>
+                          </div>
+        
+                          <br> <br>
+        
+                          <div class="text-center">
+                            <button (click)='bookAppointment()' class="btn btn-primary" data-target="#modal-default" data-toggle="modal"> Book Now </button>
+                          </div>
+        
+                          <br> <br>
+                    
+                    </form> 
+        
+                    </div>
+        
+                  </div>
+                </div>
+        </div>
+      </div>
+    </div>
+    <app-footer></app-footer>
+</div>
+
+<div class="modal fade modal-{{status}}" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button id="ordClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">{{title}}</h4>
+      </div>
+      <div class="modal-body">
+          {{errMsg}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

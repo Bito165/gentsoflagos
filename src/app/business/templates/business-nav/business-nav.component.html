@@ -51,12 +51,22 @@
             <span>Home</span>
           </a>
         </li>
+        
         <li>
           <a style="color: #ffffff; background-color: #0e0e28" routerLink="/business/view-bookings" routerLinkActive="active" >
             <i class="fa fa-calendar"></i>
-            <span> Bookings/Orders </span>
+            <span> Bookings </span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-red">0</small>
+              <small class="label pull-right bg-red">{{bookings}}</small>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a style="color: #ffffff; background-color: #0e0e28" routerLink="/business/view-orders" routerLinkActive="active" >
+            <i class="fas fa-tshirt"></i>
+            <span>  Orders </span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-red">{{orders}}</small>
             </span>
           </a>
         </li>
@@ -65,7 +75,7 @@
             <i class="fa fa-graduation-cap"></i>
             <span> Academy Applications </span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-red">0</small>
+              <small class="label pull-right bg-red">{{academy}}</small>
             </span>
           </a>
         </li>

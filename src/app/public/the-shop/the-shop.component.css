@@ -1,8 +1,22 @@
+.carousel-inner > .item > a > img {
+    min-height: 350px !important;
+}
+
+.carousel{
+    border: 1px solid #0e0e28;
+    border-radius: 5px;
+}
+
 .jumbotron{
     background: url('../../../assets/img/theshop.jpg');
     padding: 8%;
     color: #ffffff;
     background-size:cover; 
+}
+
+.fix{
+    background-color: #00000085;
+    border-radius: 7px;
 }
 
 .black{
@@ -43,7 +57,7 @@
 }
 
 .picture{
-    background: url('../../../assets/img/services.jpg');
+    background: url('../../../assets/img/theshop.jpg');
     background-size: auto;
     background-size: cover;
     line-height: 27.5em;
@@ -54,6 +68,14 @@
     background-size: auto;
     background-size: cover;
     line-height: 27.5em;
+}
+
+.gallery{
+    background: url('../../../assets/img/services.jpg');
+    background-size: auto;
+    background-size: cover;
+    line-height: 27.5em;
+    padding: 5px;
 }
 
 @media screen and (max-width: 1024px) {

@@ -35,18 +35,37 @@
 
         <div class="col-lg-6 col-lg-offset-3">
 
-          <form >
+          <form>
 
-            <!-- <p> {{errorMessage}} </p> -->
+            <p style='color:red'> {{errorMessage}} </p>
+
+            <div class="form-group">
+              <label class="pull-left">Full Name</label>
+              <input type="text" name="fullname" placeholder="Full Name" class="form-control" [(ngModel)]='fullname'>
+            </div>
+
+            <div class="input-group fixing">
+              <label class='pull-left'>Phone Number</label> <br> <br>
+               <div class="input-group">
+                  <span style='background-color: #0e0e28; color:white' class="input-group-addon">+234</span>
+                  <input class="form-control col-lg-12" maxlength="11" name="applicant_contact" placeholder="Phone Number" type="tel-no" [(ngModel)]='applicant_contact'>                         
+              </div> 
+
+            </div> <br>
+ 
+            <div class="form-group">
+              <label class="pull-left">Date Of Birth(Must Be At Least 16 Years Old)</label>
+              <input type="date" name="dob" class="form-control" max="2003-12-31" [(ngModel)]='dob'>
+            </div>
             
-            <input type="text" name="full-name" placeholder="Full Name" class="form-control"> <br>
+            <div class="form-group">
+              <label class="pull-left">Bio</label>
+              <textarea name="reason" placeholder="Sell yourself and earn your place in our academy in less than 50 words" cols="30" rows="10" class="form-control" [(ngModel)]='reason'></textarea>
+            </div>
+            
 
-            <input type="date" name="age" class="form-control" max="2002-12-31"> <br>
-
-            <textarea name="reason" placeholder="Sell yourself and earn your place in our academy in less than 50 words" cols="30" rows="10" class="form-control"></textarea> <br>
-
-            <button class="btn btn-primary"> APPLY </button> <br> <br>
-
+            <button (click)='academyApplication()' class="btn btn-primary"> APPLY </button> <br> <br>
+            <button id='modal-btn' style='display: none' class="btn btn-primary" data-target="#modal-default" data-toggle="modal"> Book Now </button>
           </form>
 
         </div>
@@ -56,3 +75,24 @@
   </div>
 </div>
 <app-footer></app-footer>
+
+<div class="modal fade modal-success" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button id="ordClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Application Successful</h4>
+      </div>
+      <div class="modal-body">
+          {{msg}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">CLOSE</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
