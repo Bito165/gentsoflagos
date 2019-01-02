@@ -33,12 +33,10 @@ var connection = sql.createConnection({
 });
 
 
-connection.query('DROP DATABASE h9fm1o7pm244m15o');
-
-connection.query('CREATE DATABASE h9fm1o7pm244m15o');
 
 connection.query('use h9fm1o7pm244m15o');
 
+connection.query('show tables');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
