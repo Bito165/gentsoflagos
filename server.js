@@ -29,7 +29,6 @@ setInterval(() => {
   connection.query('SELECT 1');
 }, 1000);
 
-connection.query('show Tables');
 
 connection.query('CREATE TABLE IF NOT EXISTS Services (id INT AUTO_INCREMENT PRIMARY KEY, service_name VARCHAR(255), service_price VARCHAR(255), duration VARCHAR(255), description VARCHAR(255), times_booked VARCHAR(255), createdby VARCHAR(255), createddate VARCHAR(255))', function (err, result) {
   if (err) throw err;
