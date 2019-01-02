@@ -112,7 +112,7 @@ app.use('/uploads/', express.static(path.join(__dirname, '/uploads/')));
 
 console.log(__dirname);
 
-// app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(function (req, res, next) {
 
