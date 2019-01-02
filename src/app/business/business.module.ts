@@ -16,7 +16,7 @@ import { MerchManagementComponent } from './merch-management/merch-management.co
 import { CustomersComponent } from './customers/customers.component';
 import { AcademyApplicationsComponent } from './academy-applications/academy-applications.component';
 import { AuthGuard } from "./../../services/auth/auth.guard";
-import { FileSelectDirective } from 'ng2-file-upload';
+
 import { OrdersComponent } from './orders/orders.component';
 
 const BusinessRoutes: Routes = [
@@ -41,7 +41,6 @@ const BusinessRoutes: Routes = [
         ExpensesComponent,
         JournalComponent,
         PLComponent,
-        FileSelectDirective,
         RevenueComponent,
         StaffComponent,
         BusinesshomeComponent,
