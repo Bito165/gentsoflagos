@@ -24,6 +24,11 @@ connection.connect(function (err) {
   console.log("Connected!");
 });
 
+
+connection.query('DROP h9fm1o7pm244m15o');
+
+connection.query('CREATE DATABASE h9fm1o7pm244m15o');
+
 connection.query('USE h9fm1o7pm244m15o');
 
 setInterval(() => {
