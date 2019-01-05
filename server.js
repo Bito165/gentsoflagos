@@ -70,7 +70,6 @@ connection.query('CREATE TABLE IF NOT EXISTS Customers (id INT AUTO_INCREMENT PR
 
 connection.query('CREATE TABLE IF NOT EXISTS Revenue (id INT AUTO_INCREMENT PRIMARY KEY, amount VARCHAR(255), source VARCHAR(255), staff VARCHAR(255), week_day VARCHAR(255), month VARCHAR(255), year VARCHAR(255), createdby VARCHAR(255), createddate VARCHAR(255))', function (err, result) {
   if (err) throw err;
-
 });
 
 connection.query('CREATE TABLE IF NOT EXISTS Expenses (id INT AUTO_INCREMENT PRIMARY KEY, amount VARCHAR(255), source VARCHAR(255), week_day VARCHAR(255), month VARCHAR(255), year VARCHAR(255), createdby VARCHAR(255), createddate VARCHAR(255))', function (err, result) {
