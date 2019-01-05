@@ -30,13 +30,13 @@ var connection = sql.createConnection({
   password : 'aob6bzsq38b021ri',
   port : '3306',
   multipleStatements: true
+
 });
 
 
 
 connection.query('use h9fm1o7pm244m15o');
 
-connection.query('show tables');
 
 /* GET api listing. */
 router.get('/', (req, res) => {
@@ -82,8 +82,7 @@ router.get('/services', (req, res) => {
 })
 
 router.get('/revenue/history', (req,res) => {
-
-    var query = "SELECT * from revenue";
+    var query = "SELECT * from revenue; SELECT * from revenuesources";
     connection.query(query, function (err, result){
         if(err){
             res.send(err);
@@ -91,12 +90,10 @@ router.get('/revenue/history', (req,res) => {
             res.send(result);
         }
     })
-
 });
 
 router.get('/expenses/history', (req, res) => {
-
-    var query = "SELECT * from expenses";
+    var query = "SELECT * from expenses;  SELECT * from expensesources";
     connection.query(query, function (err, result) {
         if (err) {
             res.send(err);
@@ -130,7 +127,7 @@ router.get('/profit-loss/history', (req, res) => {
 });
 
 router.get('/staff-list', (req, res) => {
-   var query = "SELECT * from staff; SELECT * from revenue where source =?";
+   var query = "SELECT * from staff; SELECT * from revenue where source ='Hair Cut'";
    connection.query(query, [req.body.source] ,function(err, result) {
        if(err){
            res.send(err);
@@ -342,7 +339,12 @@ router.post('/bookings/new', (req, res) => {
         if(err){
           res.send(err);
         }else{
-          console.log('result');
+
+          var message = {
+            "message": "Success"
+            };
+            res.send(message);
+
           var customerCheck = 'Select * from customers where customer_phone_number = ?';
           connection.query(customerCheck, [req.body.client_phone_number], (err, result) =>{
             if(err){
@@ -352,10 +354,23 @@ router.post('/bookings/new', (req, res) => {
               connection.query(customer);
             }
           })
-          var message = {
-          "message": "Success"
-        };
-        res.send(message);
+
+          var serviceUpdate = 'Select * from services where service_name=?'
+          connection.query(serviceUpdate, [req.body.service], (err,result) => {
+            if(err){
+              console.log(err)
+              res.send(err);
+            }else{
+              console.log(result);
+              var times_booked = result[0].times_booked;
+              times_booked = +times_booked + 1;
+              console.log(times_booked);
+              var updateBookingNo = 'UPDATE services set times_booked=? where service_name=?';
+              connection.query(updateBookingNo, [times_booked, req.body.service])
+            }
+          })
+
+          
         }
       })
     }else{
@@ -474,7 +489,7 @@ router.post('/orders/new', (req, res) => {
         }
       })
 
-      var revenueEntry = "INSERT INTO revenue (amount, source, staff , week_day, month, year, createdby, createddate) values ('" + req.body.amount + "', 'Orders',  'Orders', '" + req.body.week_day + "', '" + req.body.month + "', '" + req.body.year + "', 'Gents', '" + createddate + "')";
+      var revenueEntry = "INSERT INTO revenue (amount, source, staff , week_day, month, year, createdby, createddate) values ('" + req.body.amount + "', 'Merch Sales',  'Orders', '" + req.body.week_day + "', '" + req.body.month + "', '" + req.body.year + "', 'Gents', '" + createddate + "')";
       connection.query(revenueEntry);
       var customerCheck = 'Select * from customers where customer_phone_number = ?';
       connection.query(customerCheck, [req.body.client_phone_number], (err, result) =>{
@@ -538,9 +553,9 @@ router.post('/user/account/update', (req, res) => {
 })
 
 router.post('/staff/create-new', upload.single('staff_avatar') ,(req, res) => {
-  console.log(req.file);
-    var query = "INSERT INTO staff (staff_name, staff_avatar, staff_bio, staff_category, createdby) values ('" + req.body.staff_name + "', 'uploads/" + req.file.filename + "', '" + req.body.staff_bio + "', '" + req.body.staff_category + "', '" + req.body.createdby + "') ";
-    connection.query(query, function (err, result) {
+  var date = new Date();
+  var query = "INSERT INTO staff (staff_name, staff_avatar, staff_bio, staff_category, commission_rate, contact ,createdby, createddate) values ('" + req.body.staff_name + "', 'uploads/" + req.file.filename + "', '" + req.body.staff_bio + "', '" + req.body.staff_category + "', '"+req.body.commission_rate+"', '"+req.body.contact+"',  '" + req.body.createdby + "', '"+date+"') ";
+  connection.query(query,  (err, result) => {
         if (err) {
             res.send(err);
         } else {
@@ -597,6 +612,66 @@ router.post('/carousel/image/delete', (req, res) => {
 
 router.post('/staff/delete', (req, res) => {
     var query = "DELETE FROM staff where id = ?";
+    connection.query(query, [req.body.id] , function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            var message = { "message": "Success" };
+            res.send(message);
+        }
+    })
+});
+
+router.post('/categories/staff-delete', (req, res) => {
+    var query = "DELETE FROM staffcategories where id = ?";
+    connection.query(query, [req.body.id] , function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            var message = { "message": "Success" };
+            res.send(message);
+        }
+    })
+});
+
+router.post('/categories/merch-delete', (req, res) => {
+    var query = "DELETE FROM merchcategories where id = ?";
+    connection.query(query, [req.body.id] , function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            var message = { "message": "Success" };
+            res.send(message);
+        }
+    })
+});
+
+router.post('/sources/revenue-delete', (req, res) => {
+    var query = "DELETE FROM revenuesources where id = ?";
+    connection.query(query, [req.body.id] , function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            var message = { "message": "Success" };
+            res.send(message);
+        }
+    })
+});
+
+router.post('/sources/expenses-delete', (req, res) => {
+    var query = "DELETE FROM expensesources where id = ?";
+    connection.query(query, [req.body.id] , function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            var message = { "message": "Success" };
+            res.send(message);
+        }
+    })
+});
+
+router.post('/services/delete', (req, res) => {
+    var query = "DELETE FROM services where id = ?";
     connection.query(query, [req.body.id] , function (err, result) {
         if (err) {
             res.send(err);
@@ -675,8 +750,8 @@ router.post('/categories/staff-new', (req, res) => {
       res.send(message);
     }else{
       var time = new Date();
-      req.body.createddate = time;
-      connection.query("INSERT INTO staffcategories(category_name, createdby) values ('" + req.body.category_name + "', '" + req.body.username + "') ")
+      
+      connection.query("INSERT INTO staffcategories(category_name, createdby) values ('" + req.body.category_name + "', '" + req.body.username + "',  '"+time+"') ")
       var message = {
         "message": "Success"
       };
@@ -697,8 +772,8 @@ router.post('/categories/merch-new', (req, res) => {
       res.send(message);
     } else {
       var time = new Date();
-      req.body.createddate = time;
-      connection.query("INSERT INTO merchcategories(category_name, createdby) values ('" + req.body.category_name + "', '" + req.body.username + "') ")
+      
+      connection.query("INSERT INTO merchcategories(category_name, createdby) values ('" + req.body.category_name + "', '" + req.body.username + "',  '"+time+"') ")
       var message = {
         "message": "Success"
       };
@@ -720,7 +795,7 @@ router.post('/sources/revenue-new', (req, res) => {
     } else {
       var time = new Date();
       req.body.createddate = time;
-      connection.query("INSERT INTO revenuesources(source, createdby) values ('" + req.body.source + "', '" + req.body.username + "') ")
+      connection.query("INSERT INTO revenuesources(source, createdby, createddate) values ('" + req.body.source + "', '" + req.body.username + "', '"+time+"') ")
       var message = {
         "message": "Success"
       };
@@ -741,8 +816,8 @@ router.post('/sources/expenses-new', (req, res) => {
       res.send(message);
     } else {
       var time = new Date();
-      req.body.createddate = time;
-      connection.query("INSERT INTO expensesources(source, createdby) values ('" + req.body.source + "', '" + req.body.username + "') ")
+      
+      connection.query("INSERT INTO expensesources(source, createdby) values ('" + req.body.source + "', '" + req.body.username + "',  '"+time+"') ")
       var message = {
         "message": "Success"
       };
@@ -763,8 +838,7 @@ router.post('/services/create-new', (req, res) => {
       res.send(message);
     } else {
       var time = new Date();
-      req.body.createddate = time;
-      connection.query("INSERT INTO services(service_name, service_price, duration, description ,createdby) values ('" + req.body.service_name + "', '" + req.body.service_price + "', '" + req.body.duration + "', '" + req.body.description + "' , '" + req.body.username + "') ")
+      connection.query("INSERT INTO services(service_name, service_price, duration, description, times_booked, createdby, createddate) values ('" + req.body.service_name + "', '" + req.body.service_price + "', '" + req.body.duration + "', '" + req.body.description + "' , '0' , '" + req.body.username + "', '"+time+"') ")
       var message = {
         "message": "Success"
       };

@@ -1,6 +1,11 @@
 <business-nav> </business-nav>
 <div class="content-wrapper">
-    <section class="content">
+    
+        <div *ngIf='loader' class="row text-center">
+            <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
+        </div>       
+    
+        <section *ngIf='!loader && first' class="content">
         <h2 class="page-header">Revenue Breakdown</h2>
         
         <div class="row">
@@ -12,9 +17,9 @@
         
                     <div class="info-box-content">
                         <span class="info-box-text">Today</span>
-                        <span class="info-box-number">2,000</span>
+                        <span class="info-box-number">{{dayAmount | currency:'₦'}}</span>
                         <span class="info-box-text">
-                            <a href="#" class="small-box-footer">More info
+                            <a (click)="drillDown('today')" class="small-box-footer">More info
                                 <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </span>
@@ -32,9 +37,9 @@
         
                     <div class="info-box-content">
                         <span class="info-box-text">This Week</span>
-                        <span class="info-box-number">20,000</span>
+                        <span class="info-box-number">{{weekAmount | currency:'₦'}}</span>
                         <span class="info-box-text">
-                            <a href="#" class="small-box-footer">More info
+                            <a (click)="drillDown('week')" class="small-box-footer">More info
                                 <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </span>
@@ -56,9 +61,9 @@
         
                     <div class="info-box-content">
                         <span class="info-box-text">This Month</span>
-                        <span class="info-box-number">200,000</span>
+                        <span class="info-box-number">{{monthAmount | currency:'₦'}}</span>
                         <span class="info-box-text">
-                            <a href="#" class="small-box-footer">More info
+                            <a (click)="drillDown('month')" class="small-box-footer">More info
                                 <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </span>
@@ -76,9 +81,9 @@
         
                     <div class="info-box-content">
                         <span class="info-box-text">This Year</span>
-                        <span class="info-box-number">2,000,000</span>
+                        <span class="info-box-number">{{yearAmount | currency:'₦'}}</span>
                         <span class="info-box-text">
-                            <a href="#" class="small-box-footer">More info
+                            <a (click)="drillDown('year')" class="small-box-footer">More info
                                 <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </span>
@@ -139,4 +144,8 @@
             </div>
         </div>
     </section>
+    <app-daily-revenue *ngIf='day'></app-daily-revenue>
+    <app-weekly-revenue *ngIf='week'></app-weekly-revenue>
+    <app-monthly-revenue *ngIf='month'></app-monthly-revenue>    
+    <app-yearly-revenue *ngIf='year'></app-yearly-revenue>
 </div>

@@ -1,0 +1,269 @@
+<section class="content">
+    <h2 class="page-header">This Year's Earnings <button (click)='reset()' class='btn btn-info'> <i class='fa fa-arrow-left'></i> Back </button> </h2>
+    
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">January</span>
+                    <span class="info-box-number">{{janRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('January')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">February</span>
+                    <span class="info-box-number">{{febRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('February')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+    
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">March</span>
+                    <span class="info-box-number">{{marRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('March')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">April</span>
+                    <span class="info-box-number">{{aprRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('April')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span style='color:white;background-color: #001F3F' class="info-box-icon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">May</span>
+                    <span class="info-box-number">{{mayRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('May')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span style='color:white;background-color: #D81B60' class="info-box-icon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">June</span>
+                    <span class="info-box-number">{{juneRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('June')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+    
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span style='color:white;background-color: #39CCCC' class="info-box-icon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">July</span>
+                    <span class="info-box-number">{{julyRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('July')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span style='color:white;background-color: #39CCCC' class="info-box-icon bg-light-blue-active">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">August</span>
+                    <span class="info-box-number">{{augRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('August')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+       
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span style='color:white;background-color: #001F3F' class="info-box-icon bg-olive-active">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">September</span>
+                    <span class="info-box-number">{{septRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('September')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span style='color:white;background-color: #D81B60' class="info-box-icon bg-light-blue">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">October</span>
+                    <span class="info-box-number">{{octRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('October')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+    
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span style='color:white;background-color: #39CCCC' class="info-box-icon bg-lime">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">November</span>
+                    <span class="info-box-number">{{novRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('November')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span style='color:white;background-color: #39CCCC' class="info-box-icon bg-fuchsia">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text">December</span>
+                    <span class="info-box-number">{{decRevenueAmount | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown('December')" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+       
+    </div>
+
+</section>

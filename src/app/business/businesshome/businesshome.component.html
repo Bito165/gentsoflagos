@@ -82,7 +82,7 @@
             <div *ngFor="let order of orders | slice:0:4" class="col-md-3 col-sm-6 col-xs-12" style="cursor:pointer" data-toggle="modal" data-target="#modal-default" >
                 <div (click)='viewOrder(order)' class="info-box">
                     <span class="info-box-icon bg-aqua">
-                        <i class="ion ion-ios-gear-outline"></i>
+                        <i class="fas fa-tshirt"></i>
                     </span>
         
                     <div class="info-box-content">
@@ -287,17 +287,23 @@
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="amount">Delivery Status</label>
-                                <div class="form-group">
-                                    <select name="source" class="form-control" [(ngModel)]='order.status'>
-                                        <option value=""> Select Status </option>
-                                        <option value="0"> Received </option>
-                                        <option value="1"> Processing </option>
-                                        <option value="2"> In Transit </option>
-                                        <option value="3"> Delivered </option>
-                                    </select>
-                                </div>
+                                <label for="amount">Item Quantity</label>
+                                <input type="text" disabled class="form-control" name="item_quantity" [(ngModel)]='order.item_quantity'>
                             </div>
+                          </div>
+                          <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="amount">Delivery Status</label>
+                                    <div class="form-group">
+                                        <select name="source" class="form-control" [(ngModel)]='order.status'>
+                                            <option value=""> Select Status </option>
+                                            <option value="0"> Received </option>
+                                            <option value="1"> Processing </option>
+                                            <option value="2"> In Transit </option>
+                                            <option value="3"> Delivered </option>
+                                        </select>
+                                    </div>
+                                </div>
                           </div>
                           
                       </div>

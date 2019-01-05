@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiBaseService } from "../../../services/apibase/api-base.service";
 import { NgForm } from '../../../../node_modules/@angular/forms'; 
 import { NgProgress } from "ngx-progressbar";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-journal',
@@ -9,6 +10,7 @@ import { NgProgress } from "ngx-progressbar";
   styleUrls: ['./journal.component.css']
 })
 export class JournalComponent implements OnInit {
+  loader:boolean = true;
   users:any;
   newService;
   endButton;
@@ -31,7 +33,6 @@ export class JournalComponent implements OnInit {
   constructor(private webServ:ApiBaseService, private progress:NgProgress) { }
 
   ngOnInit() {
-
     this.getStuff();
     this.click =  document.getElementById('close');
     console.log(this.click);
@@ -42,6 +43,7 @@ export class JournalComponent implements OnInit {
   getStuff() {
     this.webServ.getMaintenance().subscribe(
       res => {
+        this.loader = false;
         console.log(res);
         this.users = res[0];
         this.staffCategories = res[1];
@@ -49,8 +51,24 @@ export class JournalComponent implements OnInit {
         this.revenueSources = res[3];
         this.expenseSources = res[4];
         this.services = res[5];
+        this.dateFix();
       }
     )
+  }
+
+  dateFix(){
+    this.staffCategories.forEach(element => {
+      element.createddate = moment(element.createddate).format('DD/MM/YY')
+    });
+    this.merchCategories.forEach(element => {
+      element.createddate = moment(element.createddate).format('DD/MM/YY')
+    });
+    this.revenueSources.forEach(element => {
+      element.createddate = moment(element.createddate).format('DD/MM/YY')
+    });
+    this.expenseSources.forEach(element => {
+      element.createddate = moment(element.createddate).format('DD/MM/YY')
+    });
   }
 
 
@@ -67,7 +85,7 @@ export class JournalComponent implements OnInit {
           this.rspMsg = res['message'];
           setTimeout(() => {
             this.click.click();
-          }, 2000);
+          }, 500);
         }else{
           this.rspMsg = "Operation Failed"
         }
@@ -102,7 +120,7 @@ export class JournalComponent implements OnInit {
           this.rspMsg = res['message']; 
           setTimeout(() => {
             this.click.click()
-          }, 2000);
+          }, 500);
         } else {
           this.rspMsg = "Operation Failed"
         }
@@ -122,7 +140,7 @@ export class JournalComponent implements OnInit {
           this.rspMsg = res['message'];
           setTimeout(() => {
             this.click.click()
-          }, 2000);
+          }, 500);
         } else {
           this.rspMsg = "Operation Failed"
         }
@@ -172,7 +190,7 @@ export class JournalComponent implements OnInit {
           this.rspMsg = res['message'];
           setTimeout(() => {
             this.click.click()
-          }, 2000);
+          }, 500);
         } else {
           this.rspMsg = "Operation Failed"
         }
@@ -192,7 +210,7 @@ export class JournalComponent implements OnInit {
           this.rspMsg = res['message'];
           setTimeout(() => {
             this.click.click()
-          }, 2000);
+          }, 500);
         } else {
           this.rspMsg = "Operation Failed"
         }
@@ -241,7 +259,7 @@ export class JournalComponent implements OnInit {
             this.rspMsg = res['message'];
             setTimeout(() => {
               this.click.click()
-            }, 2000);
+            }, 500);
           } else {
             this.rspMsg = "Operation Failed"
           }

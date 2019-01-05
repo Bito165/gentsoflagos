@@ -94,7 +94,7 @@ export class BookingsComponent implements OnInit, OnDestroy {
         this.status = 'danger';
       }
     else{
-      
+      this.currentDate = moment(this.currentDate).format('DD/MM/YY');
       this.webServ.postBooking(this.currentBarber, this.currentService, this.currentPrice, this.customer_name, this.currentDate, this.currentTime, this.client_phone_number, 0)
       .subscribe(
         res => {

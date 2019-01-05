@@ -8,12 +8,18 @@ import { ApiBaseService } from "../../../services/apibase/api-base.service";
 })
 export class CustomersComponent implements OnInit {
   customers:any;
+  noCustomers:boolean = true;
+  loader:boolean = true;
   constructor(private api:ApiBaseService) { }
 
   ngOnInit() {
     this.api.getCustomerList().subscribe(
       res => {
+        this.loader = false;
         this.customers = res;
+        if(this.customers.length > 0){
+          this.noCustomers = false;
+        }
       }
     )
   }

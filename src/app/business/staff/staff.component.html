@@ -2,101 +2,160 @@
 <ng-progress [color]="'white'" [speed]="10" [trickleSpeed]="50" [thick]="true"></ng-progress>
 
 <div class="content-wrapper">
-  <section class="content">
-    <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab_1" data-toggle="tab">Staff List</a></li>
-              <li><a href="#tab_2" data-toggle="tab">Staff Schedule</a></li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab_1">
-                <div class="row">
-                    <div style="cursor: pointer;" data-toggle="modal" data-target="#modal-info" class="col-lg-3">
-                        <div class="small-box bg-aqua">
-                        <div class="inner">
-                            <h3>ADD</h3>
 
-                            <p>NEW STAFF</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-plus"></i>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div *ngFor="let staff of staff" class="col-md-4">
-                    <div class="box box-primary">
-                        <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-circle" src="https://gentsoflagos.herokuapp.com/{{staff.staff_avatar}}" alt="User profile picture">
+    <div *ngIf='loader' class="row text-center">
+        <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
+    </div>       
 
-                            <h3 class="profile-username text-center">{{staff.staff_name}}</h3>
+    <div *ngIf='!loader' >
 
-                            <p class="text-muted text-center">{{staff.staff_category}}</p>
+      <section class="content" *ngIf='start'>
+        <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab_1" data-toggle="tab">Staff List</a></li>
+                  <li><a href="#tab_2" data-toggle="tab">Staff Schedule</a></li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1">
+                    <div class="row">
+                        <div style="cursor: pointer;" data-toggle="modal" data-target="#modal-info" class="col-lg-3">
+                            <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>ADD</h3>
 
-                            <ul class="list-group list-group-unbordered">
-                                <li class="list-group-item">
-                                <b>Date Joined</b>
-                                <a class="pull-right">{{staff.createddate}}</a>
-                                </li>
-                                <li class="list-group-item">
-                                <b> Commission Due This Month </b>
-                                <a class="pull-right"> {{staff.staff_commission}} </a>
-                                </li>
-                            </ul>
-
-                            
-
-                            <p class="text-center" style="color: steelblue"> View Commission Breakdown </p>
-
-                            <div class="row mx-auto">
-                                <div class="col-lg-6" style="margin-top: 10px">
-                                <a class="btn btn-warning btn-block ">
-                                    <b style="color: white">Edit Details</b>
-                                </a>
+                                <p>NEW STAFF</p>
                             </div>
-                            <div class="col-lg-6" style="margin-top: 10px">
-                              <a (click)="deleteStaff(staff.id)" class="btn btn-danger btn-block ">
-                                <b style="color: white">Delete</b>
-                                </a>
+                            <div class="icon">
+                                <i class="fa fa-plus"></i>
                             </div>
                             </div>
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                    </div>
-                </div>
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_2">
-                <div class="row">
-                    <div *ngFor="let staff of staff" class="col-md-4">
-                      <div class="box box-primary">
-                        <div class="box-body box-profile">
-                            <div class="text-center">
-                                <img class="profile-user-img img-responsive img-circle" src="{{staff.staff_avatar}}" alt="User profile picture">
-                                <h3> {{staff.staff_name}}'s Work Days</h3>
-                                <p *ngFor="let work_day of staff.work_days"> {{work_day}} </p>
+                    <div class="row">
+                        <div *ngFor="let staff of staff" class="col-md-4">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <img class="profile-user-img img-responsive img-circle" src="http://localhost:8080/{{staff.staff_avatar}}" alt="User profile picture">
+
+                                <h3 class="profile-username text-center">{{staff.staff_name}}</h3>
+
+                                <p class="text-muted text-center">{{staff.staff_category}}</p>
+
+                                <ul class="list-group list-group-unbordered">
+                                    <li class="list-group-item">
+                                    <b>Date Joined:</b>
+                                    <a class="pull-right">{{staff.createddate}}</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                    <b> Commission Due This Month: </b>
+                                    <a class="pull-right"> {{staff.com | currency:'₦'}} </a>
+                                    </li>
+                                </ul>
+
+                                
+
+                                <p (click)='drillDown(staff)' class="text-center" style="color: steelblue; cursor: pointer;"> View Commission Breakdown </p>
 
                                 <div class="row mx-auto">
-                                  <div class="col-lg-12" style="margin-top: 10px">
-                                    <a (click)="fill(staff)" style="cursor: pointer;" data-toggle="modal" data-target="#modal-schedule" class="btn btn-warning btn-block ">
-                                      <b style="color: white">Update</b>
-                                    </a>
+                                  <div class="col-lg-6 col-lg-offset-3" style="margin-top: 10px">
+                                    <a (click)="deleteStaff(staff.id)" class="btn btn-danger btn-block ">
+                                      <b style="color: white">Delete</b>
+                                      </a>
                                   </div>
                                 </div>
                             </div>
+                            <!-- /.box-body -->
                         </div>
-                      </div>
+                        </div>
                     </div>
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_2">
+                    <div class="row">
+                        <div *ngFor="let staff of staff" class="col-md-4">
+                          <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-responsive img-circle" src="{{staff.staff_avatar}}" alt="User profile picture">
+                                    <h3> {{staff.staff_name}}'s Work Days</h3>
+                                    <p *ngFor="let work_day of staff.work_days"> {{work_day}} </p>
+
+                                    <div class="row mx-auto">
+                                      <div class="col-lg-12" style="margin-top: 10px">
+                                        <a style="cursor: pointer;" data-toggle="modal" data-target="#modal-schedule" class="btn btn-warning btn-block ">
+                                          <b style="color: white">Update</b>
+                                        </a>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
                 </div>
+                <!-- /.tab-content -->
+        </div>
+        <!-- nav-tabs-custom -->
+        
+      </section>
+
+      <section *ngIf='!start' class="content">
+      <br>
+      <div class="row">
+        <h3 class="text-center"> {{drillHold.staff_name}}'s Earnings <button (click)='start = true' class='btn btn-info ='> <i class='fa fa-arrow-left'></i> Back </button>  </h3>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+          <div class="box box-info">
+
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered no-margin">
+                  <thead>
+                    <tr style="background-color: #0e0e28; color: white">
+                      <th class='text-center'>Amount</th>
+                      <th class='text-center'>Source</th>
+                      <th class='text-center'>Commission</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let commission of drillHold.transactions ">
+                      <td class='text-center'>
+                        <a> {{commission.amount | currency:'₦'}} </a>
+                      </td>
+                      <td class='text-center'> 
+                        <span class="label label-success">
+                            {{commission.source | uppercase}}
+                        </span>
+                      </td>
+                      <td class='text-center'>
+                        {{commission.commission | currency:'₦'}}
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td  class='text-center bg-success' colspan='2'> Total </td>
+                      <td class='text-center' > {{drillHold.com | currency:'₦'}} </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+              <!-- /.table-responsive -->
             </div>
-            <!-- /.tab-content -->
+
+            <!-- /.box-footer -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+
+      </section>
+
     </div>
-    <!-- nav-tabs-custom -->
-    
- </section>
+
 </div>
 
 <div class="modal modal-info fade" id="modal-info">
@@ -132,8 +191,15 @@
               <textarea class="form-control" name="staff_bio" placeholder="Enter Staff Bio" ngModel></textarea>
             </div>
             <div class="form-group">
+              <label for="amount">Staff Commission Rate</label>
+              <input type='number' class="form-control" name="commission_rate" placeholder="Enter Commission Rate" ngModel>
+            </div>
+            <div class="form-group">
                 <label for="amount">Phone Number</label>
-                <input type="text" class="form-control" name="staff_avatar" placeholder="Enter Staff Phone Number" ngModel>
+                <div class="input-group">
+                  <span style='background-color: #0e0e28; color:white' class="input-group-addon">+234</span>
+                  <input type='text' class="form-control" name="contact" placeholder="Enter Staff Phone Number" ngModel>
+                </div>
               </div>
             </div>
             

@@ -7,12 +7,11 @@ import { RequestOptions } from '@angular/http';
 
 @Injectable()
 export class ApiBaseService {
-  baseUrl: any = "https://gentsoflagos.herokuapp.com/api"
+  baseUrl: any = "http://localhost:8080/api"
   user:any = this.local.retrieve('user_info');
 
   constructor(public webServ:HttpClient, public local:LocalStorageService) { 
   }
-
 
 
   testapi(){
@@ -111,7 +110,6 @@ export class ApiBaseService {
 
   postDeleteUser(user_id:any){
     var body = {'id': user_id};
-
     return this.webServ.post(this.baseUrl + '/' + 'user/delete', body)
       .map(res => res);
 
@@ -121,12 +119,10 @@ export class ApiBaseService {
     var body = {'id': id};
     console.log(id);
     return this.webServ.post(this.baseUrl + '/' + 'categories/staff-delete', body)
-      .map(res => res);
   }
 
   postDeleteMerchCat(id:any){
     var body = {'id': id};
-
     return this.webServ.post(this.baseUrl + '/' + 'categories/merch-delete', body)
       .map(res => res);
   }
@@ -155,13 +151,15 @@ export class ApiBaseService {
       .map(res => res);
   }
 
-  postNewStaff(staff_name, staff_bio, staff_category, staff_avatar) {
+  postNewStaff(staff_name, staff_bio, staff_category, staff_avatar, commission_rate, contact) {
     var body = new FormData();
     body.append('staff_name', staff_name);
     body.append('staff_bio', staff_bio);
     body.append('staff_category', staff_category);
     body.append('staff_avatar', staff_avatar);
     body.append('createdby', this.user.username);
+    body.append('commission_rate', commission_rate);
+    body.append('contact', contact);
     console.log(body);
     return this.webServ.post(this.baseUrl + '/' + 'staff/create-new', body)
     .map(res => res);
@@ -291,6 +289,18 @@ export class ApiBaseService {
   getPreBooking(){
     return this.webServ.get(this.baseUrl + '/' + 'pre-booking')
     .map(res => res)
+  }
+
+  getRevenueHistory(){
+    return this.webServ.get(this.baseUrl + '/' + 'revenue/history')
+  }
+
+  getExpensesHistory(){
+    return this.webServ.get(this.baseUrl + '/' + 'expenses/history')
+  }
+
+  getProfitLossHistory(){
+    return this.webServ.get(this.baseUrl + '/' + 'profit-loss/history')
   }
   
 }

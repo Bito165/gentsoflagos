@@ -1,11 +1,11 @@
-<div *ngIf='loader' class="row text-center">
-    <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
-</div>
 
-<div *ngIf='!loader'>
+
+<div >
     <app-nav></app-nav>
-
-    <div class="content" style="margin-top: -19px; padding: 0">
+    <div *ngIf='loader' class="row text-center">
+        <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
+    </div>
+    <div *ngIf='!loader' class="content" style="margin-top: -19px; padding: 0">
           <div class="row">
             <div class="col-lg-12">
               <div class="col-lg-6  picture">

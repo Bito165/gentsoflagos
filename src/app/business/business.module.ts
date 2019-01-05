@@ -18,6 +18,10 @@ import { AcademyApplicationsComponent } from './academy-applications/academy-app
 import { AuthGuard } from "./../../services/auth/auth.guard";
 
 import { OrdersComponent } from './orders/orders.component';
+import { DailyRevenueComponent } from './revenue/daily-revenue/daily-revenue.component';
+import { WeeklyRevenueComponent } from './revenue/weekly-revenue/weekly-revenue.component';
+import { MonthlyRevenueComponent } from './revenue/monthly-revenue/monthly-revenue.component';
+import { YearlyRevenueComponent } from './revenue/yearly-revenue/yearly-revenue.component';
 
 const BusinessRoutes: Routes = [
     { path: 'business', component: LoginComponent},
@@ -47,7 +51,11 @@ const BusinessRoutes: Routes = [
         MerchManagementComponent,
         CustomersComponent,
         AcademyApplicationsComponent,
-        OrdersComponent
+        OrdersComponent,
+        DailyRevenueComponent,
+        WeeklyRevenueComponent,
+        MonthlyRevenueComponent,
+        YearlyRevenueComponent
     ],
     imports: [
         BrowserModule,

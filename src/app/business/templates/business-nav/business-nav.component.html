@@ -61,6 +61,7 @@
             </span>
           </a>
         </li>
+        
         <li>
           <a style="color: #ffffff; background-color: #0e0e28" routerLink="/business/view-orders" routerLinkActive="active" >
             <i class="fas fa-tshirt"></i>
@@ -70,7 +71,7 @@
             </span>
           </a>
         </li>
-        <li>
+        <li *ngIf="user.user_type == 'Admin'">
           <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/academy" routerLinkActive="active">
             <i class="fa fa-graduation-cap"></i>
             <span> Academy Applications </span>
@@ -79,43 +80,43 @@
             </span>
           </a>
         </li>
-        <li>
+        <li *ngIf="user.user_type == 'Admin'">
           <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/merch" routerLinkActive="active">
             <i class="fa fa-plus-circle"></i>
             <span>Merch Management</span> 
           </a>
         </li>
-        <li>
+        <li *ngIf="user.user_type == 'Admin'">
           <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/revenue" routerLinkActive="active">
             <i class="fa fa-arrow-circle-right"></i>
             <span>Revenue</span>
           </a>
         </li>
-        <li>
+        <li *ngIf="user.user_type == 'Admin'">
           <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/expenses" routerLinkActive="active">
             <i class="fa fa-arrow-circle-left"></i>
             <span>Expenses</span> 
           </a>
         </li>
-        <li>
+        <li *ngIf="user.user_type == 'Admin'">
           <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/pl-analysis" routerLinkActive="active">
             <i class="fa fa-signal"></i>
             <span>Profit & Loss Charts</span>
           </a>
         </li>
-        <li>  
+        <li *ngIf="user.user_type == 'Admin'">  
           <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/customers" routerLinkActive="active">
             <i class="fa fa-users"></i>
             <span>Customer List</span>
           </a>
         </li>
-        <li>  
+        <li *ngIf="user.user_type == 'Admin'">  
           <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/staff" routerLinkActive="active">
             <i class="fa fa-user"></i>
             <span>Staff</span>
           </a>
         </li>
-        <li>
+        <li *ngIf="user.user_type == 'Admin'">
           <a style="color: #ffffff; background-color: #0e0e28"  routerLink="/business/maintenance" routerLinkActive="active">
             <i class="fa fa-wrench"></i>
             <span> Site Maintenance </span>

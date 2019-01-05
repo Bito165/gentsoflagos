@@ -38,7 +38,24 @@ export class OrdersComponent implements OnInit {
         if(this.orders.length > 0){
           this.noOrders = false;
           for (let index = 0; index < this.orders.length; index++) {
-            this.orders[index].date_due = moment(this.orders[index].date_due).format('l');
+            this.orders[index].date_due = moment(this.orders[index].date_due).format('DD/MM/YY');
+            switch (this.orders[index].status) {
+              case 0:
+                  this.orders[index].state = 'Recieved';
+                break;
+              case 1:
+                  this.orders[index].state = 'Processing';
+                break;
+              case 2:
+                  this.orders[index].state = 'In Transit';
+                break;
+              case 3:
+                  this.orders[index].state = 'Delivered';
+                break;
+            
+              default:
+                break;
+            }
           }
         }else{
           this.noOrders = true;

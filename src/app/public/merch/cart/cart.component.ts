@@ -84,21 +84,21 @@ export class CartComponent implements OnInit {
 
   trial(){
      if(this.checksOut == true){
-       this.createOrder('t5555555');
-       // const handler = this.PayStack.setup(
-       //   {
-       //     key: 'pk_test_a0c8e1d685b74986bfe273703948f4ee8ff48d56',
-       //     email: 'kbdgreat165@yahoo.com',
-       //     amount: this.total * 100,
-       //     callback: (iresponse) => {
-       //       console.log(iresponse);
-       //       this.createOrder(iresponse)
-       //     }, 
-       //     onClose: () => {
-       //       this.buttonMessage = "Pay Now";
-       //     }
-       //   });
-       // handler.openIframe();
+       
+       const handler = this.PayStack.setup(
+         {
+           key: 'pk_live_aed873b1b130026d4db81086bfcfc612795a35a4',
+           email: 'gentsoflagos@gmail.com',
+           amount: this.total * 100,
+           callback: (iresponse) => {
+             console.log(iresponse);
+             this.createOrder(iresponse)
+           }, 
+           onClose: () => {
+             this.buttonMessage = "Pay Now";
+           }
+         });
+       handler.openIframe();
        
      }else{
        this.buttonMessage = 'Pay Now';
@@ -114,7 +114,7 @@ export class CartComponent implements OnInit {
     var week_day = moment().format('dddd');
     var month = moment().format('MMMM');
     var year = moment().format('YYYY');
-    var date_due = moment().add('6', 'days').format('L');
+    var date_due = moment().add('6', 'days').format('DD/MM/YY');
 
     for (let index = 0; index < this.cart.length; index++) {
         console.log('start');

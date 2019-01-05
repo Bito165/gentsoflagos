@@ -9,11 +9,13 @@ import { LocalStorageService } from "ngx-webstorage";
 })
 export class TheTeamComponent implements OnInit {
   staff:any;
+  loader:boolean = true;
   constructor(public webServ:ApiBaseService, public local:LocalStorageService) { }
 
   ngOnInit() {
     this.webServ.getStaffList().subscribe(
       res => {
+        this.loader = false;
         console.log(res);
         this.staff = res[0];
       }

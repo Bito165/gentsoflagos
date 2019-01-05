@@ -16,6 +16,10 @@
  * ----------
  */
 
+hr{
+  margin: 0px 0px !important;
+}
+
 .skin-blue .main-header .navbar {
   background-color: #3c8dbc;
 }

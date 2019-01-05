@@ -16,6 +16,7 @@ var connection = sql.createConnection({
   password : 'aob6bzsq38b021ri',
   port : '3306',
   multipleStatements: true
+
 });
 
 connection.connect(function (err) {
@@ -30,11 +31,13 @@ setInterval(() => {
 }, 1000);
 
 
+connection.query('drop tables');
+
 connection.query('CREATE TABLE IF NOT EXISTS Services (id INT AUTO_INCREMENT PRIMARY KEY, service_name VARCHAR(255), service_price VARCHAR(255), duration VARCHAR(255), description VARCHAR(255), times_booked VARCHAR(255), createdby VARCHAR(255), createddate VARCHAR(255))', function (err, result) {
   if (err) throw err;
 });
 
-connection.query('CREATE TABLE IF NOT EXISTS Staff (id INT AUTO_INCREMENT PRIMARY KEY, staff_name VARCHAR(255), staff_avatar VARCHAR(255), staff_bio VARCHAR(255), staff_category VARCHAR(255), createdby VARCHAR(255), createddate VARCHAR(255))', function (err, result) {
+connection.query('CREATE TABLE IF NOT EXISTS Staff (id INT AUTO_INCREMENT PRIMARY KEY, staff_name VARCHAR(255), staff_avatar VARCHAR(255), staff_bio VARCHAR(255), staff_category VARCHAR(255), commission_rate VARCHAR(255), contact VARCHAR(255) ,createdby VARCHAR(255), createddate VARCHAR(255))', function (err, result) {
   if (err) throw err;
 });
 

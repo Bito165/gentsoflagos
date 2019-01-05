@@ -1,7 +1,11 @@
 <business-nav> </business-nav>
 <div class="content-wrapper">
 
-  <section class="content">
+  <div *ngIf='loader' class="row text-center">
+        <img style='height: 100%; width: 100%' src="assets/img/loadergif.gif" alt="">
+    </div>       
+
+    <section *ngIf='!loader' class="content">
 
     <ng-progress [color]="'white'" [speed]="10" [trickleSpeed]="50" [thick]="true"></ng-progress>
 

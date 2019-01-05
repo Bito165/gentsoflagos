@@ -37,12 +37,14 @@ export class BookingsComponent implements OnInit {
         this.local.store('bookings',this.bookings.length);
         if(this.bookings.length > 0){
           this.noBookings = false;
+          
           for (let index = 0; index < this.bookings.length; index++) {
+            
             switch (this.bookings[index].status) {
-              case '0':
+              case 0:
                   this.bookings[index].state = 'Uncompleted';
                 break;
-              case '1':
+              case 1:
                   this.bookings[index].state = 'Completed';
                 break;
             

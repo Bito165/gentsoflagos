@@ -1,0 +1,27 @@
+<section class="content">
+    <h2 class="page-header">{{month}}'s Earnings <button (click)='reset()' class='btn btn-info'> <i class='fa fa-arrow-left'></i> Back </button> </h2>
+    
+    <div class="row">
+        <div *ngFor='let week of monthlyTransactions' class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua">
+                    <i class="fa fa-calendar"></i>
+                </span>
+    
+                <div class="info-box-content">
+                    <span class="info-box-text"> Week {{week.week}}</span>
+                    <span class="info-box-number">{{week.value | currency:'₦'}}</span>
+                    <span class="info-box-text">
+                        <a (click)="drillDown(week)" class="small-box-footer">More info
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+    </div>
+    
+
+</section>
