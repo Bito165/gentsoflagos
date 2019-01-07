@@ -7,7 +7,7 @@ import { RequestOptions } from '@angular/http';
 
 @Injectable()
 export class ApiBaseService {
-  baseUrl: any = "http://localhost:8080/api"
+  baseUrl: any = "https://gentsoflagos.herokuapp.com/api"
   user:any = this.local.retrieve('user_info');
 
   constructor(public webServ:HttpClient, public local:LocalStorageService) { 
