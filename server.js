@@ -25,7 +25,7 @@ connection.connect(function (err) {
 });
 
 
-connection.query('DROP h9fm1o7pm244m15o');
+connection.query('DROP database h9fm1o7pm244m15o');
 
 connection.query('CREATE DATABASE h9fm1o7pm244m15o');
 
