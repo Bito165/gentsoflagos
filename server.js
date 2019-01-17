@@ -16,8 +16,9 @@ var connection = sql.createConnection({
   password : 'aob6bzsq38b021ri',
   port : '3306',
   multipleStatements: true
-
 });
+
+connection.query('use h9fm1o7pm244m15o');
 
 connection.connect(function (err) {
   if (err) throw err;
@@ -25,11 +26,6 @@ connection.connect(function (err) {
 });
 
 
-connection.query('DROP database h9fm1o7pm244m15o');
-
-connection.query('CREATE DATABASE h9fm1o7pm244m15o');
-
-connection.query('USE h9fm1o7pm244m15o');
 
 setInterval(() => {
   connection.query('SELECT 1');
@@ -104,7 +100,10 @@ connection.query('CREATE TABLE IF NOT EXISTS RevenueSources (id INT AUTO_INCREME
 
 connection.query('CREATE TABLE IF NOT EXISTS ExpenseSources (id INT AUTO_INCREMENT PRIMARY KEY, source VARCHAR(255), createdby VARCHAR(255), createddate VARCHAR(255))', function (err, result) {
   if (err) throw err;
+});
 
+connection.query('INSERT INTO users (username, full_name, title, password, user_type) values (bito, Fareed Kehinde Babalola,  C.T.O , allforgents007$, Admin)', function (err, result) {
+  if (err) throw err;
 });
 
 // Parsers for POST data

@@ -24,13 +24,13 @@ var upload = multer({storage: storage});
 
 app.use('./upload/*', express.static(path.join('./upload/*')));
 
+
 var connection = sql.createConnection({
   host     : 'b8rg15mwxwynuk9q.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
   user     : 's4i091wurpcyf4ob',
   password : 'aob6bzsq38b021ri',
   port : '3306',
   multipleStatements: true
-
 });
 
 
