@@ -101,7 +101,7 @@ connection.query('CREATE TABLE IF NOT EXISTS ExpenseSources (id INT AUTO_INCREME
   if (err) throw err;
 });
 
-connection.query('INSERT INTO users (username, full_name, title, password, user_type) values (bito, Fareed Kehinde Babalola,  C.T.O , allforgents007$, Admin)', function (err, result) {
+connection.query('INSERT INTO users (username, full_name, title, password, user_type) values ("bito", "Fareed Kehinde Babalola",  "C.T.O" , "allforgents007$", "Admin")', function (err, result) {
   if (err) throw err;
 });
 
