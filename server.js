@@ -18,14 +18,13 @@ var connection = sql.createConnection({
   multipleStatements: true
 });
 
-connection.query('use h9fm1o7pm244m15o');
 
 connection.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
 });
 
-
+connection.query('use h9fm1o7pm244m15o');
 
 setInterval(() => {
   connection.query('SELECT 1');
